@@ -1,0 +1,211 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: #F7F8FA;
+  color: #111827;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+::-webkit-scrollbar { width: 6px; }
+::-webkit-scrollbar-track { background: #F3F4F6; }
+::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #9CA3AF; }
+
+/* Stagger animation delays */
+.animate-stagger-1 { animation-delay: 40ms; }
+.animate-stagger-2 { animation-delay: 80ms; }
+.animate-stagger-3 { animation-delay: 120ms; }
+.animate-stagger-4 { animation-delay: 160ms; }
+.animate-stagger-5 { animation-delay: 200ms; }
+.animate-stagger-6 { animation-delay: 240ms; }
+
+/* Skeleton shimmer loader */
+.skeleton {
+  background: linear-gradient(90deg, #F3F4F6 25%, #E5E7EB 50%, #F3F4F6 75%);
+  background-size: 200% 100%;
+  animation: shimmer 1.5s infinite linear;
+  border-radius: 0.375rem;
+}
+
+/* Focus ring — indigo accent */
+input:focus, select:focus, textarea:focus {
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(99, 102, 241, 0.2);
+  border-color: #6366F1;
+}
+
+/* Card hover lift — GPU-accelerated, no layout shift */
+.card-hover {
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  will-change: transform;
+}
+.card-hover:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06), 0 1px 3px rgba(0, 0, 0, 0.04);
+}
+
+/* Button press */
+.btn-press:active {
+  transform: scale(0.97);
+  transition: transform 0.1s ease;
+}
+
+/* Row hover — background only, no transform */
+.row-hover {
+  transition: background-color 0.15s ease;
+}
+.row-hover:hover {
+  background-color: #F9FAFB;
+}
+
+/* Stat card number animation */
+.stat-value {
+  animation: countUp 0.4s ease-out both;
+}
+
+/* Modal backdrop — no blur for performance */
+.modal-backdrop {
+  animation: fadeInOverlay 0.15s ease-out both;
+}
+
+/* Modal content entrance */
+.modal-content {
+  animation: scaleIn 0.2s ease-out both;
+}
+
+/* Mercury pill button */
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 0.5rem 1rem;
+  border-radius: 9999px;
+  font-size: 0.875rem;
+  font-weight: 500;
+  transition: background-color 0.15s ease, color 0.15s ease, box-shadow 0.15s ease;
+}
+.pill-btn:active {
+  transform: scale(0.97);
+}
+
+/* Chart container reveal */
+.chart-reveal {
+  animation: fadeIn 0.4s ease-out 0.1s both;
+}
+
+/* Sidebar nav item */
+.nav-item {
+  position: relative;
+}
+.nav-item::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 50%;
+  transform: translateY(-50%) scaleY(0);
+  width: 3px;
+  height: 60%;
+  background: #6366F1;
+  border-radius: 0 3px 3px 0;
+  transition: transform 0.2s ease;
+}
+.nav-item.active::before {
+  transform: translateY(-50%) scaleY(1);
+}
+
+/* Table row entrance — only first 15 rows animate */
+.table-row-enter:nth-child(-n+15) {
+  animation: fadeIn 0.25s ease-out both;
+}
+
+/* Gradient accent */
+.gradient-accent {
+  background: linear-gradient(135deg, #6366F1 0%, #818CF8 100%);
+}
+
+/* Mercury-style card */
+.mercury-card {
+  background: #FFFFFF;
+  border: 1px solid #E5E7EB;
+  border-radius: 12px;
+}
+
+/* Glass card — light */
+.glass-card {
+  background: rgba(255, 255, 255, 0.8);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1px solid #E5E7EB;
+}
+
+/* Mercury table rows */
+.mercury-row {
+  border-bottom: 1px solid #F3F4F6;
+  transition: background-color 0.15s ease;
+}
+.mercury-row:hover {
+  background-color: #F9FAFB;
+}
+
+/* Mobile touch targets */
+.touch-target {
+  min-height: 44px;
+  min-width: 44px;
+}
+
+/* Safe area for bottom nav */
+.safe-bottom {
+  padding-bottom: env(safe-area-inset-bottom, 0);
+}
+
+/* Mobile responsive helpers */
+@media (max-width: 640px) {
+  .pill-btn {
+    width: 100%;
+    justify-content: center;
+  }
+
+  button, a[role="button"] {
+    min-height: 44px;
+  }
+}
+
+/* Hero entrance keyframes */
+@keyframes hero-text-in {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+@keyframes hero-mockup-in {
+  from { opacity: 0; transform: scale(0.95) translateY(16px); }
+  to { opacity: 1; transform: scale(1) translateY(0); }
+}
+.hero-animate {
+  animation: hero-text-in 0.7s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+.hero-mockup-animate {
+  animation: hero-mockup-in 0.8s cubic-bezier(0.16, 1, 0.3, 1) 0.4s both;
+}
+.hero-delay-1 { animation-delay: 0ms; }
+.hero-delay-2 { animation-delay: 120ms; }
+.hero-delay-3 { animation-delay: 240ms; }
+
+/* How It Works connecting line grow */
+@keyframes line-grow {
+  from { transform: scaleX(0); }
+  to { transform: scaleX(1); }
+}
+
+/* Reduce motion for users who prefer it */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
