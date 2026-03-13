@@ -21,17 +21,17 @@ export default function AmortizationChart({ payments, height = 300 }: Amortizati
   return (
     <ResponsiveContainer width="100%" height={height}>
       <AreaChart data={data}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#ede9de" />
         <XAxis
           dataKey="payment"
-          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+          tick={{ fontSize: 11, fill: '#83827d' }}
           interval={interval}
           axisLine={false}
           tickLine={false}
-          label={{ value: 'Payment #', position: 'insideBottomRight', offset: -5, fontSize: 11, fill: '#9CA3AF' }}
+          label={{ value: 'Payment #', position: 'insideBottomRight', offset: -5, fontSize: 11, fill: '#83827d' }}
         />
         <YAxis
-          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+          tick={{ fontSize: 11, fill: '#83827d' }}
           tickFormatter={formatCurrencyAxis}
           axisLine={false}
           tickLine={false}
@@ -42,7 +42,7 @@ export default function AmortizationChart({ payments, height = 300 }: Amortizati
           labelFormatter={l => `Payment #${l}`}
           contentStyle={{
             borderRadius: '8px',
-            border: '1px solid #E5E7EB',
+            border: '1px solid #dad9d4',
             backgroundColor: '#fff',
             fontSize: '12px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.08)',

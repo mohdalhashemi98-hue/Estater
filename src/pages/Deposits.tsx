@@ -28,34 +28,34 @@ export default function Deposits() {
     <div className="space-y-6 max-w-[1200px]">
       <div className="flex items-center justify-between flex-wrap gap-3">
         <div className="flex items-center gap-2">
-          <select className="border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
+          <select className="border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={statusFilter} onChange={e => setStatusFilter(e.target.value)}>
             <option value="">All Deposits</option>
             <option value="held">Held</option>
             <option value="refunded">Refunded</option>
             <option value="partially_refunded">Partially Refunded</option>
             <option value="forfeited">Forfeited</option>
           </select>
-          <span className="text-sm text-gray-500">{deposits.length} deposits</span>
+          <span className="text-sm text-text-muted">{deposits.length} deposits</span>
         </div>
       </div>
 
       <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-4 animate-fade-in animate-stagger-1">
-          <p className="text-sm text-gray-500">Total Deposits</p>
-          <p className="text-xl font-semibold text-gray-900 mt-1">{deposits.length}</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 animate-fade-in animate-stagger-1">
+          <p className="text-sm text-text-muted">Total Deposits</p>
+          <p className="text-xl font-semibold text-text-primary mt-1">{deposits.length}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 animate-fade-in animate-stagger-2">
-          <p className="text-sm text-gray-500">Currently Held</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 animate-fade-in animate-stagger-2">
+          <p className="text-sm text-text-muted">Currently Held</p>
           <p className="text-xl font-semibold text-accent-600 mt-1">{formatCurrency(totalHeld)}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 animate-fade-in animate-stagger-3">
-          <p className="text-sm text-gray-500">Total Refunded</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 animate-fade-in animate-stagger-3">
+          <p className="text-sm text-text-muted">Total Refunded</p>
           <p className="text-xl font-semibold text-emerald-600 mt-1">{formatCurrency(totalRefunded)}</p>
         </div>
       </div>
 
       {isLoading ? (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-surface-border overflow-hidden">
           <div className="p-4 space-y-3">
             {[1, 2, 3, 4].map(i => (
               <div key={i} className="flex gap-4 items-center">
@@ -68,40 +68,40 @@ export default function Deposits() {
           </div>
         </div>
       ) : deposits.length === 0 ? (
-        <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-          <Shield className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500">No deposits found.</p>
+        <div className="text-center py-12 bg-white rounded-xl border border-surface-border">
+          <Shield className="w-10 h-10 text-text-muted mx-auto mb-3" />
+          <p className="text-text-muted">No deposits found.</p>
         </div>
       ) : (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden">
+        <div className="bg-white rounded-xl border border-surface-border overflow-hidden">
           <div className="overflow-x-auto">
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-100">
+            <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Tenant</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Property / Unit</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Amount</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Received</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Status</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Refund</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-gray-500">Actions</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Tenant</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Property / Unit</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Amount</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Received</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Status</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Refund</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Actions</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-50">
+            <tbody className="divide-y divide-surface">
               {deposits.map((d) => (
-                <tr key={d.id} className="hover:bg-gray-50 transition-colors">
+                <tr key={d.id} className="hover:bg-surface transition-colors">
                   <td className="px-4 py-2.5">
                     <Link to={`/contracts/${d.contract_id}`} className="font-medium text-accent-600 hover:underline">{d.tenant_name}</Link>
                   </td>
-                  <td className="px-4 py-2.5 text-gray-500">{d.property_name} - {d.unit_number}</td>
-                  <td className="px-4 py-2.5 font-medium text-gray-900">{formatCurrency(d.amount)}</td>
-                  <td className="px-4 py-2.5 text-gray-500">{formatDate(d.date_received)}</td>
+                  <td className="px-4 py-2.5 text-text-muted">{d.property_name} - {d.unit_number}</td>
+                  <td className="px-4 py-2.5 font-medium text-text-primary">{formatCurrency(d.amount)}</td>
+                  <td className="px-4 py-2.5 text-text-muted">{formatDate(d.date_received)}</td>
                   <td className="px-4 py-2.5">
                     <span className={`inline-block px-2 py-0.5 rounded-full text-xs font-medium capitalize ${statusColor(d.status)}`}>
                       {d.status.replace('_', ' ')}
                     </span>
                   </td>
-                  <td className="px-4 py-2.5 text-gray-500 text-xs">
+                  <td className="px-4 py-2.5 text-text-muted text-xs">
                     {d.refund_amount ? `${formatCurrency(d.refund_amount)} on ${formatDate(d.refund_date!)}` : '-'}
                   </td>
                   <td className="px-4 py-2.5">

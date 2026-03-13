@@ -75,21 +75,21 @@ export function fileIcon(mimeType: string): string {
 export function statusColor(status: string): string {
   const colors: Record<string, string> = {
     active: 'bg-emerald-50 text-emerald-700',
-    expired: 'bg-gray-100 text-gray-500',
+    expired: 'bg-surface-overlay text-text-muted',
     terminated: 'bg-red-50 text-red-700',
-    renewed: 'bg-indigo-50 text-indigo-700',
+    renewed: 'bg-accent-50 text-accent-700',
     draft: 'bg-amber-50 text-amber-700',
     pending: 'bg-amber-50 text-amber-700',
     paid: 'bg-emerald-50 text-emerald-700',
     overdue: 'bg-red-50 text-red-700',
-    cancelled: 'bg-gray-100 text-gray-500',
+    cancelled: 'bg-surface-overlay text-text-muted',
     vacant: 'bg-emerald-50 text-emerald-700',
-    occupied: 'bg-indigo-50 text-indigo-700',
+    occupied: 'bg-accent-50 text-accent-700',
     maintenance: 'bg-amber-50 text-amber-700',
-    held: 'bg-indigo-50 text-indigo-700',
+    held: 'bg-accent-50 text-accent-700',
     refunded: 'bg-emerald-50 text-emerald-700',
     partially_refunded: 'bg-amber-50 text-amber-700',
     forfeited: 'bg-red-50 text-red-700',
   };
-  return colors[status] || 'bg-gray-100 text-gray-500';
+  return colors[status] || 'bg-surface-overlay text-text-muted';
 }

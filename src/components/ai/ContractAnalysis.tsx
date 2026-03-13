@@ -46,21 +46,21 @@ export default function ContractAnalysis({ contractId, files }: ContractAnalysis
   );
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 shadow-sm overflow-hidden">
+    <div className="bg-white rounded-xl border border-surface-border shadow-sm overflow-hidden">
       <button
         onClick={() => setExpanded(!expanded)}
-        className="w-full px-6 py-4 flex items-center justify-between hover:bg-gray-50 transition-colors"
+        className="w-full px-6 py-4 flex items-center justify-between hover:bg-surface transition-colors"
       >
         <div className="flex items-center gap-2">
           <Sparkles className="w-5 h-5 text-accent-600" />
-          <h3 className="font-semibold text-gray-900">AI Contract Analysis</h3>
+          <h3 className="font-semibold text-text-primary">AI Contract Analysis</h3>
           {analyses.filter(a => a.status === 'completed').length > 0 && (
             <span className="text-xs bg-emerald-50 text-emerald-700 px-2.5 py-1 rounded-full font-semibold">
               {analyses.filter(a => a.status === 'completed').length} analyzed
             </span>
           )}
         </div>
-        {expanded ? <ChevronUp className="w-4 h-4 text-gray-400" /> : <ChevronDown className="w-4 h-4 text-gray-400" />}
+        {expanded ? <ChevronUp className="w-4 h-4 text-text-muted" /> : <ChevronDown className="w-4 h-4 text-text-muted" />}
       </button>
 
       {expanded && (
@@ -69,8 +69,8 @@ export default function ContractAnalysis({ contractId, files }: ContractAnalysis
           {unanalyzedFiles.length > 0 && (
             <div className="space-y-2">
               {unanalyzedFiles.map(file => (
-                <div key={file.id} className="flex items-center justify-between p-3 bg-gray-50 rounded-lg border border-gray-200">
-                  <span className="text-sm text-gray-900 truncate">{file.original_name}</span>
+                <div key={file.id} className="flex items-center justify-between p-3 bg-surface rounded-lg border border-surface-border">
+                  <span className="text-sm text-text-primary truncate">{file.original_name}</span>
                   <button
                     onClick={() => handleAnalyze(file.id)}
                     disabled={analyzingFileId !== null}
@@ -96,13 +96,13 @@ export default function ContractAnalysis({ contractId, files }: ContractAnalysis
 
           {/* Analysis results */}
           {analyses.filter(a => a.status === 'completed').length === 0 && analyzingFileId === null && analyzableFiles.length > 0 && (
-            <p className="text-sm text-gray-400 text-center py-4">
+            <p className="text-sm text-text-muted text-center py-4">
               Upload a PDF or image and click "Analyze with AI" to extract contract details.
             </p>
           )}
 
           {analyzableFiles.length === 0 && (
-            <p className="text-sm text-gray-400 text-center py-4">
+            <p className="text-sm text-text-muted text-center py-4">
               Upload contract documents (PDF, images, or text files) to enable AI analysis.
             </p>
           )}
@@ -111,7 +111,7 @@ export default function ContractAnalysis({ contractId, files }: ContractAnalysis
             .filter(a => a.status === 'completed')
             .map(analysis => (
               <div key={analysis.id}>
-                <p className="text-xs text-gray-400 mb-2">
+                <p className="text-xs text-text-muted mb-2">
                   Analyzed: {(analysis as any).file_name || `File #${analysis.file_id}`}
                   {analysis.analyzed_at && ` on ${new Date(analysis.analyzed_at).toLocaleDateString()}`}
                 </p>

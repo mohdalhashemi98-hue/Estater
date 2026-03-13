@@ -15,17 +15,17 @@ export default function Portfolio() {
 
   if (isLoading) return (
     <div className="flex items-center justify-center py-20">
-      <div className="w-6 h-6 border-2 border-gray-200 border-t-accent-600 rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-surface-border border-t-accent-600 rounded-full animate-spin" />
     </div>
   );
-  if (!portfolio) return <p className="text-gray-500">No portfolio data yet.</p>;
+  if (!portfolio) return <p className="text-text-muted">No portfolio data yet.</p>;
 
   return (
     <div className="space-y-6 max-w-[1200px]">
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="text-xl font-semibold text-gray-900 tracking-[-0.02em]">Portfolio Overview</h2>
-          <p className="text-sm text-gray-500 mt-0.5">Track your property values and overall performance</p>
+          <h2 className="text-xl font-semibold text-text-primary tracking-[-0.02em]">Portfolio Overview</h2>
+          <p className="text-sm text-text-muted mt-0.5">Track your property values and overall performance</p>
         </div>
       </div>
 
@@ -37,7 +37,7 @@ export default function Portfolio() {
           <Link
             key={prop.id}
             to={`/properties/${prop.id}/valuation`}
-            className="bg-white rounded-xl border border-gray-200 p-5 hover:shadow-md hover:border-gray-300 transition-all group animate-fade-in"
+            className="bg-white rounded-xl border border-surface-border p-5 hover:shadow-md hover:border-surface-border transition-all group animate-fade-in"
             style={{ animationDelay: `${Math.min(i * 50, 300)}ms` }}
           >
             <div className="flex items-start justify-between">
@@ -46,29 +46,29 @@ export default function Portfolio() {
                   <Building2 className="w-4 h-4 text-accent-600" />
                 </div>
                 <div>
-                  <h3 className="font-medium text-gray-900">{prop.name}</h3>
+                  <h3 className="font-medium text-text-primary">{prop.name}</h3>
                   {prop.last_updated && (
-                    <p className="text-xs text-gray-400">Updated {prop.last_updated}</p>
+                    <p className="text-xs text-text-muted">Updated {prop.last_updated}</p>
                   )}
                 </div>
               </div>
-              <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-accent-600 transition-colors" />
+              <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-accent-600 transition-colors" />
             </div>
 
             <div className="mt-4 space-y-3">
               <div>
-                <p className="text-2xl font-semibold text-gray-900 tabular-nums">
+                <p className="text-2xl font-semibold text-text-primary tabular-nums">
                   {formatCurrency(prop.current_value)}
                 </p>
               </div>
 
               <div className="flex items-center justify-between text-sm">
-                <span className="text-gray-500">Purchase: {formatCurrency(prop.purchase_price)}</span>
+                <span className="text-text-muted">Purchase: {formatCurrency(prop.purchase_price)}</span>
                 <GainLossIndicator value={prop.gain_loss} percent={prop.gain_loss_percent} size="sm" />
               </div>
 
               {/* Mini progress bar */}
-              <div className="h-1 bg-gray-100 rounded-full overflow-hidden">
+              <div className="h-1 bg-surface-overlay rounded-full overflow-hidden">
                 <div
                   className={`h-full rounded-full transition-all ${prop.gain_loss >= 0 ? 'bg-emerald-500' : 'bg-red-500'}`}
                   style={{ width: `${Math.min(Math.abs(prop.gain_loss_percent), 100)}%` }}
@@ -80,10 +80,10 @@ export default function Portfolio() {
       </div>
 
       {portfolio.properties.length === 0 && (
-        <div className="text-center py-12 bg-white rounded-xl border border-gray-200">
-          <TrendingUp className="w-10 h-10 text-gray-300 mx-auto mb-3" />
-          <p className="text-gray-500">No property valuations yet.</p>
-          <p className="text-sm text-gray-400 mt-1">Add purchase prices and valuations to your properties to see portfolio performance.</p>
+        <div className="text-center py-12 bg-white rounded-xl border border-surface-border">
+          <TrendingUp className="w-10 h-10 text-text-muted mx-auto mb-3" />
+          <p className="text-text-muted">No property valuations yet.</p>
+          <p className="text-sm text-text-muted mt-1">Add purchase prices and valuations to your properties to see portfolio performance.</p>
         </div>
       )}
     </div>

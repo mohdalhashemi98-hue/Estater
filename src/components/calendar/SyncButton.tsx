@@ -28,7 +28,7 @@ export default function SyncButton({ contractId }: SyncButtonProps) {
     <button
       onClick={() => syncMutation.mutate()}
       disabled={syncMutation.isPending}
-      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-gray-200 text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+      className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-xs font-medium border border-surface-border text-text-secondary hover:bg-surface transition-colors disabled:opacity-50"
       title="Sync deadlines to Google Calendar"
     >
       {syncMutation.isPending ? (

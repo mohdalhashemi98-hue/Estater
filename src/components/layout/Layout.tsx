@@ -4,13 +4,15 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, Building2, Users, FileText, CreditCard, Shield,
   Menu, X, ChevronDown, TrendingUp, Wallet, Search, BarChart3,
-  Settings, Receipt, History, FileEdit, Bell, FileBarChart
+  Settings, Receipt, History, FileEdit, Bell, FileBarChart, LogOut
 } from 'lucide-react';
+import { cn } from '../../lib/utils';
+import { Sidebar, SidebarBody, SidebarLink } from '../ui/sidebar';
+import { motion } from 'framer-motion';
 import CalendarStatus from '../calendar/CalendarStatus';
 import CommandPalette from '../ui/CommandPalette';
 import NotificationDropdown from '../ui/NotificationDropdown';
 import MobileNav from './MobileNav';
-import { LogOut } from 'lucide-react';
 
 const mainNavItems = [
   { path: '/dashboard', label: 'Home', icon: LayoutDashboard },
@@ -33,15 +35,137 @@ const workflowItems = [
   { path: '/settings/calendar', label: 'Settings', icon: Settings },
 ];
 
-const allNavItems = [...mainNavItems, ...workflowItems];
-
-export default function Layout({ children }: { children: ReactNode }) {
+// ---- Sidebar Content (used inside the animated sidebar) ----
+function SidebarContent() {
   const location = useLocation();
-  const navigate = useNavigate();
   const { user, logout } = useAuth();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const isActive = (path: string) =>
+    location.pathname === path || (path !== '/dashboard' && location.pathname.startsWith(path));
+
+  const userInitials = user ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '??';
+
+  return (
+    <>
+      {/* Top: Logo + nav */}
+      <div className="flex flex-col flex-1 overflow-y-auto overflow-x-hidden">
+        {/* Logo */}
+        <SidebarLogo />
+
+        {/* Main nav */}
+        <div className="mt-6 flex flex-col gap-0.5">
+          {mainNavItems.map((item) => (
+            <SidebarLink
+              key={item.path}
+              active={isActive(item.path)}
+              link={{
+                label: item.label,
+                href: item.path,
+                icon: (
+                  <item.icon className={cn(
+                    'h-4 w-4 flex-shrink-0 transition-colors duration-150',
+                    isActive(item.path) ? 'text-accent-500' : 'text-text-muted'
+                  )} />
+                ),
+              }}
+            />
+          ))}
+        </div>
+
+        {/* Workflows section */}
+        <div className="mt-6">
+          <p className="px-2 mb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+            Workflows
+          </p>
+          <div className="flex flex-col gap-0.5">
+            {workflowItems.map((item) => (
+              <SidebarLink
+                key={item.path}
+                active={isActive(item.path)}
+                link={{
+                  label: item.label,
+                  href: item.path,
+                  icon: (
+                    <item.icon className={cn(
+                      'h-4 w-4 flex-shrink-0 transition-colors duration-150',
+                      isActive(item.path) ? 'text-accent-500' : 'text-text-muted'
+                    )} />
+                  ),
+                }}
+              />
+            ))}
+          </div>
+        </div>
+      </div>
+
+      {/* Bottom: user info + logout */}
+      <div className="border-t border-surface-border pt-3 flex flex-col gap-1">
+        <SidebarLink
+          link={{
+            label: user?.name || 'User',
+            href: '/settings/calendar',
+            icon: (
+              <div className="w-6 h-6 rounded-full bg-accent-500 flex items-center justify-center flex-shrink-0">
+                <span className="text-[9px] font-semibold text-white">{userInitials}</span>
+              </div>
+            ),
+          }}
+        />
+        <SidebarLink
+          link={{
+            label: 'Sign out',
+            href: '#',
+            icon: <LogOut className="h-4 w-4 flex-shrink-0 text-text-muted" />,
+          }}
+          onClick={(e) => {
+            e?.preventDefault?.();
+            logout();
+            navigate('/');
+          }}
+        />
+      </div>
+    </>
+  );
+}
+
+// ---- Logo components ----
+const SidebarLogo = () => (
+  <Link
+    to="/dashboard"
+    className="font-normal flex space-x-2.5 items-center text-sm py-1 relative z-20"
+  >
+    <div className="h-7 w-7 rounded-lg gradient-accent flex items-center justify-center shadow-sm flex-shrink-0">
+      <Building2 className="w-3.5 h-3.5 text-white" />
+    </div>
+    <motion.span
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      className="font-semibold text-text-primary tracking-tight whitespace-pre"
+    >
+      Estater
+    </motion.span>
+  </Link>
+);
+
+const SidebarLogoIcon = () => (
+  <Link
+    to="/dashboard"
+    className="font-normal flex space-x-2.5 items-center text-sm py-1 relative z-20"
+  >
+    <div className="h-7 w-7 rounded-lg gradient-accent flex items-center justify-center shadow-sm flex-shrink-0">
+      <Building2 className="w-3.5 h-3.5 text-white" />
+    </div>
+  </Link>
+);
+
+// ---- Main Layout ----
+export default function Layout({ children }: { children: ReactNode }) {
+  const [sidebarOpen, setSidebarOpen] = useState(true);
   const [searchOpen, setSearchOpen] = useState(false);
   const [userMenuOpen, setUserMenuOpen] = useState(false);
+  const { user, logout } = useAuth();
+  const navigate = useNavigate();
 
   const userInitials = user ? user.name.split(' ').map(n => n[0]).join('').toUpperCase().slice(0, 2) : '??';
 
@@ -57,111 +181,27 @@ export default function Layout({ children }: { children: ReactNode }) {
     return () => window.removeEventListener('keydown', handler);
   }, []);
 
-  const isActive = (path: string) =>
-    location.pathname === path || (path !== '/dashboard' && location.pathname.startsWith(path));
-
   return (
-    <div className="min-h-screen flex bg-surface">
-      {/* Mobile overlay */}
-      {sidebarOpen && (
-        <div className="fixed inset-0 bg-black/20 z-40 lg:hidden modal-backdrop" onClick={() => setSidebarOpen(false)} />
-      )}
+    <div className="min-h-screen flex flex-col md:flex-row bg-surface w-full">
+      {/* Animated Sidebar */}
+      <Sidebar open={sidebarOpen} setOpen={setSidebarOpen}>
+        <SidebarBody className="justify-between gap-6 bg-sidebar border-r border-surface-border">
+          <SidebarContent />
+        </SidebarBody>
+      </Sidebar>
 
-      {/* Sidebar */}
-      <aside className={`
-        fixed inset-y-0 left-0 z-50 w-[240px] bg-white transform transition-transform duration-200 ease-out-expo
-        lg:translate-x-0 lg:static lg:z-auto border-r border-gray-200
-        ${sidebarOpen ? 'translate-x-0' : '-translate-x-full'}
-      `}>
-        {/* Company header */}
-        <div className="flex items-center justify-between h-14 px-4 border-b border-gray-100">
-          <Link to="/dashboard" className="flex items-center gap-2.5 group">
-            <div className="w-7 h-7 rounded-lg gradient-accent flex items-center justify-center shadow-sm">
-              <Building2 className="w-3.5 h-3.5 text-white" />
-            </div>
-            <span className="text-[15px] font-semibold text-gray-900 tracking-[-0.01em]">Estater</span>
-            <ChevronDown className="w-3.5 h-3.5 text-gray-400 ml-auto" />
-          </Link>
-          <button onClick={() => setSidebarOpen(false)} className="lg:hidden text-gray-400 hover:text-gray-600 transition-colors">
-            <X className="w-5 h-5" />
-          </button>
-        </div>
-
-        {/* Main navigation */}
-        <nav className="mt-2 px-2">
-          <div className="space-y-0.5">
-            {mainNavItems.map((item) => (
-              <Link
-                key={item.path}
-                to={item.path}
-                onClick={() => setSidebarOpen(false)}
-                className={`
-                  nav-item flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] font-medium transition-colors duration-150
-                  ${isActive(item.path)
-                    ? 'active bg-gray-100 text-gray-900'
-                    : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}
-                `}
-              >
-                <item.icon className={`w-4 h-4 transition-colors duration-150 ${isActive(item.path) ? 'text-accent-600' : 'text-gray-400'}`} />
-                {item.label}
-              </Link>
-            ))}
-          </div>
-
-          {/* Workflows section */}
-          <div className="mt-6">
-            <p className="px-2.5 mb-1.5 text-[11px] font-medium text-gray-400 uppercase tracking-wider">Workflows</p>
-            <div className="space-y-0.5">
-              {workflowItems.map((item) => (
-                <Link
-                  key={item.path}
-                  to={item.path}
-                  onClick={() => setSidebarOpen(false)}
-                  className={`
-                    nav-item flex items-center gap-2.5 px-2.5 py-[7px] rounded-lg text-[13px] font-medium transition-colors duration-150
-                    ${isActive(item.path)
-                      ? 'active bg-gray-100 text-gray-900'
-                      : 'text-gray-600 hover:text-gray-900 hover:bg-gray-50'}
-                  `}
-                >
-                  <item.icon className={`w-4 h-4 transition-colors duration-150 ${isActive(item.path) ? 'text-accent-600' : 'text-gray-400'}`} />
-                  {item.label}
-                </Link>
-              ))}
-            </div>
-          </div>
-        </nav>
-
-        {/* Sidebar footer */}
-        <div className="absolute bottom-0 left-0 right-0 p-3 border-t border-gray-100">
-          <div className="flex items-center gap-2.5 px-2 py-1.5">
-            <div className="w-7 h-7 rounded-full bg-accent-100 flex items-center justify-center">
-              <span className="text-[10px] font-semibold text-accent-700">ES</span>
-            </div>
-            <div className="text-xs leading-tight">
-              <p className="font-medium text-gray-900">Estater</p>
-              <p className="text-gray-400">v2.0</p>
-            </div>
-          </div>
-        </div>
-      </aside>
-
-      {/* Main content */}
+      {/* Main content area */}
       <div className="flex-1 flex flex-col min-w-0">
         {/* Top header */}
-        <header className="h-14 bg-white border-b border-gray-200 flex items-center px-4 lg:px-6 sticky top-0 z-30">
-          <button onClick={() => setSidebarOpen(true)} className="lg:hidden mr-3 text-gray-400 hover:text-gray-600 transition-colors">
-            <Menu className="w-5 h-5" />
-          </button>
-
+        <header className="h-14 bg-white border-b border-surface-border flex items-center px-4 lg:px-6 sticky top-0 z-30">
           {/* Centered search bar — opens command palette */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="hidden md:flex items-center gap-2 mx-auto px-3 py-1.5 bg-gray-50 border border-gray-200 rounded-lg text-sm text-gray-400 w-[320px] cursor-pointer hover:border-gray-300 transition-colors"
+            className="hidden md:flex items-center gap-2 mx-auto px-3 py-1.5 bg-surface border border-surface-border rounded-lg text-sm text-text-muted w-[320px] cursor-pointer hover:border-accent-200 transition-colors"
           >
             <Search className="w-3.5 h-3.5" />
             <span className="flex-1 text-left">Search for anything</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] text-gray-400 bg-white border border-gray-200 rounded px-1.5 py-0.5 font-mono">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] text-text-muted bg-white border border-surface-border rounded px-1.5 py-0.5 font-mono">
               <span className="text-xs">&#8984;</span>K
             </kbd>
           </button>
@@ -181,17 +221,17 @@ export default function Layout({ children }: { children: ReactNode }) {
               {userMenuOpen && (
                 <>
                   <div className="fixed inset-0 z-40" onClick={() => setUserMenuOpen(false)} />
-                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-gray-200 shadow-xl z-50 py-1 modal-content origin-top-right">
-                    <div className="px-3 py-2 border-b border-gray-100">
-                      <p className="text-sm font-medium text-gray-900">{user?.name}</p>
-                      <p className="text-xs text-gray-400">{user?.email}</p>
+                  <div className="absolute right-0 top-full mt-2 w-48 bg-white rounded-xl border border-surface-border shadow-xl z-50 py-1 modal-content origin-top-right">
+                    <div className="px-3 py-2 border-b border-surface-border">
+                      <p className="text-sm font-medium text-text-primary">{user?.name}</p>
+                      <p className="text-xs text-text-muted">{user?.email}</p>
                     </div>
-                    <Link to="/settings/calendar" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition-colors">
+                    <Link to="/settings/calendar" onClick={() => setUserMenuOpen(false)} className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-surface-hover transition-colors">
                       <Settings className="w-3.5 h-3.5" /> Settings
                     </Link>
                     <button
                       onClick={() => { setUserMenuOpen(false); logout(); navigate('/'); }}
-                      className="flex items-center gap-2 px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 transition-colors w-full text-left"
+                      className="flex items-center gap-2 px-3 py-2 text-sm text-text-secondary hover:bg-surface-hover transition-colors w-full text-left"
                     >
                       <LogOut className="w-3.5 h-3.5" /> Sign out
                     </button>

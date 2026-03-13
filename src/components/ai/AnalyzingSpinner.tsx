@@ -9,8 +9,8 @@ export default function AnalyzingSpinner() {
         </div>
         <div className="absolute -top-1 -right-1 w-3.5 h-3.5 bg-accent-500 rounded-full animate-ping" />
       </div>
-      <p className="mt-4 text-sm font-medium text-gray-900">Analyzing contract with AI...</p>
-      <p className="text-xs text-gray-400 mt-1">This may take 15-30 seconds</p>
+      <p className="mt-4 text-sm font-medium text-text-primary">Analyzing contract with AI...</p>
+      <p className="text-xs text-text-muted mt-1">This may take 15-30 seconds</p>
     </div>
   );
 }

@@ -123,15 +123,15 @@ export default function CalendarSettings() {
 
   if (isLoading) return (
     <div className="flex items-center justify-center py-20">
-      <div className="w-6 h-6 border-2 border-gray-200 border-t-accent-600 rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-surface-border border-t-accent-600 rounded-full animate-spin" />
     </div>
   );
 
   return (
     <div className="space-y-8 max-w-2xl">
       <div>
-        <h2 className="text-xl font-bold text-gray-900">Settings</h2>
-        <p className="text-sm text-gray-500 mt-1">Manage integrations and data sources</p>
+        <h2 className="text-xl font-bold text-text-primary">Settings</h2>
+        <p className="text-sm text-text-muted mt-1">Manage integrations and data sources</p>
       </div>
 
       {justConnected && (
@@ -143,29 +143,29 @@ export default function CalendarSettings() {
 
       {/* ===== GOOGLE CALENDAR SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Google Calendar</h3>
+        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Google Calendar</h3>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
-              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${status?.connected ? 'bg-emerald-50' : 'bg-gray-50'}`}>
-                <Calendar className={`w-6 h-6 ${status?.connected ? 'text-emerald-600' : 'text-gray-500'}`} />
+              <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${status?.connected ? 'bg-emerald-50' : 'bg-surface'}`}>
+                <Calendar className={`w-6 h-6 ${status?.connected ? 'text-emerald-600' : 'text-text-muted'}`} />
               </div>
               <div>
-                <h3 className="font-semibold text-gray-900">Google Calendar</h3>
+                <h3 className="font-semibold text-text-primary">Google Calendar</h3>
                 <div className="flex items-center gap-1.5 mt-0.5">
                   {status?.connected ? (
                     <>
                       <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                       <span className="text-sm text-emerald-700">Connected</span>
                       {status.events_synced !== undefined && (
-                        <span className="text-sm text-gray-500">&middot; {status.events_synced} events synced</span>
+                        <span className="text-sm text-text-muted">&middot; {status.events_synced} events synced</span>
                       )}
                     </>
                   ) : (
                     <>
-                      <XCircle className="w-3.5 h-3.5 text-gray-400" />
-                      <span className="text-sm text-gray-500">Not connected</span>
+                      <XCircle className="w-3.5 h-3.5 text-text-muted" />
+                      <span className="text-sm text-text-muted">Not connected</span>
                     </>
                   )}
                 </div>
@@ -195,11 +195,11 @@ export default function CalendarSettings() {
 
         {/* Sync Actions */}
         {status?.connected && (
-          <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm mt-3 space-y-4">
-            <div className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+          <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm mt-3 space-y-4">
+            <div className="flex items-center justify-between p-4 bg-surface rounded-lg">
               <div>
-                <p className="font-medium text-gray-900">Sync All Active Contracts</p>
-                <p className="text-sm text-gray-500">Creates events for contract end dates, renewal deadlines, and AI milestones.</p>
+                <p className="font-medium text-text-primary">Sync All Active Contracts</p>
+                <p className="text-sm text-text-muted">Creates events for contract end dates, renewal deadlines, and AI milestones.</p>
               </div>
               <button
                 onClick={() => syncAllMutation.mutate()}
@@ -221,14 +221,14 @@ export default function CalendarSettings() {
 
         {/* Setup Instructions */}
         {!status?.connected && (
-          <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 mt-3">
-            <h4 className="font-semibold text-gray-900 mb-3">Setup Instructions</h4>
-            <ol className="space-y-2 text-sm text-gray-500 list-decimal ml-4">
+          <div className="bg-surface rounded-xl border border-surface-border p-6 mt-3">
+            <h4 className="font-semibold text-text-primary mb-3">Setup Instructions</h4>
+            <ol className="space-y-2 text-sm text-text-muted list-decimal ml-4">
               <li>Create a project in Google Cloud Console</li>
               <li>Enable the Google Calendar API</li>
               <li>Create OAuth 2.0 credentials (Web application type)</li>
-              <li>Add <code className="bg-white px-1 rounded border border-gray-200 text-xs">http://localhost:3000/api/calendar/callback</code> as redirect URI</li>
-              <li>Set <code className="bg-white px-1 rounded border border-gray-200 text-xs">GOOGLE_CLIENT_ID</code> and <code className="bg-white px-1 rounded border border-gray-200 text-xs">GOOGLE_CLIENT_SECRET</code> in .env</li>
+              <li>Add <code className="bg-white px-1 rounded border border-surface-border text-xs">http://localhost:3000/api/calendar/callback</code> as redirect URI</li>
+              <li>Set <code className="bg-white px-1 rounded border border-surface-border text-xs">GOOGLE_CLIENT_ID</code> and <code className="bg-white px-1 rounded border border-surface-border text-xs">GOOGLE_CLIENT_SECRET</code> in .env</li>
               <li>Click "Connect" above</li>
             </ol>
           </div>
@@ -237,21 +237,21 @@ export default function CalendarSettings() {
 
       {/* ===== DLD MARKET DATA SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Market Data</h3>
+        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Market Data</h3>
 
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-5">
-            <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${dldConfig?.api_key ? 'bg-accent-50' : 'bg-gray-50'}`}>
-              <BarChart3 className={`w-6 h-6 ${dldConfig?.api_key ? 'text-accent-600' : 'text-gray-500'}`} />
+            <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${dldConfig?.api_key ? 'bg-accent-50' : 'bg-surface'}`}>
+              <BarChart3 className={`w-6 h-6 ${dldConfig?.api_key ? 'text-accent-600' : 'text-text-muted'}`} />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Dubai Land Department Data</h3>
+              <h3 className="font-semibold text-text-primary">Dubai Land Department Data</h3>
               <div className="flex items-center gap-1.5 mt-0.5">
                 {dldConfig?.api_key ? (
                   <>
                     <CheckCircle2 className="w-3.5 h-3.5 text-emerald-600" />
                     <span className="text-sm text-emerald-700">API Key configured</span>
-                    <span className="text-sm text-gray-500">&middot; Key: {dldConfig.api_key}</span>
+                    <span className="text-sm text-text-muted">&middot; Key: {dldConfig.api_key}</span>
                   </>
                 ) : (
                   <>
@@ -266,45 +266,45 @@ export default function CalendarSettings() {
           {/* Data source toggle */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Data Source</label>
+              <label className="block text-sm font-medium text-text-muted mb-1">Data Source</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => { setDldDataSource('sample'); saveDldMutation.mutate({ data_source: 'sample' }); }}
                   className={`flex-1 p-3 rounded-lg border text-sm font-medium text-left transition-colors ${
                     (dldConfig?.data_source || 'sample') === 'sample'
                       ? 'border-accent-300 bg-accent-50 text-accent-700'
-                      : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                      : 'border-surface-border text-text-secondary hover:bg-surface'
                   }`}
                 >
                   <Database className="w-4 h-4 mb-1" />
                   <p>Sample Data</p>
-                  <p className="text-xs font-normal text-gray-400 mt-0.5">~500 seeded transactions for demo</p>
+                  <p className="text-xs font-normal text-text-muted mt-0.5">~500 seeded transactions for demo</p>
                 </button>
                 <button
                   onClick={() => { setDldDataSource('live'); saveDldMutation.mutate({ data_source: 'live' }); }}
                   className={`flex-1 p-3 rounded-lg border text-sm font-medium text-left transition-colors ${
                     dldConfig?.data_source === 'live'
                       ? 'border-accent-300 bg-accent-50 text-accent-700'
-                      : 'border-gray-200 text-gray-600 hover:bg-gray-50'
+                      : 'border-surface-border text-text-secondary hover:bg-surface'
                   }`}
                 >
                   <ExternalLink className="w-4 h-4 mb-1" />
                   <p>Dubai Pulse API</p>
-                  <p className="text-xs font-normal text-gray-400 mt-0.5">Live DLD transaction data</p>
+                  <p className="text-xs font-normal text-text-muted mt-0.5">Live DLD transaction data</p>
                 </button>
               </div>
             </div>
 
             {/* API Key input */}
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">
+              <label className="block text-sm font-medium text-text-muted mb-1">
                 <Key className="w-3.5 h-3.5 inline mr-1" />
                 Dubai Pulse API Key
               </label>
               <div className="flex gap-2">
                 <input
                   type="password"
-                  className="flex-1 border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
+                  className="flex-1 border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
                   placeholder={dldConfig?.api_key ? dldConfig.api_key : 'Enter your Dubai Pulse API key'}
                   value={dldApiKey}
                   onChange={e => setDldApiKey(e.target.value)}
@@ -324,10 +324,10 @@ export default function CalendarSettings() {
 
             {/* API URL */}
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">API Endpoint</label>
+              <label className="block text-sm font-medium text-text-muted mb-1">API Endpoint</label>
               <input
                 type="url"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
+                className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
                 value={dldApiUrl}
                 onChange={e => setDldApiUrl(e.target.value)}
                 onBlur={() => saveDldMutation.mutate({ api_url: dldApiUrl })}
@@ -339,7 +339,7 @@ export default function CalendarSettings() {
               <button
                 onClick={() => testDldMutation.mutate()}
                 disabled={testDldMutation.isPending}
-                className="flex items-center gap-1.5 px-4 py-2 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors disabled:opacity-50"
+                className="flex items-center gap-1.5 px-4 py-2 border border-surface-border rounded-lg text-sm font-medium text-text-secondary hover:bg-surface transition-colors disabled:opacity-50"
               >
                 {testDldMutation.isPending ? <Loader2 className="w-3.5 h-3.5 animate-spin" /> : <RefreshCw className="w-3.5 h-3.5" />}
                 Test Connection
@@ -368,49 +368,49 @@ export default function CalendarSettings() {
         </div>
 
         {/* DLD info box */}
-        <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 mt-3">
-          <h4 className="font-semibold text-gray-900 mb-3">About DLD Market Data</h4>
-          <div className="space-y-2 text-sm text-gray-500">
+        <div className="bg-surface rounded-xl border border-surface-border p-6 mt-3">
+          <h4 className="font-semibold text-text-primary mb-3">About DLD Market Data</h4>
+          <div className="space-y-2 text-sm text-text-muted">
             <p>Dubai Land Department data powers the Market Data page with real transaction records for properties across the UAE.</p>
-            <p><strong className="text-gray-700">Sample mode:</strong> Uses ~500 seeded transactions across 10 major Dubai areas with realistic pricing.</p>
-            <p><strong className="text-gray-700">Live mode:</strong> Fetches real-time data from the Dubai Pulse API (requires API key from <a href="https://www.dubaipulse.gov.ae" target="_blank" rel="noopener" className="text-accent-600 hover:underline">dubaipulse.gov.ae</a>).</p>
+            <p><strong className="text-text-secondary">Sample mode:</strong> Uses ~500 seeded transactions across 10 major Dubai areas with realistic pricing.</p>
+            <p><strong className="text-text-secondary">Live mode:</strong> Fetches real-time data from the Dubai Pulse API (requires API key from <a href="https://www.dubaipulse.gov.ae" target="_blank" rel="noopener" className="text-accent-600 hover:underline">dubaipulse.gov.ae</a>).</p>
           </div>
         </div>
       </div>
 
       {/* ===== WEBHOOKS SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-gray-400 uppercase tracking-wider mb-3">Webhooks (n8n Integration)</h3>
+        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Webhooks (n8n Integration)</h3>
 
         {/* Add Webhook Form */}
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-5">
             <div className="w-12 h-12 rounded-lg flex items-center justify-center bg-purple-50">
               <WebhookIcon className="w-6 h-6 text-purple-600" />
             </div>
             <div>
-              <h3 className="font-semibold text-gray-900">Register Webhook</h3>
-              <p className="text-sm text-gray-500">Send event notifications to n8n or any HTTP endpoint</p>
+              <h3 className="font-semibold text-text-primary">Register Webhook</h3>
+              <p className="text-sm text-text-muted">Send event notifications to n8n or any HTTP endpoint</p>
             </div>
           </div>
 
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Name</label>
+                <label className="block text-sm font-medium text-text-muted mb-1">Name</label>
                 <input
                   type="text"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
+                  className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
                   placeholder="e.g. n8n Payment Alerts"
                   value={whName}
                   onChange={e => setWhName(e.target.value)}
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Secret (optional)</label>
+                <label className="block text-sm font-medium text-text-muted mb-1">Secret (optional)</label>
                 <input
                   type="text"
-                  className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
+                  className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
                   placeholder="HMAC signing secret"
                   value={whSecret}
                   onChange={e => setWhSecret(e.target.value)}
@@ -419,10 +419,10 @@ export default function CalendarSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Webhook URL</label>
+              <label className="block text-sm font-medium text-text-muted mb-1">Webhook URL</label>
               <input
                 type="url"
-                className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
+                className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
                 placeholder="https://your-n8n-instance.com/webhook/..."
                 value={whUrl}
                 onChange={e => setWhUrl(e.target.value)}
@@ -430,15 +430,15 @@ export default function CalendarSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-2">Events</label>
+              <label className="block text-sm font-medium text-text-muted mb-2">Events</label>
               <label className="flex items-center gap-2 mb-2 cursor-pointer">
                 <input
                   type="checkbox"
                   checked={whAllEvents}
                   onChange={e => { setWhAllEvents(e.target.checked); if (e.target.checked) setWhEvents([]); }}
-                  className="rounded border-gray-300 text-accent-600 focus:ring-accent-500"
+                  className="rounded border-surface-border text-accent-600 focus:ring-accent-500"
                 />
-                <span className="text-sm text-gray-700">All events</span>
+                <span className="text-sm text-text-secondary">All events</span>
               </label>
               {!whAllEvents && (
                 <div className="grid grid-cols-2 gap-1.5">
@@ -451,9 +451,9 @@ export default function CalendarSettings() {
                           if (e.target.checked) setWhEvents([...whEvents, evt]);
                           else setWhEvents(whEvents.filter(x => x !== evt));
                         }}
-                        className="rounded border-gray-300 text-accent-600 focus:ring-accent-500"
+                        className="rounded border-surface-border text-accent-600 focus:ring-accent-500"
                       />
-                      <span className="text-sm text-gray-600 font-mono">{evt}</span>
+                      <span className="text-sm text-text-secondary font-mono">{evt}</span>
                     </label>
                   ))}
                 </div>
@@ -486,7 +486,7 @@ export default function CalendarSettings() {
         {webhooks.length > 0 && (
           <div className="space-y-3 mt-3">
             {webhooks.map(wh => (
-              <div key={wh.id} className="bg-white rounded-xl border border-gray-200 shadow-sm">
+              <div key={wh.id} className="bg-white rounded-xl border border-surface-border shadow-sm">
                 <div className="p-4">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-3 min-w-0">
@@ -498,13 +498,13 @@ export default function CalendarSettings() {
                         {wh.active ? (
                           <ToggleRight className="w-8 h-5 text-emerald-600" />
                         ) : (
-                          <ToggleLeft className="w-8 h-5 text-gray-400" />
+                          <ToggleLeft className="w-8 h-5 text-text-muted" />
                         )}
                       </button>
                       <div className="min-w-0">
-                        <p className={`font-medium truncate ${wh.active ? 'text-gray-900' : 'text-gray-400'}`}>{wh.name}</p>
-                        <p className="text-xs text-gray-400 font-mono truncate">{wh.url}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">
+                        <p className={`font-medium truncate ${wh.active ? 'text-text-primary' : 'text-text-muted'}`}>{wh.name}</p>
+                        <p className="text-xs text-text-muted font-mono truncate">{wh.url}</p>
+                        <p className="text-xs text-text-muted mt-0.5">
                           Events: {wh.events === '*' ? 'All' : wh.events.split(',').length + ' selected'}
                         </p>
                       </div>
@@ -513,14 +513,14 @@ export default function CalendarSettings() {
                       <button
                         onClick={() => testWebhookMutation.mutate(wh.id)}
                         disabled={testWebhookMutation.isPending}
-                        className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium border border-surface-border rounded-lg text-text-secondary hover:bg-surface transition-colors"
                       >
                         {testWebhookMutation.isPending ? <Loader2 className="w-3 h-3 animate-spin" /> : <Send className="w-3 h-3" />}
                         Test
                       </button>
                       <button
                         onClick={() => setExpandedLogs(expandedLogs === wh.id ? null : wh.id)}
-                        className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium border border-gray-200 rounded-lg text-gray-600 hover:bg-gray-50 transition-colors"
+                        className="flex items-center gap-1 px-2.5 py-1.5 text-xs font-medium border border-surface-border rounded-lg text-text-secondary hover:bg-surface transition-colors"
                       >
                         {expandedLogs === wh.id ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                         Logs
@@ -547,26 +547,26 @@ export default function CalendarSettings() {
 
                 {/* Expanded Logs */}
                 {expandedLogs === wh.id && (
-                  <div className="border-t border-gray-100 px-4 py-3 bg-gray-50/50 max-h-64 overflow-y-auto">
+                  <div className="border-t border-surface-border px-4 py-3 bg-surface/50 max-h-64 overflow-y-auto">
                     {webhookLogQueries.isLoading ? (
                       <div className="flex items-center justify-center py-4">
-                        <Loader2 className="w-4 h-4 animate-spin text-gray-400" />
+                        <Loader2 className="w-4 h-4 animate-spin text-text-muted" />
                       </div>
                     ) : (webhookLogQueries.data?.length || 0) === 0 ? (
-                      <p className="text-xs text-gray-400 text-center py-4">No delivery logs yet</p>
+                      <p className="text-xs text-text-muted text-center py-4">No delivery logs yet</p>
                     ) : (
                       <table className="w-full text-xs">
                         <thead>
-                          <tr className="text-left text-gray-400">
+                          <tr className="text-left text-text-muted">
                             <th className="pb-1.5 font-medium">Event</th>
                             <th className="pb-1.5 font-medium">Status</th>
                             <th className="pb-1.5 font-medium">Time</th>
                           </tr>
                         </thead>
-                        <tbody className="divide-y divide-gray-100">
+                        <tbody className="divide-y divide-surface-border">
                           {webhookLogQueries.data?.map(log => (
                             <tr key={log.id}>
-                              <td className="py-1.5 font-mono text-gray-600">{log.event}</td>
+                              <td className="py-1.5 font-mono text-text-secondary">{log.event}</td>
                               <td className="py-1.5">
                                 <span className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded text-xs font-medium ${
                                   log.success ? 'bg-emerald-50 text-emerald-700' : 'bg-red-50 text-red-700'
@@ -575,7 +575,7 @@ export default function CalendarSettings() {
                                   {log.status_code || 'ERR'}
                                 </span>
                               </td>
-                              <td className="py-1.5 text-gray-400">{new Date(log.created_at).toLocaleString()}</td>
+                              <td className="py-1.5 text-text-muted">{new Date(log.created_at).toLocaleString()}</td>
                             </tr>
                           ))}
                         </tbody>
@@ -589,21 +589,21 @@ export default function CalendarSettings() {
         )}
 
         {/* n8n Quick Start Guide */}
-        <div className="bg-gray-50 rounded-xl border border-gray-200 p-6 mt-3">
+        <div className="bg-surface rounded-xl border border-surface-border p-6 mt-3">
           <button
             onClick={() => setShowN8nGuide(!showN8nGuide)}
             className="flex items-center justify-between w-full text-left"
           >
-            <h4 className="font-semibold text-gray-900">n8n Quick Start Guide</h4>
-            {showN8nGuide ? <ChevronDown className="w-4 h-4 text-gray-400" /> : <ChevronRight className="w-4 h-4 text-gray-400" />}
+            <h4 className="font-semibold text-text-primary">n8n Quick Start Guide</h4>
+            {showN8nGuide ? <ChevronDown className="w-4 h-4 text-text-muted" /> : <ChevronRight className="w-4 h-4 text-text-muted" />}
           </button>
 
           {showN8nGuide && (
-            <div className="mt-4 space-y-4 text-sm text-gray-600">
+            <div className="mt-4 space-y-4 text-sm text-text-secondary">
               <div>
-                <p className="font-medium text-gray-900 mb-2">1. Payload Format</p>
-                <p className="text-gray-500 mb-1.5">Every webhook POST contains:</p>
-                <pre className="bg-white border border-gray-200 rounded-lg p-3 text-xs font-mono overflow-x-auto">{`{
+                <p className="font-medium text-text-primary mb-2">1. Payload Format</p>
+                <p className="text-text-muted mb-1.5">Every webhook POST contains:</p>
+                <pre className="bg-white border border-surface-border rounded-lg p-3 text-xs font-mono overflow-x-auto">{`{
   "event": "payment.paid",
   "timestamp": "2024-01-15T10:30:00.000Z",
   "data": {
@@ -618,9 +618,9 @@ export default function CalendarSettings() {
               </div>
 
               <div>
-                <p className="font-medium text-gray-900 mb-2">2. HMAC Signature Verification</p>
-                <p className="text-gray-500 mb-1.5">If you set a secret, verify the <code className="bg-white px-1 rounded border border-gray-200 text-xs">X-Estater-Signature</code> header:</p>
-                <pre className="bg-white border border-gray-200 rounded-lg p-3 text-xs font-mono overflow-x-auto">{`// Node.js / n8n Function Node
+                <p className="font-medium text-text-primary mb-2">2. HMAC Signature Verification</p>
+                <p className="text-text-muted mb-1.5">If you set a secret, verify the <code className="bg-white px-1 rounded border border-surface-border text-xs">X-Estater-Signature</code> header:</p>
+                <pre className="bg-white border border-surface-border rounded-lg p-3 text-xs font-mono overflow-x-auto">{`// Node.js / n8n Function Node
 const crypto = require('crypto');
 const secret = 'your-webhook-secret';
 const signature = $input.first().headers['x-estater-signature'];
@@ -635,24 +635,24 @@ if (signature !== expected) {
               </div>
 
               <div>
-                <p className="font-medium text-gray-900 mb-2">3. Inbound API (n8n &rarr; Estater)</p>
-                <p className="text-gray-500 mb-1.5">Push data back to Estater using these endpoints. Set <code className="bg-white px-1 rounded border border-gray-200 text-xs">INBOUND_WEBHOOK_SECRET</code> in your .env file.</p>
+                <p className="font-medium text-text-primary mb-2">3. Inbound API (n8n &rarr; Estater)</p>
+                <p className="text-text-muted mb-1.5">Push data back to Estater using these endpoints. Set <code className="bg-white px-1 rounded border border-surface-border text-xs">INBOUND_WEBHOOK_SECRET</code> in your .env file.</p>
                 <div className="space-y-2">
-                  <div className="bg-white border border-gray-200 rounded-lg p-3">
+                  <div className="bg-white border border-surface-border rounded-lg p-3">
                     <p className="font-mono text-xs font-medium text-purple-700 mb-1">POST /api/webhooks/inbound/mark-paid</p>
-                    <p className="text-xs text-gray-500">Mark a payment as paid. Header: <code>X-Estater-Secret: your-secret</code></p>
-                    <pre className="text-xs font-mono mt-1 text-gray-600">{`{ "payment_id": 42, "payment_method": "bank_transfer", "reference": "TXN-123" }`}</pre>
+                    <p className="text-xs text-text-muted">Mark a payment as paid. Header: <code>X-Estater-Secret: your-secret</code></p>
+                    <pre className="text-xs font-mono mt-1 text-text-secondary">{`{ "payment_id": 42, "payment_method": "bank_transfer", "reference": "TXN-123" }`}</pre>
                   </div>
-                  <div className="bg-white border border-gray-200 rounded-lg p-3">
+                  <div className="bg-white border border-surface-border rounded-lg p-3">
                     <p className="font-mono text-xs font-medium text-purple-700 mb-1">POST /api/webhooks/inbound/add-note</p>
-                    <p className="text-xs text-gray-500">Append a note to a contract. Header: <code>X-Estater-Secret: your-secret</code></p>
-                    <pre className="text-xs font-mono mt-1 text-gray-600">{`{ "contract_id": 7, "note": "Tenant confirmed renewal via WhatsApp" }`}</pre>
+                    <p className="text-xs text-text-muted">Append a note to a contract. Header: <code>X-Estater-Secret: your-secret</code></p>
+                    <pre className="text-xs font-mono mt-1 text-text-secondary">{`{ "contract_id": 7, "note": "Tenant confirmed renewal via WhatsApp" }`}</pre>
                   </div>
                 </div>
               </div>
 
               <div>
-                <p className="font-medium text-gray-900 mb-2">4. Available Event Types</p>
+                <p className="font-medium text-text-primary mb-2">4. Available Event Types</p>
                 <div className="grid grid-cols-2 gap-1">
                   {ALL_EVENTS.map(evt => (
                     <div key={evt} className="flex items-center gap-1.5 text-xs">

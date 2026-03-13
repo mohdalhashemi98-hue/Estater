@@ -10,8 +10,8 @@ export default function VacancyCostCard() {
   });
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-2">
-      <h3 className="text-sm font-medium text-gray-900 mb-4">Vacancy Cost</h3>
+    <div className="bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-2">
+      <h3 className="text-sm font-medium text-text-primary mb-4">Vacancy Cost</h3>
       {data && data.vacant_units.length > 0 ? (
         <>
           <div className="flex items-center gap-3 mb-4">
@@ -20,14 +20,14 @@ export default function VacancyCostCard() {
             </div>
             <div>
               <p className="text-lg font-semibold text-red-600 stat-value">{formatCurrency(data.total_monthly_loss)}</p>
-              <p className="text-xs text-gray-400">Estimated monthly loss</p>
+              <p className="text-xs text-text-muted">Estimated monthly loss</p>
             </div>
           </div>
           <div className="space-y-1.5">
             {data.vacant_units.slice(0, 5).map(u => (
-              <div key={u.id} className="flex items-center justify-between text-xs py-1.5 border-b border-gray-50">
-                <span className="text-gray-600">{u.property_name} — {u.unit_number}</span>
-                <span className="text-gray-900 font-medium">{u.last_rent ? formatCurrency(u.last_rent) : 'N/A'}</span>
+              <div key={u.id} className="flex items-center justify-between text-xs py-1.5 border-b border-surface">
+                <span className="text-text-secondary">{u.property_name} — {u.unit_number}</span>
+                <span className="text-text-primary font-medium">{u.last_rent ? formatCurrency(u.last_rent) : 'N/A'}</span>
               </div>
             ))}
           </div>

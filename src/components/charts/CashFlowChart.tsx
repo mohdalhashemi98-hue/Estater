@@ -24,10 +24,10 @@ export default function CashFlowChart({ data, height = 350 }: CashFlowChartProps
   return (
     <ResponsiveContainer width="100%" height={height}>
       <BarChart data={chartData}>
-        <CartesianGrid strokeDasharray="3 3" stroke="#F3F4F6" />
+        <CartesianGrid strokeDasharray="3 3" stroke="#ede9de" />
         <XAxis
           dataKey="month"
-          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+          tick={{ fontSize: 11, fill: '#83827d' }}
           tickFormatter={m => {
             const [y, mo] = m.split('-');
             const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
@@ -37,7 +37,7 @@ export default function CashFlowChart({ data, height = 350 }: CashFlowChartProps
           tickLine={false}
         />
         <YAxis
-          tick={{ fontSize: 11, fill: '#9CA3AF' }}
+          tick={{ fontSize: 11, fill: '#83827d' }}
           tickFormatter={formatCurrencyAxis}
           axisLine={false}
           tickLine={false}
@@ -50,7 +50,7 @@ export default function CashFlowChart({ data, height = 350 }: CashFlowChartProps
           ]}
           contentStyle={{
             borderRadius: '8px',
-            border: '1px solid #E5E7EB',
+            border: '1px solid #dad9d4',
             backgroundColor: '#fff',
             fontSize: '12px',
             boxShadow: '0 4px 12px rgba(0,0,0,0.08)',

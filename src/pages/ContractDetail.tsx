@@ -120,13 +120,13 @@ export default function ContractDetail() {
       case 'image': return <FileImage className="w-5 h-5 text-accent-600" />;
       case 'excel': return <FileSpreadsheet className="w-5 h-5 text-success-600" />;
       case 'word': return <FileText className="w-5 h-5 text-accent-600" />;
-      default: return <File className="w-5 h-5 text-gray-400" />;
+      default: return <File className="w-5 h-5 text-text-muted" />;
     }
   };
 
   if (isLoading) return (
     <div className="flex items-center justify-center py-20">
-      <div className="w-6 h-6 border-2 border-gray-200 border-t-accent-600 rounded-full animate-spin" />
+      <div className="w-6 h-6 border-2 border-surface-border border-t-accent-600 rounded-full animate-spin" />
     </div>
   );
   if (!contract) return <p className="text-danger-600">Contract not found</p>;
@@ -139,7 +139,7 @@ export default function ContractDetail() {
 
   return (
     <div className="space-y-6">
-      <Link to="/contracts" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+      <Link to="/contracts" className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Contracts
       </Link>
 
@@ -170,29 +170,29 @@ export default function ContractDetail() {
       )}
 
       {/* Contract Header */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm animate-fade-in">
+      <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm animate-fade-in">
         {editingContract ? (
           <>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-xl font-bold text-gray-900">Edit Contract #{contract.id}</h2>
-              <button onClick={() => setEditingContract(false)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+              <h2 className="text-xl font-bold text-text-primary">Edit Contract #{contract.id}</h2>
+              <button onClick={() => setEditingContract(false)} className="text-text-muted hover:text-text-secondary"><X className="w-5 h-5" /></button>
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Start Date</label>
-                <input type="date" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.start_date} onChange={e => setContractForm({ ...contractForm, start_date: e.target.value })} />
+                <label className="block text-sm font-medium text-text-muted mb-1">Start Date</label>
+                <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.start_date} onChange={e => setContractForm({ ...contractForm, start_date: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">End Date</label>
-                <input type="date" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.end_date} onChange={e => setContractForm({ ...contractForm, end_date: e.target.value })} />
+                <label className="block text-sm font-medium text-text-muted mb-1">End Date</label>
+                <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.end_date} onChange={e => setContractForm({ ...contractForm, end_date: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Rent Amount</label>
-                <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.rent_amount} onChange={e => setContractForm({ ...contractForm, rent_amount: e.target.value })} />
+                <label className="block text-sm font-medium text-text-muted mb-1">Rent Amount</label>
+                <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.rent_amount} onChange={e => setContractForm({ ...contractForm, rent_amount: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Frequency</label>
-                <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.payment_frequency} onChange={e => setContractForm({ ...contractForm, payment_frequency: e.target.value })}>
+                <label className="block text-sm font-medium text-text-muted mb-1">Frequency</label>
+                <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.payment_frequency} onChange={e => setContractForm({ ...contractForm, payment_frequency: e.target.value })}>
                   <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
                   <option value="semi_annual">Semi-Annual</option>
@@ -200,12 +200,12 @@ export default function ContractDetail() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Total Payments</label>
-                <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.total_payments} onChange={e => setContractForm({ ...contractForm, total_payments: e.target.value })} />
+                <label className="block text-sm font-medium text-text-muted mb-1">Total Payments</label>
+                <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.total_payments} onChange={e => setContractForm({ ...contractForm, total_payments: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-gray-500 mb-1">Status</label>
-                <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.status} onChange={e => setContractForm({ ...contractForm, status: e.target.value })}>
+                <label className="block text-sm font-medium text-text-muted mb-1">Status</label>
+                <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.status} onChange={e => setContractForm({ ...contractForm, status: e.target.value })}>
                   <option value="active">Active</option>
                   <option value="terminated">Terminated</option>
                   <option value="renewed">Renewed</option>
@@ -213,8 +213,8 @@ export default function ContractDetail() {
                 </select>
               </div>
               <div className="md:col-span-3">
-                <label className="block text-sm font-medium text-gray-500 mb-1">Notes</label>
-                <textarea rows={2} className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.notes} onChange={e => setContractForm({ ...contractForm, notes: e.target.value })} />
+                <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                <textarea rows={2} className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.notes} onChange={e => setContractForm({ ...contractForm, notes: e.target.value })} />
               </div>
             </div>
             {updateContractMutation.isError && <p className="mt-2 text-sm text-danger-600">{(updateContractMutation.error as any)?.message || 'Update failed'}</p>}
@@ -222,7 +222,7 @@ export default function ContractDetail() {
               <button onClick={() => updateContractMutation.mutate({ ...contractForm, rent_amount: Number(contractForm.rent_amount), total_payments: Number(contractForm.total_payments) })} disabled={updateContractMutation.isPending} className="flex items-center gap-1 bg-accent-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-accent-700 disabled:opacity-50 transition-colors">
                 <Check className="w-4 h-4" /> Save
               </button>
-              <button onClick={() => setEditingContract(false)} className="px-4 py-2 rounded-lg text-sm text-gray-500 hover:bg-gray-50 transition-colors">Cancel</button>
+              <button onClick={() => setEditingContract(false)} className="px-4 py-2 rounded-lg text-sm text-text-muted hover:bg-surface transition-colors">Cancel</button>
             </div>
           </>
         ) : (
@@ -230,36 +230,36 @@ export default function ContractDetail() {
             <div className="flex justify-between items-start flex-wrap gap-4">
               <div>
                 <div className="flex items-center gap-3">
-                  <h2 className="text-xl font-bold text-gray-900">Contract #{contract.id}</h2>
+                  <h2 className="text-xl font-bold text-text-primary">Contract #{contract.id}</h2>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${statusColor(contract.status)}`}>{contract.status}</span>
                 </div>
                 <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                   <div className="flex items-center gap-2">
-                    <User className="w-4 h-4 text-gray-500" />
+                    <User className="w-4 h-4 text-text-muted" />
                     <div>
-                      <p className="text-gray-500">Tenant</p>
-                      <p className="font-medium text-gray-900">{contract.tenant_name}</p>
+                      <p className="text-text-muted">Tenant</p>
+                      <p className="font-medium text-text-primary">{contract.tenant_name}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Building2 className="w-4 h-4 text-gray-500" />
+                    <Building2 className="w-4 h-4 text-text-muted" />
                     <div>
-                      <p className="text-gray-500">Property</p>
-                      <p className="font-medium text-gray-900">{contract.property_name} - {contract.unit_number}</p>
+                      <p className="text-text-muted">Property</p>
+                      <p className="font-medium text-text-primary">{contract.property_name} - {contract.unit_number}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <Calendar className="w-4 h-4 text-gray-500" />
+                    <Calendar className="w-4 h-4 text-text-muted" />
                     <div>
-                      <p className="text-gray-500">Period</p>
-                      <p className="font-medium text-gray-900">{formatDate(contract.start_date)} - {formatDate(contract.end_date)}</p>
+                      <p className="text-text-muted">Period</p>
+                      <p className="font-medium text-text-primary">{formatDate(contract.start_date)} - {formatDate(contract.end_date)}</p>
                     </div>
                   </div>
                   <div className="flex items-center gap-2">
-                    <DollarSign className="w-4 h-4 text-gray-500" />
+                    <DollarSign className="w-4 h-4 text-text-muted" />
                     <div>
-                      <p className="text-gray-500">Rent</p>
-                      <p className="font-medium text-gray-900">{formatCurrency(contract.rent_amount)} / {frequencyLabel(contract.payment_frequency).toLowerCase()}</p>
+                      <p className="text-text-muted">Rent</p>
+                      <p className="font-medium text-text-primary">{formatCurrency(contract.rent_amount)} / {frequencyLabel(contract.payment_frequency).toLowerCase()}</p>
                     </div>
                   </div>
                 </div>
@@ -275,7 +275,7 @@ export default function ContractDetail() {
                     });
                     setEditingContract(true);
                   }}
-                  className="p-2 text-gray-400 hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors" title="Edit"
+                  className="p-2 text-text-muted hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors" title="Edit"
                 >
                   <Pencil className="w-4 h-4" />
                 </button>
@@ -307,7 +307,7 @@ export default function ContractDetail() {
               </div>
             </div>
 
-            {contract.notes && <p className="mt-4 text-sm text-gray-500">{contract.notes}</p>}
+            {contract.notes && <p className="mt-4 text-sm text-text-muted">{contract.notes}</p>}
             {contract.renewal_of && (
               <p className="mt-2 text-sm text-accent-600">
                 Renewed from <Link to={`/contracts/${contract.renewal_of}`} className="underline">Contract #{contract.renewal_of}</Link>
@@ -320,23 +320,23 @@ export default function ContractDetail() {
       {/* Renewal Form */}
       {showRenew && (
         <div className="bg-white rounded-xl border border-accent-200 p-6 shadow-sm animate-slide-down">
-          <h3 className="font-semibold text-lg text-gray-900 mb-4">Renew Contract</h3>
+          <h3 className="font-semibold text-lg text-text-primary mb-4">Renew Contract</h3>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">New Start Date *</label>
-              <input type="date" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.start_date} onChange={e => setRenewForm({ ...renewForm, start_date: e.target.value })} />
+              <label className="block text-sm font-medium text-text-muted mb-1">New Start Date *</label>
+              <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.start_date} onChange={e => setRenewForm({ ...renewForm, start_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">New End Date *</label>
-              <input type="date" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.end_date} onChange={e => setRenewForm({ ...renewForm, end_date: e.target.value })} />
+              <label className="block text-sm font-medium text-text-muted mb-1">New End Date *</label>
+              <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.end_date} onChange={e => setRenewForm({ ...renewForm, end_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Rent Amount *</label>
-              <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.rent_amount} onChange={e => setRenewForm({ ...renewForm, rent_amount: e.target.value })} />
+              <label className="block text-sm font-medium text-text-muted mb-1">Rent Amount *</label>
+              <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.rent_amount} onChange={e => setRenewForm({ ...renewForm, rent_amount: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Frequency</label>
-              <select className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.payment_frequency} onChange={e => setRenewForm({ ...renewForm, payment_frequency: e.target.value })}>
+              <label className="block text-sm font-medium text-text-muted mb-1">Frequency</label>
+              <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.payment_frequency} onChange={e => setRenewForm({ ...renewForm, payment_frequency: e.target.value })}>
                 <option value="monthly">Monthly</option>
                 <option value="quarterly">Quarterly</option>
                 <option value="semi_annual">Semi-Annual</option>
@@ -344,12 +344,12 @@ export default function ContractDetail() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">Number of Payments *</label>
-              <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.total_payments} onChange={e => setRenewForm({ ...renewForm, total_payments: e.target.value })} />
+              <label className="block text-sm font-medium text-text-muted mb-1">Number of Payments *</label>
+              <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.total_payments} onChange={e => setRenewForm({ ...renewForm, total_payments: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-gray-500 mb-1">New Deposit</label>
-              <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.deposit_amount} onChange={e => setRenewForm({ ...renewForm, deposit_amount: e.target.value })} placeholder="Optional" />
+              <label className="block text-sm font-medium text-text-muted mb-1">New Deposit</label>
+              <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.deposit_amount} onChange={e => setRenewForm({ ...renewForm, deposit_amount: e.target.value })} placeholder="Optional" />
             </div>
           </div>
           <div className="mt-4 flex gap-2">
@@ -365,51 +365,51 @@ export default function ContractDetail() {
             >
               Create Renewal
             </button>
-            <button onClick={() => setShowRenew(false)} className="px-4 py-2 rounded-lg text-sm text-gray-500 hover:bg-gray-50 transition-colors">Cancel</button>
+            <button onClick={() => setShowRenew(false)} className="px-4 py-2 rounded-lg text-sm text-text-muted hover:bg-surface transition-colors">Cancel</button>
           </div>
         </div>
       )}
 
       {/* Payment Summary */}
       <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm animate-fade-in animate-stagger-1">
-          <p className="text-sm text-gray-500">Total Payments</p>
-          <p className="text-2xl font-bold text-gray-900">{contract.total_payments}</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 shadow-sm animate-fade-in animate-stagger-1">
+          <p className="text-sm text-text-muted">Total Payments</p>
+          <p className="text-2xl font-bold text-text-primary">{contract.total_payments}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm animate-fade-in animate-stagger-2">
-          <p className="text-sm text-gray-500">Paid</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 shadow-sm animate-fade-in animate-stagger-2">
+          <p className="text-sm text-text-muted">Paid</p>
           <p className="text-2xl font-bold text-success-600">{paidCount}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm animate-fade-in animate-stagger-3">
-          <p className="text-sm text-gray-500">Overdue</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 shadow-sm animate-fade-in animate-stagger-3">
+          <p className="text-sm text-text-muted">Overdue</p>
           <p className="text-2xl font-bold text-danger-600">{overdueCount}</p>
         </div>
-        <div className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm animate-fade-in animate-stagger-4">
-          <p className="text-sm text-gray-500">Total Collected</p>
-          <p className="text-2xl font-bold text-gray-900">{formatCurrency(totalPaid)}</p>
+        <div className="bg-white rounded-xl border border-surface-border p-4 shadow-sm animate-fade-in animate-stagger-4">
+          <p className="text-sm text-text-muted">Total Collected</p>
+          <p className="text-2xl font-bold text-text-primary">{formatCurrency(totalPaid)}</p>
         </div>
       </div>
 
       {/* Security Deposit */}
       {contract.deposit && (
-        <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+        <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           {editingDeposit ? (
             <>
               <div className="flex items-center justify-between mb-4">
                 <div className="flex items-center gap-2">
                   <Shield className="w-5 h-5 text-accent-600" />
-                  <h3 className="font-semibold text-gray-900">Edit Deposit</h3>
+                  <h3 className="font-semibold text-text-primary">Edit Deposit</h3>
                 </div>
-                <button onClick={() => setEditingDeposit(false)} className="text-gray-400 hover:text-gray-600"><X className="w-5 h-5" /></button>
+                <button onClick={() => setEditingDeposit(false)} className="text-text-muted hover:text-text-secondary"><X className="w-5 h-5" /></button>
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Amount</label>
-                  <input type="number" className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.amount} onChange={e => setDepositForm({ ...depositForm, amount: e.target.value })} />
+                  <label className="block text-sm font-medium text-text-muted mb-1">Amount</label>
+                  <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.amount} onChange={e => setDepositForm({ ...depositForm, amount: e.target.value })} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-gray-500 mb-1">Notes</label>
-                  <input className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.notes} onChange={e => setDepositForm({ ...depositForm, notes: e.target.value })} />
+                  <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                  <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.notes} onChange={e => setDepositForm({ ...depositForm, notes: e.target.value })} />
                 </div>
               </div>
               {updateDepositMutation.isError && <p className="mt-2 text-sm text-danger-600">Update failed</p>}
@@ -417,7 +417,7 @@ export default function ContractDetail() {
                 <button onClick={() => updateDepositMutation.mutate({ id: contract.deposit!.id, amount: Number(depositForm.amount), status: contract.deposit!.status, notes: depositForm.notes })} disabled={updateDepositMutation.isPending} className="flex items-center gap-1 bg-accent-600 text-white px-4 py-2 rounded-lg text-sm font-semibold hover:bg-accent-700 disabled:opacity-50 transition-colors">
                   <Check className="w-4 h-4" /> Save
                 </button>
-                <button onClick={() => setEditingDeposit(false)} className="px-4 py-2 rounded-lg text-sm text-gray-500 hover:bg-gray-50 transition-colors">Cancel</button>
+                <button onClick={() => setEditingDeposit(false)} className="px-4 py-2 rounded-lg text-sm text-text-muted hover:bg-surface transition-colors">Cancel</button>
               </div>
             </>
           ) : (
@@ -425,10 +425,10 @@ export default function ContractDetail() {
               <div className="flex items-center justify-between">
                 <div className="flex items-center gap-2">
                   <Shield className="w-5 h-5 text-accent-600" />
-                  <h3 className="font-semibold text-gray-900">Security Deposit</h3>
+                  <h3 className="font-semibold text-text-primary">Security Deposit</h3>
                 </div>
                 <div className="flex items-center gap-2">
-                  <button onClick={() => { setDepositForm({ amount: String(contract.deposit!.amount), notes: (contract.deposit as any)?.notes || '' }); setEditingDeposit(true); }} className="p-1.5 text-gray-400 hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors" title="Edit deposit"><Pencil className="w-3.5 h-3.5" /></button>
+                  <button onClick={() => { setDepositForm({ amount: String(contract.deposit!.amount), notes: (contract.deposit as any)?.notes || '' }); setEditingDeposit(true); }} className="p-1.5 text-text-muted hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors" title="Edit deposit"><Pencil className="w-3.5 h-3.5" /></button>
                   <span className={`px-2.5 py-0.5 rounded-full text-xs font-medium capitalize ${statusColor(contract.deposit.status)}`}>
                     {contract.deposit.status.replace('_', ' ')}
                   </span>
@@ -436,17 +436,17 @@ export default function ContractDetail() {
               </div>
               <div className="mt-3 grid grid-cols-2 md:grid-cols-4 gap-4 text-sm">
                 <div>
-                  <p className="text-gray-500">Amount</p>
-                  <p className="font-semibold text-gray-900">{formatCurrency(contract.deposit.amount)}</p>
+                  <p className="text-text-muted">Amount</p>
+                  <p className="font-semibold text-text-primary">{formatCurrency(contract.deposit.amount)}</p>
                 </div>
                 <div>
-                  <p className="text-gray-500">Received</p>
-                  <p className="font-medium text-gray-900">{formatDate(contract.deposit.date_received)}</p>
+                  <p className="text-text-muted">Received</p>
+                  <p className="font-medium text-text-primary">{formatDate(contract.deposit.date_received)}</p>
                 </div>
                 {contract.deposit.refund_amount != null && (
                   <div>
-                    <p className="text-gray-500">Refunded</p>
-                    <p className="font-medium text-gray-900">{formatCurrency(contract.deposit.refund_amount)} on {formatDate(contract.deposit.refund_date!)}</p>
+                    <p className="text-text-muted">Refunded</p>
+                    <p className="font-medium text-text-primary">{formatCurrency(contract.deposit.refund_amount)} on {formatDate(contract.deposit.refund_date!)}</p>
                   </div>
                 )}
               </div>
@@ -475,13 +475,13 @@ export default function ContractDetail() {
       )}
 
       {/* Contract Documents */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm">
+      <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
         <div className="flex items-center justify-between mb-4">
           <div className="flex items-center gap-2">
             <Paperclip className="w-5 h-5 text-accent-600" />
-            <h3 className="font-semibold text-gray-900">Contract Documents</h3>
+            <h3 className="font-semibold text-text-primary">Contract Documents</h3>
             {contract.files && contract.files.length > 0 && (
-              <span className="text-xs bg-gray-50 text-gray-500 px-2 py-0.5 rounded-full">{contract.files.length} file{contract.files.length !== 1 ? 's' : ''}</span>
+              <span className="text-xs bg-surface text-text-muted px-2 py-0.5 rounded-full">{contract.files.length} file{contract.files.length !== 1 ? 's' : ''}</span>
             )}
           </div>
           <div>
@@ -504,7 +504,7 @@ export default function ContractDetail() {
           </div>
         </div>
 
-        <p className="text-xs text-gray-500 mb-4">Accepted: PDF, Images (JPG, PNG, WebP), Word, Excel, Text. Max 20MB per file.</p>
+        <p className="text-xs text-text-muted mb-4">Accepted: PDF, Images (JPG, PNG, WebP), Word, Excel, Text. Max 20MB per file.</p>
 
         {uploadFilesMutation.isError && (
           <div className="mb-4 p-3 bg-danger-50 border border-red-200 rounded-lg text-sm text-danger-700">
@@ -513,33 +513,33 @@ export default function ContractDetail() {
         )}
 
         {(!contract.files || contract.files.length === 0) ? (
-          <div className="text-center py-8 border-2 border-dashed border-gray-200 rounded-lg">
-            <Paperclip className="w-8 h-8 text-gray-400 mx-auto mb-2" />
-            <p className="text-sm text-gray-500">No documents uploaded yet.</p>
-            <p className="text-xs text-gray-400 mt-1">Upload signed contracts, addendums, or supporting documents.</p>
+          <div className="text-center py-8 border-2 border-dashed border-surface-border rounded-lg">
+            <Paperclip className="w-8 h-8 text-text-muted mx-auto mb-2" />
+            <p className="text-sm text-text-muted">No documents uploaded yet.</p>
+            <p className="text-xs text-text-muted mt-1">Upload signed contracts, addendums, or supporting documents.</p>
           </div>
         ) : (
           <div className="space-y-2">
             {contract.files.map(file => (
-              <div key={file.id} className="flex items-center justify-between p-3 rounded-lg border border-gray-200 hover:bg-gray-50 group transition-colors">
+              <div key={file.id} className="flex items-center justify-between p-3 rounded-lg border border-surface-border hover:bg-surface group transition-colors">
                 <div className="flex items-center gap-3 min-w-0">
                   {getFileIcon(file.mime_type)}
                   <div className="min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{file.original_name}</p>
-                    <p className="text-xs text-gray-500">{formatFileSize(file.size_bytes)} &middot; {formatDate(file.uploaded_at.split('T')[0] || file.uploaded_at.split(' ')[0])}</p>
+                    <p className="text-sm font-medium text-text-primary truncate">{file.original_name}</p>
+                    <p className="text-xs text-text-muted">{formatFileSize(file.size_bytes)} &middot; {formatDate(file.uploaded_at.split('T')[0] || file.uploaded_at.split(' ')[0])}</p>
                   </div>
                 </div>
                 <div className="flex items-center gap-1 shrink-0">
                   <a
                     href={`/api/contracts/files/${file.id}/download`}
-                    className="p-2 text-gray-400 hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors"
+                    className="p-2 text-text-muted hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors"
                     title="Download"
                   >
                     <Download className="w-4 h-4" />
                   </a>
                   <button
                     onClick={() => { if (confirm(`Delete "${file.original_name}"?`)) deleteFileMutation.mutate(file.id); }}
-                    className="p-2 text-gray-400 hover:text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
+                    className="p-2 text-text-muted hover:text-danger-600 hover:bg-danger-50 rounded-lg transition-colors"
                     title="Delete"
                   >
                     <Trash2 className="w-4 h-4" />
@@ -555,30 +555,30 @@ export default function ContractDetail() {
       <ContractAnalysis contractId={contract.id} files={contract.files || []} />
 
       {/* Payment Schedule Table */}
-      <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-        <div className="px-6 py-4 border-b border-gray-200">
-          <h3 className="font-semibold text-gray-900">Payment Schedule</h3>
+      <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
+        <div className="px-6 py-4 border-b border-surface-border">
+          <h3 className="font-semibold text-text-primary">Payment Schedule</h3>
         </div>
         <div className="overflow-x-auto">
         <table className="w-full text-sm">
-          <thead className="bg-gray-50 border-b border-gray-200">
+          <thead className="bg-surface border-b border-surface-border">
             <tr>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">#</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Due Date</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Amount</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Status</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Paid Date</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Method</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Reference</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Actions</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">#</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Due Date</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Amount</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Status</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Paid Date</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Method</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Reference</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Actions</th>
             </tr>
           </thead>
-          <tbody className="divide-y divide-gray-100">
+          <tbody className="divide-y divide-surface-border">
             {payments.map((p, i) => (
-              <tr key={p.id} className="hover:bg-gray-50 transition-colors animate-fade-in-fast" style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}>
-                <td className="px-4 py-3 text-gray-500">{p.payment_number}</td>
-                <td className="px-4 py-3 text-gray-900">{formatDate(p.due_date)}</td>
-                <td className="px-4 py-3 font-medium text-gray-900">{formatCurrency(p.amount)}</td>
+              <tr key={p.id} className="hover:bg-surface transition-colors animate-fade-in-fast" style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}>
+                <td className="px-4 py-3 text-text-muted">{p.payment_number}</td>
+                <td className="px-4 py-3 text-text-primary">{formatDate(p.due_date)}</td>
+                <td className="px-4 py-3 font-medium text-text-primary">{formatCurrency(p.amount)}</td>
                 <td className="px-4 py-3">
                   <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-full text-xs font-medium capitalize ${statusColor(p.status)}`}>
                     {p.status === 'paid' && <CheckCircle2 className="w-3 h-3" />}
@@ -587,28 +587,28 @@ export default function ContractDetail() {
                     {p.status}
                   </span>
                 </td>
-                <td className="px-4 py-3 text-gray-500">{p.paid_date ? formatDate(p.paid_date) : '-'}</td>
-                <td className="px-4 py-3 text-gray-500 capitalize">{p.payment_method?.replace('_', ' ') || '-'}</td>
-                <td className="px-4 py-3 text-gray-500">{p.reference || '-'}</td>
+                <td className="px-4 py-3 text-text-muted">{p.paid_date ? formatDate(p.paid_date) : '-'}</td>
+                <td className="px-4 py-3 text-text-muted capitalize">{p.payment_method?.replace('_', ' ') || '-'}</td>
+                <td className="px-4 py-3 text-text-muted">{p.reference || '-'}</td>
                 <td className="px-4 py-3">
                   {(p.status === 'pending' || p.status === 'overdue') && (
                     <>
                       {payingId === p.id ? (
                         <div className="flex items-center gap-2">
-                          <select className="border border-gray-200 rounded px-2 py-1 text-xs bg-white" value={payMethod} onChange={e => setPayMethod(e.target.value)}>
+                          <select className="border border-surface-border rounded px-2 py-1 text-xs bg-white" value={payMethod} onChange={e => setPayMethod(e.target.value)}>
                             <option value="check">Check</option>
                             <option value="bank_transfer">Transfer</option>
                             <option value="cash">Cash</option>
                             <option value="other">Other</option>
                           </select>
-                          <input className="border border-gray-200 rounded px-2 py-1 text-xs w-24 bg-white" placeholder="Ref #" value={payRef} onChange={e => setPayRef(e.target.value)} />
+                          <input className="border border-surface-border rounded px-2 py-1 text-xs w-24 bg-white" placeholder="Ref #" value={payRef} onChange={e => setPayRef(e.target.value)} />
                           <button
                             onClick={() => markPaidMutation.mutate({ paymentId: p.id, data: { payment_method: payMethod, reference: payRef } })}
                             className="bg-success-600 text-white px-2 py-1 rounded text-xs hover:bg-success-700 transition-colors"
                           >
                             Confirm
                           </button>
-                          <button onClick={() => setPayingId(null)} className="text-gray-500 hover:text-gray-500 text-xs">Cancel</button>
+                          <button onClick={() => setPayingId(null)} className="text-text-muted hover:text-text-muted text-xs">Cancel</button>
                         </div>
                       ) : (
                         <button

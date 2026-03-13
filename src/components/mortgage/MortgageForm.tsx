@@ -90,7 +90,7 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
     });
   };
 
-  const inputClass = "w-full border border-gray-200 rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none";
+  const inputClass = "w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none";
 
   const AiBadge = ({ field }: { field: string }) =>
     aiFields.has(field) ? (
@@ -98,10 +98,10 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
     ) : null;
 
   return (
-    <div className="bg-white rounded-xl border border-gray-200 p-5 shadow-sm">
+    <div className="bg-white rounded-xl border border-surface-border p-5 shadow-sm">
       <div className="flex justify-between items-center mb-4">
-        <h3 className="font-semibold text-sm text-gray-900">Add Mortgage</h3>
-        <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+        <h3 className="font-semibold text-sm text-text-primary">Add Mortgage</h3>
+        <button onClick={onClose} className="text-text-muted hover:text-text-secondary">
           <X className="w-4 h-4" />
         </button>
       </div>
@@ -121,7 +121,7 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
 
       {/* AI Analyzing State */}
       {uploadMutation.isPending && (
-        <div className="mb-4 p-5 bg-gray-50 rounded-lg border border-gray-200 animate-scale-in">
+        <div className="mb-4 p-5 bg-surface rounded-lg border border-surface-border animate-scale-in">
           <div className="flex flex-col items-center">
             <div className="relative">
               <div className="w-12 h-12 rounded-lg bg-accent-50 flex items-center justify-center animate-pulse">
@@ -129,8 +129,8 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
               </div>
               <div className="absolute -top-1 -right-1 w-3 h-3 bg-accent-500 rounded-full animate-ping" />
             </div>
-            <p className="mt-3 text-sm font-medium text-gray-900">AI is analyzing your mortgage document...</p>
-            <p className="text-xs text-gray-400 mt-1">Extracting lender, rates, terms, and payment details</p>
+            <p className="mt-3 text-sm font-medium text-text-primary">AI is analyzing your mortgage document...</p>
+            <p className="text-xs text-text-muted mt-1">Extracting lender, rates, terms, and payment details</p>
           </div>
         </div>
       )}
@@ -149,31 +149,31 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
 
       <div className="grid md:grid-cols-3 gap-3">
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Lender Name *<AiBadge field="lender_name" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Lender Name *<AiBadge field="lender_name" /></label>
           <input className={inputClass} value={form.lender_name} onChange={e => setForm({ ...form, lender_name: e.target.value })} placeholder="e.g., Emirates NBD" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Loan Amount *<AiBadge field="loan_amount" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Loan Amount *<AiBadge field="loan_amount" /></label>
           <input type="number" className={inputClass} value={form.loan_amount} onChange={e => setForm({ ...form, loan_amount: e.target.value })} placeholder="300000" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Interest Rate (%) *<AiBadge field="interest_rate" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Interest Rate (%) *<AiBadge field="interest_rate" /></label>
           <input type="number" step="0.01" className={inputClass} value={form.interest_rate} onChange={e => setForm({ ...form, interest_rate: e.target.value })} placeholder="3.99" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Term (months) *<AiBadge field="term_months" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Term (months) *<AiBadge field="term_months" /></label>
           <input type="number" className={inputClass} value={form.term_months} onChange={e => setForm({ ...form, term_months: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Start Date *<AiBadge field="start_date" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Start Date *<AiBadge field="start_date" /></label>
           <input type="date" className={inputClass} value={form.start_date} onChange={e => setForm({ ...form, start_date: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Monthly Payment<AiBadge field="monthly_payment" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Monthly Payment<AiBadge field="monthly_payment" /></label>
           <input type="number" className={inputClass} value={form.monthly_payment} onChange={e => setForm({ ...form, monthly_payment: e.target.value })} placeholder="Auto-calculated" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Loan Type<AiBadge field="loan_type" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Loan Type<AiBadge field="loan_type" /></label>
           <select className={inputClass} value={form.loan_type} onChange={e => setForm({ ...form, loan_type: e.target.value })}>
             <option value="fixed">Fixed Rate</option>
             <option value="variable">Variable Rate</option>
@@ -181,13 +181,13 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-1">Account Number<AiBadge field="account_number" /></label>
+          <label className="block text-xs font-medium text-text-muted mb-1">Account Number<AiBadge field="account_number" /></label>
           <input className={inputClass} value={form.account_number} onChange={e => setForm({ ...form, account_number: e.target.value })} />
         </div>
       </div>
 
       <div className="mt-3">
-        <label className="block text-xs font-medium text-gray-500 mb-1">Notes<AiBadge field="notes" /></label>
+        <label className="block text-xs font-medium text-text-muted mb-1">Notes<AiBadge field="notes" /></label>
         <textarea className={inputClass} rows={2} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
       </div>
 
@@ -203,7 +203,7 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
         >
           {mutation.isPending ? 'Creating...' : 'Add Mortgage'}
         </button>
-        <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs text-gray-500 hover:bg-gray-50 transition-colors">Cancel</button>
+        <button onClick={onClose} className="px-3 py-2 rounded-lg text-xs text-text-muted hover:bg-surface transition-colors">Cancel</button>
       </div>
     </div>
   );

@@ -73,28 +73,28 @@ export default function Dashboard() {
     <div className="space-y-6 max-w-[1200px]">
       {/* Page greeting */}
       <div className="animate-fade-in">
-        <h1 className="text-2xl font-semibold text-gray-900 tracking-[-0.02em]">Welcome back</h1>
-        <p className="text-sm text-gray-500 mt-0.5">Here's what's happening with your portfolio.</p>
+        <h1 className="text-2xl font-semibold text-text-primary tracking-[-0.02em]">Welcome back</h1>
+        <p className="text-sm text-text-muted mt-0.5">Here's what's happening with your portfolio.</p>
       </div>
 
       {/* Quick actions */}
       <div className="flex items-center gap-2 animate-fade-in animate-stagger-1">
-        <Link to="/properties" className="pill-btn bg-accent-600 text-white hover:bg-accent-700 shadow-sm">
+        <Link to="/properties" className="pill-btn bg-accent-500 text-white hover:bg-accent-600 shadow-sm">
           <Building2 className="w-3.5 h-3.5" /> Properties
         </Link>
-        <Link to="/contracts" className="pill-btn bg-white text-gray-700 border border-gray-200 hover:bg-gray-50">
+        <Link to="/contracts" className="pill-btn bg-white text-text-secondary border border-surface-border hover:bg-surface">
           <FileText className="w-3.5 h-3.5" /> Contracts
         </Link>
-        <Link to="/payments" className="pill-btn bg-white text-gray-700 border border-gray-200 hover:bg-gray-50">
+        <Link to="/payments" className="pill-btn bg-white text-text-secondary border border-surface-border hover:bg-surface">
           <DollarSign className="w-3.5 h-3.5" /> Payments
         </Link>
-        <Link to="/tenants" className="pill-btn bg-white text-gray-700 border border-gray-200 hover:bg-gray-50">
+        <Link to="/tenants" className="pill-btn bg-white text-text-secondary border border-surface-border hover:bg-surface">
           <Users className="w-3.5 h-3.5" /> Tenants
         </Link>
-        <Link to="/market" className="pill-btn bg-white text-gray-700 border border-gray-200 hover:bg-gray-50">
+        <Link to="/market" className="pill-btn bg-white text-text-secondary border border-surface-border hover:bg-surface">
           <BarChart3 className="w-3.5 h-3.5" /> Market
         </Link>
-        <Link to="/portfolio" className="pill-btn text-gray-400 hover:text-gray-600 ml-auto">
+        <Link to="/portfolio" className="pill-btn text-text-muted hover:text-text-secondary ml-auto">
           <TrendingUp className="w-3.5 h-3.5" /> Portfolio
         </Link>
       </div>
@@ -127,35 +127,35 @@ export default function Dashboard() {
       {/* Main dashboard grid */}
       <div className="grid lg:grid-cols-5 gap-5">
         {/* Portfolio balance chart — 3 cols */}
-        <div className="lg:col-span-3 bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-2">
+        <div className="lg:col-span-3 bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-2">
           <div className="flex items-center justify-between mb-1">
             <div className="flex items-center gap-2">
-              <h3 className="text-sm font-medium text-gray-900">Portfolio value</h3>
+              <h3 className="text-sm font-medium text-text-primary">Portfolio value</h3>
               <svg className="w-4 h-4 text-accent-500" viewBox="0 0 20 20" fill="currentColor">
                 <path fillRule="evenodd" d="M6.267 3.455a3.066 3.066 0 001.745-.723 3.066 3.066 0 013.976 0 3.066 3.066 0 001.745.723 3.066 3.066 0 012.812 2.812c.051.643.304 1.254.723 1.745a3.066 3.066 0 010 3.976 3.066 3.066 0 00-.723 1.745 3.066 3.066 0 01-2.812 2.812 3.066 3.066 0 00-1.745.723 3.066 3.066 0 01-3.976 0 3.066 3.066 0 00-1.745-.723 3.066 3.066 0 01-2.812-2.812 3.066 3.066 0 00-.723-1.745 3.066 3.066 0 010-3.976 3.066 3.066 0 00.723-1.745 3.066 3.066 0 012.812-2.812zm7.44 5.252a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
               </svg>
             </div>
-            <div className="flex items-center gap-1 text-xs text-gray-400">
+            <div className="flex items-center gap-1 text-xs text-text-muted">
               <button
                 onClick={() => setChartView('chart')}
-                className={`px-2.5 py-1 rounded-md font-medium transition-colors ${chartView === 'chart' ? 'bg-gray-100 text-gray-600' : 'hover:bg-gray-50 text-gray-400'}`}
+                className={`px-2.5 py-1 rounded-md font-medium transition-colors ${chartView === 'chart' ? 'bg-surface-overlay text-text-secondary' : 'hover:bg-surface text-text-muted'}`}
               >Chart</button>
               <button
                 onClick={() => setChartView('table')}
-                className={`px-2.5 py-1 rounded-md font-medium transition-colors ${chartView === 'table' ? 'bg-gray-100 text-gray-600' : 'hover:bg-gray-50 text-gray-400'}`}
+                className={`px-2.5 py-1 rounded-md font-medium transition-colors ${chartView === 'table' ? 'bg-surface-overlay text-text-secondary' : 'hover:bg-surface text-text-muted'}`}
               >Table</button>
             </div>
           </div>
 
           <div className="mb-4">
-            <p className="text-3xl font-semibold text-gray-900 tracking-[-0.02em] stat-value">
+            <p className="text-3xl font-semibold text-text-primary tracking-[-0.02em] stat-value">
               {portfolio ? formatCurrency(portfolio.total_current_value) : 'AED 0.00'}
             </p>
             <div className="flex items-center gap-4 mt-1.5">
               <div className="relative">
                 <button
                   onClick={() => setPeriodOpen(!periodOpen)}
-                  className="text-xs text-gray-500 flex items-center gap-1 hover:text-gray-700"
+                  className="text-xs text-text-muted flex items-center gap-1 hover:text-text-secondary"
                 >
                   {PERIOD_OPTIONS.find(p => p.value === revenuePeriod)?.label ?? `Last ${revenuePeriod} Months`}
                   <ChevronDown className="w-3 h-3" />
@@ -163,13 +163,13 @@ export default function Dashboard() {
                 {periodOpen && (
                   <>
                     <div className="fixed inset-0 z-10" onClick={() => setPeriodOpen(false)} />
-                    <div className="absolute left-0 top-full mt-1 bg-white rounded-lg border border-gray-200 shadow-lg z-20 py-1 min-w-[140px]">
+                    <div className="absolute left-0 top-full mt-1 bg-white rounded-lg border border-surface-border shadow-lg z-20 py-1 min-w-[140px]">
                       {PERIOD_OPTIONS.map(opt => (
                         <button
                           key={opt.value}
                           onClick={() => { setRevenuePeriod(opt.value); setPeriodOpen(false); }}
                           className={`w-full text-left px-3 py-1.5 text-xs transition-colors ${
-                            revenuePeriod === opt.value ? 'bg-accent-50 text-accent-700 font-medium' : 'text-gray-600 hover:bg-gray-50'
+                            revenuePeriod === opt.value ? 'bg-accent-50 text-accent-700 font-medium' : 'text-text-secondary hover:bg-surface'
                           }`}
                         >
                           {opt.label}
@@ -196,13 +196,13 @@ export default function Dashboard() {
                 <AreaChart data={revenue} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
                   <defs>
                     <linearGradient id="revenueGradient" x1="0" y1="0" x2="0" y2="1">
-                      <stop offset="0%" stopColor="#6366F1" stopOpacity={0.12} />
-                      <stop offset="100%" stopColor="#6366F1" stopOpacity={0.01} />
+                      <stop offset="0%" stopColor="#c96442" stopOpacity={0.12} />
+                      <stop offset="100%" stopColor="#c96442" stopOpacity={0.01} />
                     </linearGradient>
                   </defs>
                   <XAxis
                     dataKey="month"
-                    tick={{ fontSize: 11, fill: '#9CA3AF' }}
+                    tick={{ fontSize: 11, fill: '#83827d' }}
                     axisLine={false}
                     tickLine={false}
                   />
@@ -211,7 +211,7 @@ export default function Dashboard() {
                     formatter={(value: number) => [formatCurrency(value), 'Revenue']}
                     contentStyle={{
                       borderRadius: '8px',
-                      border: '1px solid #E5E7EB',
+                      border: '1px solid #dad9d4',
                       backgroundColor: '#fff',
                       fontSize: '12px',
                       boxShadow: '0 4px 12px rgba(0,0,0,0.08)',
@@ -220,7 +220,7 @@ export default function Dashboard() {
                   <Area
                     type="monotone"
                     dataKey="total"
-                    stroke="#6366F1"
+                    stroke="#c96442"
                     strokeWidth={2}
                     fill="url(#revenueGradient)"
                   />
@@ -230,16 +230,16 @@ export default function Dashboard() {
               <div className="h-[200px] overflow-y-auto">
                 <table className="w-full text-sm">
                   <thead>
-                    <tr className="border-b border-gray-100">
-                      <th className="text-left py-2 text-xs font-medium text-gray-400">Month</th>
-                      <th className="text-right py-2 text-xs font-medium text-gray-400">Revenue</th>
+                    <tr className="border-b border-surface-border">
+                      <th className="text-left py-2 text-xs font-medium text-text-muted">Month</th>
+                      <th className="text-right py-2 text-xs font-medium text-text-muted">Revenue</th>
                     </tr>
                   </thead>
                   <tbody>
                     {revenue.map((r, i) => (
-                      <tr key={r.month} className="border-b border-gray-50">
-                        <td className="py-2 text-gray-700">{r.month}</td>
-                        <td className="py-2 text-right font-medium text-gray-900 tabular-nums">{formatCurrency(r.total)}</td>
+                      <tr key={r.month} className="border-b border-surface">
+                        <td className="py-2 text-text-secondary">{r.month}</td>
+                        <td className="py-2 text-right font-medium text-text-primary tabular-nums">{formatCurrency(r.total)}</td>
                       </tr>
                     ))}
                   </tbody>
@@ -247,62 +247,62 @@ export default function Dashboard() {
               </div>
             )
           ) : (
-            <div className="h-[200px] flex items-center justify-center text-sm text-gray-400">
+            <div className="h-[200px] flex items-center justify-center text-sm text-text-muted">
               Revenue data will appear here
             </div>
           )}
         </div>
 
         {/* Accounts / Properties list — 2 cols */}
-        <div className="lg:col-span-2 bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-3">
+        <div className="lg:col-span-2 bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-3">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-900">Properties</h3>
-            <Link to="/properties" className="text-gray-400 hover:text-gray-600 transition-colors" title="Add property">
+            <h3 className="text-sm font-medium text-text-primary">Properties</h3>
+            <Link to="/properties" className="text-text-muted hover:text-text-secondary transition-colors" title="Add property">
               <Plus className="w-4 h-4" />
             </Link>
           </div>
 
           <div className="space-y-0">
             {/* Stats as list items */}
-            <div className="flex items-center justify-between py-2.5 border-b border-gray-50">
+            <div className="flex items-center justify-between py-2.5 border-b border-surface">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-accent-500" />
-                <span className="text-sm text-gray-700">Total Properties</span>
+                <span className="text-sm text-text-secondary">Total Properties</span>
               </div>
-              <span className="text-sm font-semibold text-gray-900 tabular-nums">{summary?.total_properties ?? 0}</span>
+              <span className="text-sm font-semibold text-text-primary tabular-nums">{summary?.total_properties ?? 0}</span>
             </div>
-            <div className="flex items-center justify-between py-2.5 border-b border-gray-50">
+            <div className="flex items-center justify-between py-2.5 border-b border-surface">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-sm text-gray-700">Occupied Units</span>
+                <span className="text-sm text-text-secondary">Occupied Units</span>
               </div>
-              <span className="text-sm font-semibold text-gray-900 tabular-nums">{summary?.occupied_units ?? 0}</span>
+              <span className="text-sm font-semibold text-text-primary tabular-nums">{summary?.occupied_units ?? 0}</span>
             </div>
-            <div className="flex items-center justify-between py-2.5 border-b border-gray-50">
+            <div className="flex items-center justify-between py-2.5 border-b border-surface">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-amber-500" />
-                <span className="text-sm text-gray-700">Vacant Units</span>
+                <span className="text-sm text-text-secondary">Vacant Units</span>
               </div>
-              <span className="text-sm font-semibold text-gray-900 tabular-nums">{summary?.vacant_units ?? 0}</span>
+              <span className="text-sm font-semibold text-text-primary tabular-nums">{summary?.vacant_units ?? 0}</span>
             </div>
-            <div className="flex items-center justify-between py-2.5 border-b border-gray-50">
+            <div className="flex items-center justify-between py-2.5 border-b border-surface">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-blue-500" />
-                <span className="text-sm text-gray-700">Active Contracts</span>
+                <span className="text-sm text-text-secondary">Active Contracts</span>
               </div>
-              <span className="text-sm font-semibold text-gray-900 tabular-nums">{summary?.active_contracts ?? 0}</span>
+              <span className="text-sm font-semibold text-text-primary tabular-nums">{summary?.active_contracts ?? 0}</span>
             </div>
-            <div className="flex items-center justify-between py-2.5 border-b border-gray-50">
+            <div className="flex items-center justify-between py-2.5 border-b border-surface">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-emerald-500" />
-                <span className="text-sm text-gray-700">Revenue (Month)</span>
+                <span className="text-sm text-text-secondary">Revenue (Month)</span>
               </div>
-              <span className="text-sm font-semibold text-gray-900 tabular-nums">{formatCurrency(summary?.revenue_this_month ?? 0)}</span>
+              <span className="text-sm font-semibold text-text-primary tabular-nums">{formatCurrency(summary?.revenue_this_month ?? 0)}</span>
             </div>
             <div className="flex items-center justify-between py-2.5">
               <div className="flex items-center gap-2.5">
                 <div className="w-2 h-2 rounded-full bg-red-500" />
-                <span className="text-sm text-gray-700">Overdue</span>
+                <span className="text-sm text-text-secondary">Overdue</span>
               </div>
               <span className="text-sm font-semibold text-red-600 tabular-nums">{summary?.overdue_count ?? 0}</span>
             </div>
@@ -310,7 +310,7 @@ export default function Dashboard() {
 
           <Link
             to="/portfolio"
-            className="block mt-4 pt-3 border-t border-gray-100 text-center text-xs font-medium text-accent-600 hover:text-accent-700 transition-colors"
+            className="block mt-4 pt-3 border-t border-surface-border text-center text-xs font-medium text-accent-500 hover:text-accent-600 transition-colors"
           >
             View portfolio details
           </Link>
@@ -320,13 +320,13 @@ export default function Dashboard() {
       {/* Bottom three-column grid */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         {/* Expiring contracts */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-4">
+        <div className="bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-4">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-900">Expiring Contracts</h3>
-            <span className="text-[11px] text-gray-400 font-medium">Next 60 days</span>
+            <h3 className="text-sm font-medium text-text-primary">Expiring Contracts</h3>
+            <span className="text-[11px] text-text-muted font-medium">Next 60 days</span>
           </div>
           {expiring.length === 0 ? (
-            <p className="text-sm text-gray-400 py-6 text-center">No contracts expiring soon</p>
+            <p className="text-sm text-text-muted py-6 text-center">No contracts expiring soon</p>
           ) : (
             <div className="space-y-2">
               {expiring.slice(0, 5).map((c) => (
@@ -336,12 +336,12 @@ export default function Dashboard() {
                   className="flex items-center justify-between p-2.5 rounded-lg row-hover group"
                 >
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{c.tenant_name}</p>
-                    <p className="text-xs text-gray-400">{c.property_name} — {c.unit_number}</p>
+                    <p className="text-sm font-medium text-text-primary">{c.tenant_name}</p>
+                    <p className="text-xs text-text-muted">{c.property_name} — {c.unit_number}</p>
                   </div>
                   <div className="text-right">
                     <p className="text-xs font-semibold text-amber-600">{daysUntil(c.end_date)}d left</p>
-                    <p className="text-[11px] text-gray-400">{formatDate(c.end_date)}</p>
+                    <p className="text-[11px] text-text-muted">{formatDate(c.end_date)}</p>
                   </div>
                 </Link>
               ))}
@@ -350,24 +350,24 @@ export default function Dashboard() {
         </div>
 
         {/* Upcoming payments */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-5">
+        <div className="bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-5">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-900">Upcoming Payments</h3>
-            <span className="text-[11px] text-gray-400 font-medium">Next 30 days</span>
+            <h3 className="text-sm font-medium text-text-primary">Upcoming Payments</h3>
+            <span className="text-[11px] text-text-muted font-medium">Next 30 days</span>
           </div>
           {upcoming.length === 0 ? (
-            <p className="text-sm text-gray-400 py-6 text-center">No upcoming payments</p>
+            <p className="text-sm text-text-muted py-6 text-center">No upcoming payments</p>
           ) : (
             <div className="space-y-2">
               {upcoming.slice(0, 5).map(p => (
                 <div key={p.id} className="flex items-center justify-between p-2.5 rounded-lg row-hover">
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{p.tenant_name}</p>
-                    <p className="text-xs text-gray-400">{p.property_name} — {p.unit_number}</p>
+                    <p className="text-sm font-medium text-text-primary">{p.tenant_name}</p>
+                    <p className="text-xs text-text-muted">{p.property_name} — {p.unit_number}</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-gray-900 tabular-nums">{formatCurrency(p.amount)}</p>
-                    <p className="text-[11px] text-gray-400">Due {formatDate(p.due_date)}</p>
+                    <p className="text-sm font-semibold text-text-primary tabular-nums">{formatCurrency(p.amount)}</p>
+                    <p className="text-[11px] text-text-muted">Due {formatDate(p.due_date)}</p>
                   </div>
                 </div>
               ))}
@@ -376,30 +376,30 @@ export default function Dashboard() {
         </div>
 
         {/* Market snapshot */}
-        <div className="bg-white rounded-xl border border-gray-200 p-5 animate-fade-in animate-stagger-6">
+        <div className="bg-white rounded-xl border border-surface-border p-5 animate-fade-in animate-stagger-6">
           <div className="flex items-center justify-between mb-4">
-            <h3 className="text-sm font-medium text-gray-900">Market Snapshot</h3>
-            <Link to="/market" className="text-[11px] text-accent-600 hover:text-accent-700 font-medium">View All</Link>
+            <h3 className="text-sm font-medium text-text-primary">Market Snapshot</h3>
+            <Link to="/market" className="text-[11px] text-accent-500 hover:text-accent-600 font-medium">View All</Link>
           </div>
           {marketAreas.length > 0 ? (
             <div className="space-y-2">
               {marketAreas.slice(0, 5).map((area) => (
                 <div key={area.area} className="flex items-center justify-between p-2.5 rounded-lg row-hover">
                   <div>
-                    <p className="text-sm font-medium text-gray-800">{area.area}</p>
-                    <p className="text-xs text-gray-400">{area.transaction_count} transactions</p>
+                    <p className="text-sm font-medium text-text-primary">{area.area}</p>
+                    <p className="text-xs text-text-muted">{area.transaction_count} transactions</p>
                   </div>
                   <div className="text-right">
-                    <p className="text-sm font-semibold text-gray-900 tabular-nums">AED {area.avg_price_sqm.toLocaleString()}</p>
-                    <p className="text-[11px] text-gray-400">per sqm</p>
+                    <p className="text-sm font-semibold text-text-primary tabular-nums">AED {area.avg_price_sqm.toLocaleString()}</p>
+                    <p className="text-[11px] text-text-muted">per sqm</p>
                   </div>
                 </div>
               ))}
             </div>
           ) : (
             <div className="text-center py-6">
-              <BarChart3 className="w-6 h-6 text-gray-300 mx-auto mb-1.5" />
-              <p className="text-sm text-gray-400">No market data yet</p>
+              <BarChart3 className="w-6 h-6 text-text-muted mx-auto mb-1.5" />
+              <p className="text-sm text-text-muted">No market data yet</p>
             </div>
           )}
         </div>
@@ -420,7 +420,7 @@ export default function Dashboard() {
 
       {/* Floating footer disclaimer */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 animate-slide-up" style={{ animationDelay: '600ms' }}>
-        <div className="bg-gray-900 text-gray-400 text-[10px] px-4 py-2 rounded-full shadow-lg max-w-[500px] text-center leading-relaxed">
+        <div className="bg-text-primary text-text-muted text-[10px] px-4 py-2 rounded-full shadow-lg max-w-[500px] text-center leading-relaxed">
           Estater is a property management platform. Market data is sourced from DLD public records.
         </div>
       </div>

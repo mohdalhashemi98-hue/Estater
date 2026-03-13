@@ -52,8 +52,8 @@ export default function ValuationChart({ data, purchasePrice, onHover, height = 
             onClick={() => setPeriod(p)}
             className={`px-3 py-1 rounded-md text-xs font-medium transition-colors ${
               period === p
-                ? 'bg-gray-900 text-white'
-                : 'bg-gray-100 text-gray-500 hover:bg-gray-200'
+                ? 'bg-text-primary text-white'
+                : 'bg-surface-overlay text-text-muted hover:bg-surface-border'
             }`}
           >
             {p}
@@ -79,7 +79,7 @@ export default function ValuationChart({ data, purchasePrice, onHover, height = 
           </defs>
           <XAxis
             dataKey="date"
-            tick={{ fontSize: 11, fill: '#9CA3AF' }}
+            tick={{ fontSize: 11, fill: '#83827d' }}
             tickFormatter={d => {
               const date = new Date(d);
               return `${date.toLocaleString('default', { month: 'short' })} ${date.getFullYear().toString().slice(2)}`;
@@ -88,7 +88,7 @@ export default function ValuationChart({ data, purchasePrice, onHover, height = 
             tickLine={false}
           />
           <YAxis
-            tick={{ fontSize: 11, fill: '#9CA3AF' }}
+            tick={{ fontSize: 11, fill: '#83827d' }}
             tickFormatter={formatCurrencyAxis}
             axisLine={false}
             tickLine={false}
@@ -99,7 +99,7 @@ export default function ValuationChart({ data, purchasePrice, onHover, height = 
             labelFormatter={d => new Date(d).toLocaleDateString('en-US', { month: 'long', day: 'numeric', year: 'numeric' })}
             contentStyle={{
               borderRadius: '8px',
-              border: '1px solid #E5E7EB',
+              border: '1px solid #dad9d4',
               backgroundColor: '#fff',
               fontSize: '12px',
               boxShadow: '0 4px 12px rgba(0,0,0,0.08)',

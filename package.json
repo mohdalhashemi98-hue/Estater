@@ -18,10 +18,12 @@
     "bcryptjs": "^3.0.3",
     "better-sqlite3": "^11.7.0",
     "cheerio": "^1.2.0",
+    "clsx": "^2.1.1",
     "cors": "^2.8.5",
     "date-fns": "^4.1.0",
     "dotenv": "^17.3.1",
     "express": "^4.21.0",
+    "framer-motion": "^12.35.2",
     "googleapis": "^171.4.0",
     "jsonwebtoken": "^9.0.3",
     "lucide-react": "^0.468.0",
@@ -31,7 +33,9 @@
     "react": "^19.0.0",
     "react-dom": "^19.0.0",
     "react-router-dom": "^7.1.0",
+    "react-use-measure": "^2.1.7",
     "recharts": "^2.15.0",
+    "tailwind-merge": "^3.5.0",
     "xlsx": "^0.18.5"
   },
   "devDependencies": {

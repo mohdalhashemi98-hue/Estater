@@ -17,15 +17,15 @@ export default function StockTicker({ label, currentValue, previousValue, hoverV
 
   return (
     <div className="select-none">
-      <p className="text-sm text-gray-500 mb-1">{hoverDate || label}</p>
-      <p className="text-4xl font-semibold text-gray-900 tracking-tight transition-all duration-200">
+      <p className="text-sm text-text-muted mb-1">{hoverDate || label}</p>
+      <p className="text-4xl font-semibold text-text-primary tracking-tight transition-all duration-200">
         {formatCurrency(displayValue)}
       </p>
       {previousValue !== undefined && previousValue > 0 && (
         <div className="mt-1">
           <GainLossIndicator value={gainLoss} percent={gainLossPercent} size="md" />
           {hoverDate && (
-            <span className="text-xs text-gray-400 ml-2">vs. purchase price</span>
+            <span className="text-xs text-text-muted ml-2">vs. purchase price</span>
           )}
         </div>
       )}

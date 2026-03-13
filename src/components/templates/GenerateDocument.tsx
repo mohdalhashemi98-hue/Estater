@@ -35,9 +35,9 @@ export default function GenerateDocument({ template }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-xs font-medium text-gray-500 mb-1">Select Contract</label>
+        <label className="block text-xs font-medium text-text-muted mb-1">Select Contract</label>
         <select value={contractId} onChange={e => setContractId(e.target.value)}
-          className="w-full border border-gray-200 rounded-lg px-3 py-2 text-sm">
+          className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm">
           <option value="">Choose a contract...</option>
           {contracts.map(c => (
             <option key={c.id} value={c.id}>
@@ -53,14 +53,14 @@ export default function GenerateDocument({ template }: Props) {
           {previewMut.isPending ? 'Generating...' : 'Preview'}
         </button>
         {preview && (
-          <button onClick={downloadPdf} className="px-4 py-2 bg-gray-900 text-white rounded-lg text-sm font-medium hover:bg-gray-800 flex items-center gap-1.5">
+          <button onClick={downloadPdf} className="px-4 py-2 bg-text-primary text-white rounded-lg text-sm font-medium hover:bg-text-primary flex items-center gap-1.5">
             <Download className="w-3.5 h-3.5" /> Download PDF
           </button>
         )}
       </div>
 
       {preview && (
-        <div className="border border-gray-200 rounded-lg p-6 bg-white overflow-y-auto max-h-[500px] text-sm"
+        <div className="border border-surface-border rounded-lg p-6 bg-white overflow-y-auto max-h-[500px] text-sm"
           dangerouslySetInnerHTML={{ __html: preview }} />
       )}
     </div>

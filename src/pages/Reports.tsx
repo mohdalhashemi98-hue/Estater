@@ -55,24 +55,24 @@ export default function Reports() {
   return (
     <div className="space-y-6 max-w-[1000px]">
       <div className="animate-fade-in">
-        <h1 className="text-2xl font-semibold text-gray-900 flex items-center gap-2">
+        <h1 className="text-2xl font-semibold text-text-primary flex items-center gap-2">
           <FileBarChart className="w-6 h-6 text-accent-600" /> Reports
         </h1>
-        <p className="text-sm text-gray-500 mt-0.5">Generate and export property management reports</p>
+        <p className="text-sm text-text-muted mt-0.5">Generate and export property management reports</p>
       </div>
 
-      <div className="bg-white rounded-xl border border-gray-200 p-6 space-y-5 animate-fade-in animate-stagger-1">
+      <div className="bg-white rounded-xl border border-surface-border p-6 space-y-5 animate-fade-in animate-stagger-1">
         {/* Report type selector */}
         <div>
-          <label className="block text-xs font-medium text-gray-500 mb-2">Report Type</label>
+          <label className="block text-xs font-medium text-text-muted mb-2">Report Type</label>
           <div className="grid md:grid-cols-3 gap-3">
             {reportTypes.map(rt => (
               <button key={rt.id} onClick={() => setSelectedType(rt.id)}
                 className={`text-left p-3 rounded-lg border-2 transition-all duration-200 ${
-                  selectedType === rt.id ? 'border-accent-500 bg-accent-50 scale-[1.02] shadow-sm' : 'border-gray-200 hover:border-gray-300 hover:shadow-sm'
+                  selectedType === rt.id ? 'border-accent-500 bg-accent-50 scale-[1.02] shadow-sm' : 'border-surface-border hover:border-surface-border hover:shadow-sm'
                 }`}>
-                <p className="text-sm font-medium text-gray-900">{rt.name}</p>
-                <p className="text-xs text-gray-500 mt-0.5">{rt.description}</p>
+                <p className="text-sm font-medium text-text-primary">{rt.name}</p>
+                <p className="text-xs text-text-muted mt-0.5">{rt.description}</p>
               </button>
             ))}
           </div>
@@ -84,45 +84,45 @@ export default function Reports() {
             <div className="flex flex-wrap gap-4">
               {selectedReport?.requires_property && (
                 <div>
-                  <label className="block text-xs font-medium text-gray-500 mb-1">Property *</label>
+                  <label className="block text-xs font-medium text-text-muted mb-1">Property *</label>
                   <select value={propertyId} onChange={e => setPropertyId(e.target.value)}
-                    className="border border-gray-200 rounded-lg px-3 py-2 text-sm">
+                    className="border border-surface-border rounded-lg px-3 py-2 text-sm">
                     <option value="">Select property</option>
                     {properties.map(p => <option key={p.id} value={p.id}>{p.name}</option>)}
                   </select>
                 </div>
               )}
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">From Date</label>
+                <label className="block text-xs font-medium text-text-muted mb-1">From Date</label>
                 <input type="date" value={fromDate} onChange={e => setFromDate(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+                  className="border border-surface-border rounded-lg px-3 py-2 text-sm" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-gray-500 mb-1">To Date</label>
+                <label className="block text-xs font-medium text-text-muted mb-1">To Date</label>
                 <input type="date" value={toDate} onChange={e => setToDate(e.target.value)}
-                  className="border border-gray-200 rounded-lg px-3 py-2 text-sm" />
+                  className="border border-surface-border rounded-lg px-3 py-2 text-sm" />
               </div>
             </div>
 
             {/* Format toggle */}
             <div>
-              <label className="block text-xs font-medium text-gray-500 mb-2">Format</label>
+              <label className="block text-xs font-medium text-text-muted mb-2">Format</label>
               <div className="flex gap-2">
                 <button onClick={() => setFormat('pdf')}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium border ${
-                    format === 'pdf' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-gray-200 text-gray-600'
+                    format === 'pdf' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-surface-border text-text-secondary'
                   }`}>
                   <FileText className="w-3.5 h-3.5" /> PDF
                 </button>
                 <button onClick={() => setFormat('excel')}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium border ${
-                    format === 'excel' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-gray-200 text-gray-600'
+                    format === 'excel' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-surface-border text-text-secondary'
                   }`}>
                   <FileSpreadsheet className="w-3.5 h-3.5" /> Excel
                 </button>
                 <button onClick={() => setFormat('json')}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium border ${
-                    format === 'json' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-gray-200 text-gray-600'
+                    format === 'json' ? 'border-accent-500 bg-accent-50 text-accent-700' : 'border-surface-border text-text-secondary'
                   }`}>
                   Preview
                 </button>
@@ -140,25 +140,25 @@ export default function Reports() {
 
       {/* Preview table */}
       {preview && (
-        <div className="bg-white rounded-xl border border-gray-200 p-5 animate-slide-up">
-          <h3 className="text-sm font-medium text-gray-900 mb-3">{preview.title}</h3>
-          <p className="text-xs text-gray-400 mb-4">Generated {new Date(preview.generated_at).toLocaleString()}</p>
+        <div className="bg-white rounded-xl border border-surface-border p-5 animate-slide-up">
+          <h3 className="text-sm font-medium text-text-primary mb-3">{preview.title}</h3>
+          <p className="text-xs text-text-muted mb-4">Generated {new Date(preview.generated_at).toLocaleString()}</p>
 
           {Array.isArray(preview.data) && preview.data.length > 0 ? (
             <div className="overflow-x-auto">
               <table className="w-full text-xs">
                 <thead>
-                  <tr className="border-b border-gray-200 bg-gray-50">
+                  <tr className="border-b border-surface-border bg-surface">
                     {Object.keys(preview.data[0]).map(k => (
-                      <th key={k} className="text-left px-3 py-2 font-medium text-gray-500">{k.replace(/_/g, ' ')}</th>
+                      <th key={k} className="text-left px-3 py-2 font-medium text-text-muted">{k.replace(/_/g, ' ')}</th>
                     ))}
                   </tr>
                 </thead>
                 <tbody>
                   {preview.data.slice(0, 50).map((row: any, i: number) => (
-                    <tr key={i} className="border-b border-gray-50">
+                    <tr key={i} className="border-b border-surface">
                       {Object.values(row).map((v: any, j: number) => (
-                        <td key={j} className="px-3 py-2 text-gray-700">{String(v ?? '-')}</td>
+                        <td key={j} className="px-3 py-2 text-text-secondary">{String(v ?? '-')}</td>
                       ))}
                     </tr>
                   ))}
@@ -168,14 +168,14 @@ export default function Reports() {
           ) : preview.data && typeof preview.data === 'object' ? (
             <div className="space-y-2">
               {Object.entries(preview.data).map(([k, v]) => (
-                <div key={k} className="flex justify-between text-sm py-1 border-b border-gray-50">
-                  <span className="text-gray-500">{k.replace(/_/g, ' ')}</span>
-                  <span className="text-gray-900 font-medium">{Array.isArray(v) ? `${(v as any[]).length} items` : String(v)}</span>
+                <div key={k} className="flex justify-between text-sm py-1 border-b border-surface">
+                  <span className="text-text-muted">{k.replace(/_/g, ' ')}</span>
+                  <span className="text-text-primary font-medium">{Array.isArray(v) ? `${(v as any[]).length} items` : String(v)}</span>
                 </div>
               ))}
             </div>
           ) : (
-            <p className="text-sm text-gray-400">No data</p>
+            <p className="text-sm text-text-muted">No data</p>
           )}
         </div>
       )}

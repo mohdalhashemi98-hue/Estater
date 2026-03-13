@@ -142,10 +142,10 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
       <div className="absolute inset-0 bg-black/30 backdrop-blur-[2px]" onClick={onClose} />
 
       {/* Dialog */}
-      <div className="relative bg-white rounded-xl shadow-2xl border border-gray-200 w-full max-w-[520px] overflow-hidden animate-scale-in">
+      <div className="relative bg-white rounded-xl shadow-2xl border border-surface-border w-full max-w-[520px] overflow-hidden animate-scale-in">
         {/* Search input */}
-        <div className="flex items-center gap-3 px-4 py-3 border-b border-gray-100">
-          <Search className="w-4 h-4 text-gray-400 shrink-0" />
+        <div className="flex items-center gap-3 px-4 py-3 border-b border-surface-border">
+          <Search className="w-4 h-4 text-text-muted shrink-0" />
           <input
             ref={inputRef}
             type="text"
@@ -153,9 +153,9 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
             onChange={e => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search properties, tenants, contracts..."
-            className="flex-1 text-sm text-gray-900 placeholder-gray-400 outline-none bg-transparent"
+            className="flex-1 text-sm text-text-primary placeholder-text-muted outline-none bg-transparent"
           />
-          <button onClick={onClose} className="text-gray-400 hover:text-gray-600">
+          <button onClick={onClose} className="text-text-muted hover:text-text-secondary">
             <X className="w-4 h-4" />
           </button>
         </div>
@@ -163,11 +163,11 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
         {/* Results */}
         <div className="max-h-[360px] overflow-y-auto py-2">
           {results.length === 0 ? (
-            <p className="text-sm text-gray-400 text-center py-8">No results found</p>
+            <p className="text-sm text-text-muted text-center py-8">No results found</p>
           ) : (
             <>
               {!query.trim() && (
-                <p className="px-4 py-1.5 text-[11px] font-medium text-gray-400 uppercase tracking-wider">Quick navigation</p>
+                <p className="px-4 py-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">Quick navigation</p>
               )}
               {results.map((result, i) => (
                 <button
@@ -175,20 +175,20 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
                   onClick={() => goTo(result)}
                   onMouseEnter={() => setSelectedIndex(i)}
                   className={`w-full flex items-center gap-3 px-4 py-2.5 text-left transition-colors ${
-                    i === selectedIndex ? 'bg-accent-50' : 'hover:bg-gray-50'
+                    i === selectedIndex ? 'bg-accent-50' : 'hover:bg-surface'
                   }`}
                 >
                   <div className={`w-8 h-8 rounded-lg flex items-center justify-center shrink-0 ${
                     result.type === 'property' ? 'bg-blue-50 text-blue-600' :
                     result.type === 'tenant' ? 'bg-emerald-50 text-emerald-600' :
                     result.type === 'contract' ? 'bg-amber-50 text-amber-600' :
-                    'bg-gray-50 text-gray-400'
+                    'bg-surface text-text-muted'
                   }`}>
                     <result.icon className="w-4 h-4" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <p className="text-sm font-medium text-gray-900 truncate">{result.label}</p>
-                    <p className="text-xs text-gray-400 truncate">{result.sublabel}</p>
+                    <p className="text-sm font-medium text-text-primary truncate">{result.label}</p>
+                    <p className="text-xs text-text-muted truncate">{result.sublabel}</p>
                   </div>
                   {i === selectedIndex && (
                     <ArrowRight className="w-3.5 h-3.5 text-accent-500 shrink-0" />
@@ -200,15 +200,15 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
         </div>
 
         {/* Footer */}
-        <div className="px-4 py-2.5 border-t border-gray-100 flex items-center gap-4 text-[11px] text-gray-400">
+        <div className="px-4 py-2.5 border-t border-surface-border flex items-center gap-4 text-[11px] text-text-muted">
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded bg-gray-100 border border-gray-200 font-mono text-[10px]">↑↓</kbd> Navigate
+            <kbd className="px-1 py-0.5 rounded bg-surface-overlay border border-surface-border font-mono text-[10px]">↑↓</kbd> Navigate
           </span>
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded bg-gray-100 border border-gray-200 font-mono text-[10px]">↵</kbd> Select
+            <kbd className="px-1 py-0.5 rounded bg-surface-overlay border border-surface-border font-mono text-[10px]">↵</kbd> Select
           </span>
           <span className="flex items-center gap-1">
-            <kbd className="px-1 py-0.5 rounded bg-gray-100 border border-gray-200 font-mono text-[10px]">Esc</kbd> Close
+            <kbd className="px-1 py-0.5 rounded bg-surface-overlay border border-surface-border font-mono text-[10px]">Esc</kbd> Close
           </span>
         </div>
       </div>

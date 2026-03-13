@@ -15,7 +15,7 @@ export default function MortgageCard({ mortgage }: MortgageCardProps) {
   return (
     <Link
       to={`/mortgages/${mortgage.id}`}
-      className="bg-white rounded-xl border border-gray-200 p-4 hover:shadow-md hover:border-gray-300 transition-all group"
+      className="bg-white rounded-xl border border-surface-border p-4 hover:shadow-md hover:border-surface-border transition-all group"
     >
       <div className="flex items-start justify-between">
         <div className="flex items-center gap-2.5">
@@ -23,38 +23,38 @@ export default function MortgageCard({ mortgage }: MortgageCardProps) {
             <Landmark className="w-4 h-4 text-accent-600" />
           </div>
           <div>
-            <h4 className="font-medium text-gray-900 text-sm">{mortgage.lender_name}</h4>
-            <p className="text-xs text-gray-400 capitalize">{mortgage.loan_type} rate &middot; {mortgage.interest_rate}%</p>
+            <h4 className="font-medium text-text-primary text-sm">{mortgage.lender_name}</h4>
+            <p className="text-xs text-text-muted capitalize">{mortgage.loan_type} rate &middot; {mortgage.interest_rate}%</p>
           </div>
         </div>
-        <ArrowRight className="w-4 h-4 text-gray-300 group-hover:text-accent-600 transition-colors" />
+        <ArrowRight className="w-4 h-4 text-text-muted group-hover:text-accent-600 transition-colors" />
       </div>
 
       <div className="mt-3 grid grid-cols-2 gap-2 text-sm">
         <div>
-          <p className="text-gray-400 text-xs">Loan Amount</p>
-          <p className="font-medium text-gray-900">{formatCurrency(mortgage.loan_amount)}</p>
+          <p className="text-text-muted text-xs">Loan Amount</p>
+          <p className="font-medium text-text-primary">{formatCurrency(mortgage.loan_amount)}</p>
         </div>
         <div>
-          <p className="text-gray-400 text-xs">Monthly Payment</p>
-          <p className="font-medium text-gray-900">{formatCurrency(mortgage.monthly_payment)}</p>
+          <p className="text-text-muted text-xs">Monthly Payment</p>
+          <p className="font-medium text-text-primary">{formatCurrency(mortgage.monthly_payment)}</p>
         </div>
         <div>
-          <p className="text-gray-400 text-xs">Remaining</p>
-          <p className="font-medium text-gray-900">{formatCurrency(mortgage.remaining_balance ?? mortgage.loan_amount)}</p>
+          <p className="text-text-muted text-xs">Remaining</p>
+          <p className="font-medium text-text-primary">{formatCurrency(mortgage.remaining_balance ?? mortgage.loan_amount)}</p>
         </div>
         <div>
-          <p className="text-gray-400 text-xs">Term</p>
-          <p className="font-medium text-gray-900">{Math.round(mortgage.term_months / 12)} years</p>
+          <p className="text-text-muted text-xs">Term</p>
+          <p className="font-medium text-text-primary">{Math.round(mortgage.term_months / 12)} years</p>
         </div>
       </div>
 
       <div className="mt-3">
-        <div className="flex justify-between text-xs text-gray-400 mb-1">
+        <div className="flex justify-between text-xs text-text-muted mb-1">
           <span>Paid off</span>
           <span>{paidPercent.toFixed(1)}%</span>
         </div>
-        <div className="h-1.5 bg-gray-100 rounded-full overflow-hidden">
+        <div className="h-1.5 bg-surface-overlay rounded-full overflow-hidden">
           <div
             className="h-full bg-emerald-500 rounded-full transition-all"
             style={{ width: `${Math.min(paidPercent, 100)}%` }}

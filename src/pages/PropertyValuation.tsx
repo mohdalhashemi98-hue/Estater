@@ -58,12 +58,12 @@ export default function PropertyValuation() {
 
   return (
     <div className="space-y-6">
-      <Link to="/portfolio" className="inline-flex items-center gap-1 text-sm text-gray-500 hover:text-gray-900 transition-colors">
+      <Link to="/portfolio" className="inline-flex items-center gap-1 text-sm text-text-muted hover:text-text-primary transition-colors">
         <ArrowLeft className="w-4 h-4" /> Back to Portfolio
       </Link>
 
       {/* Stock-ticker header */}
-      <div className="bg-white rounded-xl border border-gray-200 p-6 shadow-sm animate-fade-in">
+      <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm animate-fade-in">
         <StockTicker
           label={property?.name || 'Property'}
           currentValue={currentValue}
@@ -86,8 +86,8 @@ export default function PropertyValuation() {
             />
           </div>
         ) : (
-          <div className="mt-6 text-center py-12 border-2 border-dashed border-gray-200 rounded-lg">
-            <p className="text-gray-500">Add at least 2 valuations to see the chart.</p>
+          <div className="mt-6 text-center py-12 border-2 border-dashed border-surface-border rounded-lg">
+            <p className="text-text-muted">Add at least 2 valuations to see the chart.</p>
           </div>
         )}
       </div>
@@ -104,7 +104,7 @@ export default function PropertyValuation() {
           <button
             onClick={() => scrapeMutation.mutate()}
             disabled={scrapeMutation.isPending}
-            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-gray-200 text-gray-500 hover:bg-gray-50 disabled:opacity-50 transition-colors"
+            className="flex items-center gap-2 px-4 py-2 rounded-lg text-sm font-medium border border-surface-border text-text-muted hover:bg-surface disabled:opacity-50 transition-colors"
           >
             {scrapeMutation.isPending ? <Loader2 className="w-4 h-4 animate-spin" /> : <Globe className="w-4 h-4" />}
             Scrape Latest Value
@@ -126,41 +126,41 @@ export default function PropertyValuation() {
 
       {/* Valuation History Table */}
       {valuations.length > 0 ? (
-        <div className="bg-white rounded-xl border border-gray-200 overflow-hidden shadow-sm">
-          <div className="px-6 py-4 border-b border-gray-200">
-            <h3 className="font-semibold text-gray-900">Valuation History</h3>
+        <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
+          <div className="px-6 py-4 border-b border-surface-border">
+            <h3 className="font-semibold text-text-primary">Valuation History</h3>
           </div>
           <table className="w-full text-sm">
-            <thead className="bg-gray-50 border-b border-gray-200">
+            <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Date</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Value</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Source</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Confidence</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500">Notes</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-gray-500"></th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Date</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Value</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Source</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Confidence</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Notes</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted"></th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-gray-100">
+            <tbody className="divide-y divide-surface-border">
               {valuations.map((v, i) => (
-                <tr key={v.id} className="hover:bg-gray-50 transition-colors animate-fade-in" style={{ animationDelay: `${Math.min(i * 50, 300)}ms` }}>
-                  <td className="px-4 py-3 text-gray-900">{formatDate(v.valuation_date)}</td>
-                  <td className="px-4 py-3 font-semibold text-gray-900">{formatCurrency(v.estimated_value)}</td>
-                  <td className="px-4 py-3 text-gray-500 capitalize">{v.source}</td>
+                <tr key={v.id} className="hover:bg-surface transition-colors animate-fade-in" style={{ animationDelay: `${Math.min(i * 50, 300)}ms` }}>
+                  <td className="px-4 py-3 text-text-primary">{formatDate(v.valuation_date)}</td>
+                  <td className="px-4 py-3 font-semibold text-text-primary">{formatCurrency(v.estimated_value)}</td>
+                  <td className="px-4 py-3 text-text-muted capitalize">{v.source}</td>
                   <td className="px-4 py-3">
                     <span className={`px-2 py-0.5 rounded-full text-xs font-medium capitalize ${
                       v.confidence === 'high' ? 'bg-success-50 text-success-700' :
                       v.confidence === 'medium' ? 'bg-warning-50 text-warning-700' :
-                      'bg-gray-50 text-gray-500'
+                      'bg-surface text-text-muted'
                     }`}>
                       {v.confidence}
                     </span>
                   </td>
-                  <td className="px-4 py-3 text-gray-500">{v.notes || '-'}</td>
+                  <td className="px-4 py-3 text-text-muted">{v.notes || '-'}</td>
                   <td className="px-4 py-3">
                     <button
                       onClick={() => { if (confirm('Delete this valuation?')) deleteMutation.mutate(v.id); }}
-                      className="p-1.5 text-gray-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      className="p-1.5 text-text-muted hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -171,15 +171,15 @@ export default function PropertyValuation() {
           </table>
         </div>
       ) : !isLoading && (
-        <div className="text-center py-8 bg-white rounded-xl border border-gray-200">
-          <TrendingUp className="w-8 h-8 text-gray-300 mx-auto mb-2" />
-          <p className="text-sm text-gray-400">No valuations recorded yet. Add your first valuation above.</p>
+        <div className="text-center py-8 bg-white rounded-xl border border-surface-border">
+          <TrendingUp className="w-8 h-8 text-text-muted mx-auto mb-2" />
+          <p className="text-sm text-text-muted">No valuations recorded yet. Add your first valuation above.</p>
         </div>
       )}
 
       {isLoading && (
         <div className="flex items-center justify-center py-12">
-          <div className="w-6 h-6 border-2 border-gray-200 border-t-accent-600 rounded-full animate-spin" />
+          <div className="w-6 h-6 border-2 border-surface-border border-t-accent-600 rounded-full animate-spin" />
         </div>
       )}
     </div>
