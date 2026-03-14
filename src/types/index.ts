@@ -91,6 +91,7 @@ export interface Contract {
   tenant_phone?: string;
   tenant_email?: string;
   unit_number?: string;
+  property_id?: number;
   property_name?: string;
   payments?: Payment[];
   deposit?: Deposit | null;
@@ -439,4 +440,110 @@ export interface ReportType {
   name: string;
   description: string;
   requires_property?: boolean;
+}
+
+// Cheque Types
+export type ChequeStatus = 'held' | 'deposited' | 'cleared' | 'bounced' | 'replaced' | 'cancelled';
+
+export interface Cheque {
+  id: number;
+  payment_id?: number;
+  cheque_number: string;
+  bank_name: string;
+  branch?: string;
+  drawer_name?: string;
+  cheque_date: string;
+  deposit_date?: string;
+  clearance_date?: string;
+  status: ChequeStatus;
+  bounce_reason?: string;
+  bounce_fee?: number;
+  replacement_cheque_id?: number;
+  image_file?: string;
+  notes?: string;
+  payment_amount?: number;
+  payment_due_date?: string;
+  tenant_name?: string;
+  unit_number?: string;
+  property_name?: string;
+  property_id?: number;
+  tenant_id?: number;
+  created_at: string;
+  updated_at: string;
+}
+
+// Document Types
+export type DocType = 'title_deed' | 'ejari' | 'tawtheeq' | 'emirates_id' | 'passport' | 'visa' | 'insurance' | 'service_charge' | 'noc' | 'trade_license' | 'mortgage_contract' | 'payment_schedule' | 'other';
+
+export interface Document {
+  id: number;
+  entity_type: 'property' | 'tenant' | 'contract' | 'unit';
+  entity_id: number;
+  doc_type: DocType;
+  original_name: string;
+  stored_name: string;
+  mime_type: string;
+  size_bytes: number;
+  expiry_date?: string;
+  reference_number?: string;
+  status: 'active' | 'expired' | 'archived';
+  entity_name?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Contract Registration Types (Ejari/Tawtheeq)
+export type RegistrationStatus = 'pending' | 'submitted' | 'registered' | 'expired' | 'cancelled';
+
+export interface ContractRegistration {
+  id: number;
+  contract_id: number;
+  registration_type: 'ejari' | 'tawtheeq';
+  registration_number?: string;
+  registration_date?: string;
+  expiry_date?: string;
+  status: RegistrationStatus;
+  document_id?: number;
+  document_name?: string;
+  notes?: string;
+  created_at: string;
+  updated_at: string;
+}
+
+// Property Analytics
+export interface PropertyAnalyticsSummary {
+  gross_rental_yield: number;
+  net_rental_yield: number;
+  cap_rate: number;
+  noi: number;
+  roi: number;
+  cash_on_cash: number;
+  collection_rate: number;
+  occupancy_rate: number;
+  avg_rent_per_sqm: number;
+  expense_ratio: number;
+  monthly_revenue_trend: { month: string; revenue: number }[];
+  expense_breakdown: { category: string; total: number }[];
+}
+
+// Tenant Insights
+export interface TenantInsightsSummary {
+  total_lifetime_value: number;
+  avg_payment_delay_days: number;
+  renewal_count: number;
+  payment_trend: { month: string; amount: number; on_time: boolean }[];
+  risk_factors: string[];
+  lease_duration_months: number;
+}
+
+// RERA Calculator
+export interface RERACalculation {
+  allowed_increase_percent: number;
+  max_new_rent: number;
+  band: string;
+  rule_text: string;
+  emirate: string;
+  current_rent: number;
+  market_avg: number;
+  difference_percent: number;
 }

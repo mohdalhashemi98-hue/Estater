@@ -93,7 +93,7 @@ router.get('/:id', (req: Request, res: Response) => {
   if (!tenant) return res.status(404).json({ error: 'Tenant not found' });
 
   const contracts = db.prepare(`
-    SELECT c.*, u.unit_number, p.name as property_name
+    SELECT c.*, u.unit_number, p.id as property_id, p.name as property_name
     FROM contracts c
     JOIN units u ON c.unit_id = u.id
     JOIN properties p ON u.property_id = p.id

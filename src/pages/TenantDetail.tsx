@@ -5,29 +5,12 @@ import { toast } from 'sonner';
 import { api } from '../api/client';
 import { Tenant, Contract, Payment } from '../types';
 import { formatCurrency, formatDate, statusColor, frequencyLabel, daysUntil } from '../utils/formatters';
-import { ArrowLeft, Phone, Mail, Building, CreditCard, FileText, Pencil, Trash2, Check, X, MessageCircle, Shield, Calendar } from 'lucide-react';
+import { ArrowLeft, Phone, Mail, Building, CreditCard, FileText, Pencil, Trash2, Check, X, MessageCircle, Calendar, Upload, Stamp, Landmark } from 'lucide-react';
+import TenantInsights from '../components/analytics/TenantInsights';
+import DocumentUploader from '../components/documents/DocumentUploader';
+import DocumentGrid from '../components/documents/DocumentGrid';
 
 type Tab = 'overview' | 'payments' | 'contracts' | 'documents';
-
-interface TenantRisk {
-  tenant_id: number;
-  tenant_name: string;
-  risk_score?: number;
-  risk_level?: 'low' | 'medium' | 'high';
-  on_time_rate?: number;
-  total_payments?: number;
-  paid_payments?: number;
-  overdue_payments?: number;
-}
-
-function riskBadgeColor(level?: string) {
-  switch (level) {
-    case 'low': return 'bg-emerald-50 text-emerald-700';
-    case 'medium': return 'bg-amber-50 text-amber-700';
-    case 'high': return 'bg-red-50 text-red-700';
-    default: return 'bg-surface-overlay text-text-muted';
-  }
-}
 
 function collectPayments(contracts: Contract[]): (Payment & { contract_id: number; property_name?: string; unit_number?: string })[] {
   const all: (Payment & { contract_id: number; property_name?: string; unit_number?: string })[] = [];
@@ -53,14 +36,6 @@ export default function TenantDetail() {
     queryKey: ['tenant', id],
     queryFn: () => api.get(`/tenants/${id}`),
   });
-
-  const { data: riskData } = useQuery<TenantRisk[]>({
-    queryKey: ['tenant-risk'],
-    queryFn: () => api.get('/analytics/tenant-risk'),
-    staleTime: 5 * 60 * 1000,
-  });
-
-  const tenantRisk = riskData?.find(r => r.tenant_id === Number(id));
 
   const updateMutation = useMutation({
     mutationFn: (data: any) => api.put(`/tenants/${id}`, data),
@@ -113,7 +88,7 @@ export default function TenantDetail() {
   const pendingPayments = allPayments.filter(p => p.status === 'pending');
   const totalPaid = paidPayments.reduce((sum, p) => sum + p.amount, 0);
   const totalOutstanding = [...overduePayments, ...pendingPayments].reduce((sum, p) => sum + p.amount, 0);
-  const onTimeRate = tenantRisk?.on_time_rate ?? (allPayments.length > 0 ? Math.round((paidPayments.length / allPayments.length) * 100) : null);
+  const onTimeRate = allPayments.length > 0 ? Math.round((paidPayments.length / allPayments.length) * 100) : null;
 
   const initials = `${tenant.first_name.charAt(0)}${tenant.last_name.charAt(0)}`.toUpperCase();
   const fullName = `${tenant.first_name} ${tenant.last_name}`;
@@ -225,14 +200,9 @@ export default function TenantDetail() {
               </div>
             </div>
 
-            {/* Right: Risk badge + actions */}
+            {/* Right: actions */}
             <div className="flex flex-col items-end gap-3 flex-shrink-0">
               <div className="flex items-center gap-2">
-                {tenantRisk?.risk_level && (
-                  <span className={`inline-flex items-center gap-1 px-2.5 py-1 rounded-full text-xs font-medium capitalize ${riskBadgeColor(tenantRisk.risk_level)}`}>
-                    <Shield className="w-3 h-3" /> {tenantRisk.risk_level} risk
-                  </span>
-                )}
                 <button onClick={startEditing} className="p-2 text-text-muted hover:text-accent-600 hover:bg-accent-50 rounded-lg transition-colors" title="Edit">
                   <Pencil className="w-4 h-4" />
                 </button>
@@ -329,6 +299,9 @@ export default function TenantDetail() {
               <Link to="/contracts" className="inline-block mt-2 text-sm font-medium text-accent-600 hover:text-accent-700">Create a contract</Link>
             </div>
           )}
+
+          {/* Tenant Insights */}
+          <TenantInsights tenantId={Number(id)} />
 
           {/* Quick Payment Stats */}
           {allPayments.length > 0 && (
@@ -467,15 +440,88 @@ export default function TenantDetail() {
         </div>
       )}
 
-      {activeTab === 'documents' && (
-        <div className="animate-fade-in">
-          <div className="text-center py-16 bg-white rounded-xl border border-surface-border shadow-sm">
-            <FileText className="w-10 h-10 text-text-muted mx-auto mb-3" />
-            <p className="text-lg font-medium text-text-primary">Document Management</p>
-            <p className="mt-1 text-sm text-text-muted">Coming soon. You will be able to upload and manage tenant-related documents here.</p>
+      {activeTab === 'documents' && (() => {
+        const uniqueProperties = contracts.reduce<{ id: number; name: string }[]>((acc, c) => {
+          if (c.property_id && !acc.find(p => p.id === c.property_id)) {
+            acc.push({ id: c.property_id!, name: c.property_name || 'Unknown Property' });
+          }
+          return acc;
+        }, []);
+
+        return (
+          <div className="space-y-6 animate-fade-in">
+            {/* A) Personal Documents */}
+            <div className="bg-white rounded-xl border border-surface-border p-5">
+              <div className="flex items-center gap-2 mb-4">
+                <Upload className="w-4 h-4 text-accent-600" />
+                <h3 className="font-semibold text-sm text-text-primary">Personal Documents</h3>
+              </div>
+              <DocumentUploader
+                entityType="tenant"
+                entityId={Number(id)}
+                allowedTypes={['emirates_id', 'passport', 'visa', 'trade_license', 'other']}
+              />
+              <div className="mt-4">
+                <DocumentGrid entityType="tenant" entityId={Number(id)} />
+              </div>
+            </div>
+
+            {/* B) Ejari / Contract Documents */}
+            {contracts.length > 0 && (
+              <div className="bg-white rounded-xl border border-surface-border p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <Stamp className="w-4 h-4 text-teal-600" />
+                  <h3 className="font-semibold text-sm text-text-primary">Ejari / Contract Documents</h3>
+                </div>
+                <div className="space-y-5">
+                  {contracts.map(c => (
+                    <div key={c.id} className="border border-surface-border rounded-lg p-4">
+                      <p className="text-sm font-medium text-text-primary mb-3">
+                        {c.property_name} - {c.unit_number}
+                      </p>
+                      <DocumentUploader
+                        entityType="contract"
+                        entityId={c.id}
+                        allowedTypes={['ejari', 'tawtheeq']}
+                      />
+                      <div className="mt-3">
+                        <DocumentGrid entityType="contract" entityId={c.id} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* C) Mortgage & Property Documents */}
+            {uniqueProperties.length > 0 && (
+              <div className="bg-white rounded-xl border border-surface-border p-5">
+                <div className="flex items-center gap-2 mb-4">
+                  <Landmark className="w-4 h-4 text-rose-600" />
+                  <h3 className="font-semibold text-sm text-text-primary">Mortgage & Property Documents</h3>
+                </div>
+                <div className="space-y-5">
+                  {uniqueProperties.map(prop => (
+                    <div key={prop.id} className="border border-surface-border rounded-lg p-4">
+                      <p className="text-sm font-medium text-text-primary mb-3">
+                        {prop.name}
+                      </p>
+                      <DocumentUploader
+                        entityType="property"
+                        entityId={prop.id}
+                        allowedTypes={['mortgage_contract', 'payment_schedule', 'insurance']}
+                      />
+                      <div className="mt-3">
+                        <DocumentGrid entityType="property" entityId={prop.id} />
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
           </div>
-        </div>
-      )}
+        );
+      })()}
     </div>
   );
 }
