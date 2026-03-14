@@ -29,6 +29,69 @@ router.get('/', (_req: Request, res: Response) => {
   res.json(rows);
 });
 
+// List properties with financial summaries
+router.get('/enriched', (_req: Request, res: Response) => {
+  const today = new Date().toISOString().split('T')[0];
+
+  const rows = db.prepare(`
+    SELECT p.*,
+      COUNT(u.id) as unit_count,
+      SUM(CASE WHEN u.status = 'occupied' THEN 1 ELSE 0 END) as occupied_count,
+      COUNT(u.id) - SUM(CASE WHEN u.status = 'occupied' THEN 1 ELSE 0 END) as vacant_count,
+
+      (SELECT COALESCE(SUM(
+        c2.rent_amount / CASE c2.payment_frequency
+          WHEN 'monthly' THEN 1
+          WHEN 'quarterly' THEN 3
+          WHEN 'semi_annual' THEN 6
+          WHEN 'annual' THEN 12
+          ELSE 1
+        END
+      ), 0)
+      FROM contracts c2
+      JOIN units u2 ON c2.unit_id = u2.id
+      WHERE u2.property_id = p.id AND c2.status = 'active'
+      ) as monthly_revenue,
+
+      (SELECT CASE
+        WHEN COUNT(CASE WHEN pay.due_date <= '${today}' THEN 1 END) = 0 THEN 0
+        ELSE ROUND(
+          CAST(COUNT(CASE WHEN pay.due_date <= '${today}' AND pay.status = 'paid' THEN 1 END) AS REAL)
+          / COUNT(CASE WHEN pay.due_date <= '${today}' THEN 1 END) * 100, 2)
+        END
+      FROM payments pay
+      JOIN contracts c3 ON pay.contract_id = c3.id
+      JOIN units u3 ON c3.unit_id = u3.id
+      WHERE u3.property_id = p.id
+      ) as collection_rate,
+
+      (SELECT COALESCE(SUM(pay2.amount), 0)
+      FROM payments pay2
+      JOIN contracts c4 ON pay2.contract_id = c4.id
+      JOIN units u4 ON c4.unit_id = u4.id
+      WHERE u4.property_id = p.id AND pay2.status IN ('pending', 'overdue')
+      ) as outstanding_balance,
+
+      (SELECT MIN(c5.end_date)
+      FROM contracts c5
+      JOIN units u5 ON c5.unit_id = u5.id
+      WHERE u5.property_id = p.id AND c5.status = 'active'
+      ) as next_expiry,
+
+      (SELECT COUNT(*)
+      FROM maintenance_requests mr
+      WHERE mr.property_id = p.id AND mr.status IN ('reported', 'in_progress')
+      ) as maintenance_open
+
+    FROM properties p
+    LEFT JOIN units u ON u.property_id = p.id
+    GROUP BY p.id
+    ORDER BY p.name
+  `).all();
+
+  res.json(rows);
+});
+
 // Get single property with units
 router.get('/:id', (req: Request, res: Response) => {
   const property = db.prepare('SELECT * FROM properties WHERE id = ?').get(req.params.id);
