@@ -64,7 +64,7 @@ export default function Reports() {
       <div className="bg-white rounded-xl border border-surface-border p-6 space-y-5 animate-fade-in animate-stagger-1">
         {/* Report type selector */}
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-2">Report Type</label>
+          <label className="block text-xs font-medium text-text-secondary mb-2">Report Type</label>
           <div className="grid md:grid-cols-3 gap-3">
             {reportTypes.map(rt => (
               <button key={rt.id} onClick={() => setSelectedType(rt.id)}
@@ -84,7 +84,7 @@ export default function Reports() {
             <div className="flex flex-wrap gap-4">
               {selectedReport?.requires_property && (
                 <div>
-                  <label className="block text-xs font-medium text-text-muted mb-1">Property *</label>
+                  <label className="block text-xs font-medium text-text-secondary mb-1">Property *</label>
                   <select value={propertyId} onChange={e => setPropertyId(e.target.value)}
                     className="border border-surface-border rounded-lg px-3 py-2 text-sm">
                     <option value="">Select property</option>
@@ -93,12 +93,12 @@ export default function Reports() {
                 </div>
               )}
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">From Date</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">From Date</label>
                 <input type="date" value={fromDate} onChange={e => setFromDate(e.target.value)}
                   className="border border-surface-border rounded-lg px-3 py-2 text-sm" />
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">To Date</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">To Date</label>
                 <input type="date" value={toDate} onChange={e => setToDate(e.target.value)}
                   className="border border-surface-border rounded-lg px-3 py-2 text-sm" />
               </div>
@@ -106,7 +106,7 @@ export default function Reports() {
 
             {/* Format toggle */}
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-2">Format</label>
+              <label className="block text-xs font-medium text-text-secondary mb-2">Format</label>
               <div className="flex gap-2">
                 <button onClick={() => setFormat('pdf')}
                   className={`flex items-center gap-1.5 px-4 py-2 rounded-lg text-sm font-medium border ${
@@ -150,7 +150,7 @@ export default function Reports() {
                 <thead>
                   <tr className="border-b border-surface-border bg-surface">
                     {Object.keys(preview.data[0]).map(k => (
-                      <th key={k} className="text-left px-3 py-2 font-medium text-text-muted">{k.replace(/_/g, ' ')}</th>
+                      <th key={k} className="text-left px-3 py-2 font-medium text-text-secondary">{k.replace(/_/g, ' ')}</th>
                     ))}
                   </tr>
                 </thead>

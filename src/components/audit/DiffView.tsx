@@ -33,9 +33,9 @@ export default function DiffView({ oldValues, newValues }: Props) {
   return (
     <div className="bg-surface rounded-lg border border-surface-border overflow-hidden">
       <div className="grid grid-cols-3 gap-0 text-xs">
-        <div className="px-3 py-2 font-medium text-text-muted bg-surface-overlay border-b border-surface-border">Field</div>
-        <div className="px-3 py-2 font-medium text-text-muted bg-surface-overlay border-b border-surface-border">Old Value</div>
-        <div className="px-3 py-2 font-medium text-text-muted bg-surface-overlay border-b border-surface-border">New Value</div>
+        <div className="px-3 py-2 font-medium text-text-secondary bg-surface-overlay border-b border-surface-border">Field</div>
+        <div className="px-3 py-2 font-medium text-text-secondary bg-surface-overlay border-b border-surface-border">Old Value</div>
+        <div className="px-3 py-2 font-medium text-text-secondary bg-surface-overlay border-b border-surface-border">New Value</div>
         {changedKeys.map(key => {
           const oldVal = oldObj?.[key];
           const newVal = newObj?.[key];

@@ -112,13 +112,13 @@ export default function Expenses() {
           <table className="w-full text-sm">
             <thead>
               <tr className="border-b border-surface-border bg-surface">
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Date</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Property</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Category</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Vendor</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-text-muted">Amount</th>
-                <th className="text-center px-4 py-3 text-xs font-medium text-text-muted">Receipt</th>
-                <th className="text-right px-4 py-3 text-xs font-medium text-text-muted">Actions</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Date</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Property</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Category</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Vendor</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-text-secondary">Amount</th>
+                <th className="text-center px-4 py-3 text-xs font-medium text-text-secondary">Receipt</th>
+                <th className="text-right px-4 py-3 text-xs font-medium text-text-secondary">Actions</th>
               </tr>
             </thead>
             <tbody>

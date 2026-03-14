@@ -41,15 +41,15 @@ export default function ValuationForm({ propertyId, onClose }: ValuationFormProp
 
       <div className="grid md:grid-cols-3 gap-3">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Date *</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Date *</label>
           <input type="date" className={inputClass} value={form.valuation_date} onChange={e => setForm({ ...form, valuation_date: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Estimated Value *</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Estimated Value *</label>
           <input type="number" className={inputClass} value={form.estimated_value} onChange={e => setForm({ ...form, estimated_value: e.target.value })} placeholder="450000" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Source</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Source</label>
           <select className={inputClass} value={form.source} onChange={e => setForm({ ...form, source: e.target.value })}>
             <option value="manual">Manual Entry</option>
             <option value="zillow">Zillow</option>
@@ -58,7 +58,7 @@ export default function ValuationForm({ propertyId, onClose }: ValuationFormProp
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Confidence</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Confidence</label>
           <select className={inputClass} value={form.confidence} onChange={e => setForm({ ...form, confidence: e.target.value })}>
             <option value="high">High</option>
             <option value="medium">Medium</option>
@@ -66,7 +66,7 @@ export default function ValuationForm({ propertyId, onClose }: ValuationFormProp
           </select>
         </div>
         <div className="md:col-span-2">
-          <label className="block text-xs font-medium text-text-muted mb-1">Notes</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Notes</label>
           <input className={inputClass} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} placeholder="Optional notes" />
         </div>
       </div>

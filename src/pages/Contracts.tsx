@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { api } from '../api/client';
 import { Contract, Property, Tenant, Unit, ContractCreationAnalysis, UAE_EMIRATES } from '../types';
 import { formatCurrency, formatDate, statusColor, frequencyLabel, daysUntil } from '../utils/formatters';
@@ -57,7 +58,9 @@ export default function Contracts() {
       setShowForm(false);
       setForm(defaultForm);
       setSelectedPropertyId(null);
+      toast.success('Contract created');
     },
+    onError: () => toast.error('Failed to create contract'),
   });
 
   // AI Upload mutation
@@ -70,7 +73,9 @@ export default function Contracts() {
     onSuccess: (data) => {
       setAiAnalysis(data);
       setShowAiReview(true);
+      toast.success('Contract analyzed — review the details below');
     },
+    onError: () => toast.error('Failed to analyze contract'),
   });
 
   // Auto-create from AI analysis
@@ -83,7 +88,9 @@ export default function Contracts() {
       queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
       setShowAiReview(false);
       setAiAnalysis(null);
+      toast.success('Contract, tenant, and property created');
     },
+    onError: () => toast.error('Failed to create from analysis'),
   });
 
   const handleFileUpload = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -186,7 +193,7 @@ export default function Contracts() {
                 <p className="text-sm text-text-muted">{aiAnalysis.summary}</p>
               </div>
             </div>
-            <button onClick={() => { setShowAiReview(false); setAiAnalysis(null); }} className="text-text-muted hover:text-text-muted">
+            <button onClick={() => { setShowAiReview(false); setAiAnalysis(null); }} className="text-text-muted hover:text-text-secondary">
               <X className="w-5 h-5" />
             </button>
           </div>
@@ -339,12 +346,12 @@ export default function Contracts() {
         <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm modal-content">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-lg text-text-primary">New Contract</h3>
-            <button onClick={() => { setShowForm(false); setSelectedPropertyId(null); }} className="text-text-muted hover:text-text-muted"><X className="w-5 h-5" /></button>
+            <button onClick={() => { setShowForm(false); setSelectedPropertyId(null); }} className="text-text-muted hover:text-text-secondary"><X className="w-5 h-5" /></button>
           </div>
 
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Property *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Property *</label>
               <select
                 className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none"
                 value={selectedPropertyId ?? ''}
@@ -355,7 +362,7 @@ export default function Contracts() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Unit (Vacant) *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Unit (Vacant) *</label>
               <select
                 className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none"
                 value={form.unit_id}
@@ -370,14 +377,14 @@ export default function Contracts() {
               )}
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Tenant *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Tenant *</label>
               <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.tenant_id} onChange={e => setForm({ ...form, tenant_id: e.target.value })}>
                 <option value="">Select tenant...</option>
                 {tenants.map(t => <option key={t.id} value={t.id}>{t.first_name} {t.last_name}</option>)}
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Payment Frequency *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Payment Frequency *</label>
               <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.payment_frequency} onChange={e => setForm({ ...form, payment_frequency: e.target.value })}>
                 <option value="monthly">Monthly</option>
                 <option value="quarterly">Quarterly</option>
@@ -386,27 +393,27 @@ export default function Contracts() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Start Date *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Start Date *</label>
               <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.start_date} onChange={e => setForm({ ...form, start_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">End Date *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">End Date *</label>
               <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.end_date} onChange={e => setForm({ ...form, end_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Rent Amount (per period) *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Rent Amount (per period) *</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.rent_amount} onChange={e => setForm({ ...form, rent_amount: e.target.value })} placeholder="5000" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Number of Payments/Checks *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Number of Payments/Checks *</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.total_payments} onChange={e => setForm({ ...form, total_payments: e.target.value })} placeholder="12" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Security Deposit Amount</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Security Deposit Amount</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.deposit_amount} onChange={e => setForm({ ...form, deposit_amount: e.target.value })} placeholder="Optional" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
             </div>
           </div>
@@ -459,6 +466,12 @@ export default function Contracts() {
         <div className="text-center py-12 bg-white rounded-xl border border-surface-border">
           <FileText className="w-12 h-12 text-text-muted mx-auto mb-3" />
           <p className="text-text-muted">No contracts found.</p>
+          <p className="text-sm text-text-muted mt-1">Create a contract manually or upload a PDF for AI-powered extraction.</p>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <button onClick={() => setShowForm(true)} className="text-sm font-medium text-accent-600 hover:text-accent-700">Create manually →</button>
+            <span className="text-text-muted">or</span>
+            <button onClick={() => fileInputRef.current?.click()} className="text-sm font-medium text-accent-600 hover:text-accent-700">Upload contract PDF →</button>
+          </div>
         </div>
       ) : (
         <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
@@ -466,14 +479,14 @@ export default function Contracts() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Tenant</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Property / Unit</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Period</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Rent</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Payments</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Docs</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Status</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Expiry</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Tenant</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Property / Unit</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Period</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Rent</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Payments</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Docs</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Status</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Expiry</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">

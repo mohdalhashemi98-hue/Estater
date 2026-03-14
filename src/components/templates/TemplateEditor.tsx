@@ -45,12 +45,12 @@ export default function TemplateEditor({ template, onSuccess }: Props) {
     <div className="space-y-4">
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Template Name</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Template Name</label>
           <input type="text" value={name} onChange={e => setName(e.target.value)}
             className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm" required />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Type</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Type</label>
           <select value={templateType} onChange={e => setTemplateType(e.target.value as any)}
             className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm">
             <option value="contract">Contract</option>
@@ -63,7 +63,7 @@ export default function TemplateEditor({ template, onSuccess }: Props) {
       {/* Variable toolbar */}
       {variables && (
         <div className="flex flex-wrap gap-1 p-2 bg-surface rounded-lg border border-surface-border">
-          <span className="text-[10px] font-medium text-text-muted uppercase mr-2 self-center">Variables:</span>
+          <span className="text-[10px] font-medium text-text-secondary uppercase mr-2 self-center">Variables:</span>
           {Object.entries(variables).map(([group, vars]) => (
             vars.map(v => (
               <button key={v} onClick={() => insertVariable(v)}
@@ -78,12 +78,12 @@ export default function TemplateEditor({ template, onSuccess }: Props) {
       {/* Split view: source + preview */}
       <div className="grid grid-cols-2 gap-4">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">HTML Source</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">HTML Source</label>
           <textarea value={content} onChange={e => setContent(e.target.value)}
             className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm font-mono h-[400px] resize-none" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Preview</label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Preview</label>
           <div className="border border-surface-border rounded-lg p-4 h-[400px] overflow-y-auto bg-white text-sm"
             dangerouslySetInnerHTML={{ __html: content }} />
         </div>

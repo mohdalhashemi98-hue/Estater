@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { api } from '../api/client';
 import { Payment } from '../types';
 import { formatCurrency, formatDate, statusColor } from '../utils/formatters';
@@ -12,6 +13,9 @@ export default function Payments() {
   const [payingId, setPayingId] = useState<number | null>(null);
   const [payMethod, setPayMethod] = useState('check');
   const [payRef, setPayRef] = useState('');
+  const [selected, setSelected] = useState<Set<number>>(new Set());
+  const [bulkMethod, setBulkMethod] = useState('check');
+  const [bulkPaying, setBulkPaying] = useState(false);
 
   const { data: payments = [], isLoading } = useQuery<Payment[]>({
     queryKey: ['payments', statusFilter],
@@ -26,8 +30,50 @@ export default function Payments() {
       queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
       setPayingId(null);
       setPayRef('');
+      toast.success('Payment marked as paid');
     },
+    onError: () => toast.error('Failed to mark payment'),
   });
+
+  const actionablePayments = payments.filter(p => p.status === 'pending' || p.status === 'overdue');
+  const selectedCount = selected.size;
+
+  const toggleSelect = (id: number) => {
+    setSelected(prev => {
+      const next = new Set(prev);
+      if (next.has(id)) next.delete(id);
+      else next.add(id);
+      return next;
+    });
+  };
+
+  const toggleAll = () => {
+    if (selectedCount === actionablePayments.length) {
+      setSelected(new Set());
+    } else {
+      setSelected(new Set(actionablePayments.map(p => p.id)));
+    }
+  };
+
+  const handleBulkMarkPaid = async () => {
+    setBulkPaying(true);
+    let successCount = 0;
+    let failCount = 0;
+    for (const paymentId of selected) {
+      try {
+        await api.post(`/payments/${paymentId}/mark-paid`, { payment_method: bulkMethod, reference: '' });
+        successCount++;
+      } catch {
+        failCount++;
+      }
+    }
+    queryClient.invalidateQueries({ queryKey: ['payments'] });
+    queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
+    setSelected(new Set());
+    setBulkPaying(false);
+    if (successCount > 0) toast.success(`${successCount} payment${successCount > 1 ? 's' : ''} marked as paid`);
+    if (failCount > 0) toast.error(`${failCount} payment${failCount > 1 ? 's' : ''} failed`);
+  };
 
   const summary = {
     total: payments.length,
@@ -73,6 +119,26 @@ export default function Payments() {
         </div>
       </div>
 
+      {/* Bulk action bar */}
+      {selectedCount > 0 && (
+        <div className="flex items-center gap-3 bg-accent-50 border border-accent-200 rounded-xl px-4 py-3 animate-fade-in">
+          <span className="text-sm font-medium text-accent-700">{selectedCount} selected</span>
+          <select className="border border-accent-200 rounded-lg px-2 py-1.5 text-xs bg-white" value={bulkMethod} onChange={e => setBulkMethod(e.target.value)}>
+            <option value="check">Check</option>
+            <option value="bank_transfer">Transfer</option>
+            <option value="cash">Cash</option>
+          </select>
+          <button
+            onClick={handleBulkMarkPaid}
+            disabled={bulkPaying}
+            className="bg-emerald-600 text-white px-4 py-1.5 rounded-lg text-xs font-semibold hover:bg-emerald-700 disabled:opacity-50 transition-colors"
+          >
+            {bulkPaying ? 'Processing...' : `Mark ${selectedCount} Paid`}
+          </button>
+          <button onClick={() => setSelected(new Set())} className="text-xs text-text-muted hover:text-text-secondary ml-auto">Clear selection</button>
+        </div>
+      )}
+
       {isLoading ? (
         <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
           <div className="p-4 space-y-3">
@@ -91,6 +157,8 @@ export default function Payments() {
         <div className="text-center py-12 bg-white rounded-xl border border-surface-border">
           <CreditCard className="w-12 h-12 text-text-muted mx-auto mb-3" />
           <p className="text-text-muted">No payments found.</p>
+          <p className="text-sm text-text-muted mt-1">Payments are auto-generated when you create contracts.</p>
+          <Link to="/contracts" className="inline-block mt-3 text-sm font-medium text-accent-600 hover:text-accent-700">Create your first contract →</Link>
         </div>
       ) : (
         <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
@@ -98,18 +166,38 @@ export default function Payments() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Tenant</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Property / Unit</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Due Date</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Amount</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Status</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Paid</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-muted">Actions</th>
+                <th className="px-4 py-3 w-8">
+                  <input
+                    type="checkbox"
+                    checked={selectedCount > 0 && selectedCount === actionablePayments.length}
+                    onChange={toggleAll}
+                    className="rounded border-surface-border text-accent-600 focus:ring-accent-500"
+                  />
+                </th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Tenant</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Property / Unit</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Due Date</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Amount</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Status</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Paid</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-semibold text-text-secondary">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">
               {payments.map((p, i) => (
-                <tr key={p.id} className="hover:bg-surface transition-colors animate-fade-in" style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}>
+                <tr key={p.id} className={`hover:bg-surface transition-colors animate-fade-in ${selected.has(p.id) ? 'bg-accent-50/50' : ''}`} style={{ animationDelay: `${Math.min(i * 30, 300)}ms` }}>
+                  <td className="px-4 py-3">
+                    {(p.status === 'pending' || p.status === 'overdue') ? (
+                      <input
+                        type="checkbox"
+                        checked={selected.has(p.id)}
+                        onChange={() => toggleSelect(p.id)}
+                        className="rounded border-surface-border text-accent-600 focus:ring-accent-500"
+                      />
+                    ) : (
+                      <span className="w-4 block" />
+                    )}
+                  </td>
                   <td className="px-4 py-3">
                     <Link to={`/contracts/${p.contract_id}`} className="font-medium text-accent-600 hover:underline">{p.tenant_name}</Link>
                   </td>

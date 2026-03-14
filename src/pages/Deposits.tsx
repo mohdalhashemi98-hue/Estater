@@ -5,6 +5,7 @@ import { api } from '../api/client';
 import { Deposit } from '../types';
 import { formatCurrency, formatDate, statusColor } from '../utils/formatters';
 import { Shield } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Deposits() {
   const queryClient = useQueryClient();
@@ -18,7 +19,13 @@ export default function Deposits() {
   const refundMutation = useMutation({
     mutationFn: (data: { depositId: number; refund_amount: number; refund_reason: string }) =>
       api.post(`/deposits/${data.depositId}/refund`, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['deposits'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['deposits'] });
+      toast.success('Deposit refunded');
+    },
+    onError: () => {
+      toast.error('Failed to refund deposit');
+    },
   });
 
   const totalHeld = deposits.filter(d => d.status === 'held').reduce((s, d) => s + d.amount, 0);
@@ -71,6 +78,8 @@ export default function Deposits() {
         <div className="text-center py-12 bg-white rounded-xl border border-surface-border">
           <Shield className="w-10 h-10 text-text-muted mx-auto mb-3" />
           <p className="text-text-muted">No deposits found.</p>
+          <p className="text-sm text-text-muted mt-1">Security deposits are created alongside contracts.</p>
+          <a href="/contracts" className="inline-block mt-3 text-sm font-medium text-accent-600 hover:text-accent-700">Create a contract with deposit →</a>
         </div>
       ) : (
         <div className="bg-white rounded-xl border border-surface-border overflow-hidden">
@@ -78,13 +87,13 @@ export default function Deposits() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Tenant</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Property / Unit</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Amount</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Received</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Status</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Refund</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Actions</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Tenant</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Property / Unit</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Amount</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Received</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Status</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Refund</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Actions</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface">

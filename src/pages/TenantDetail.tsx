@@ -5,6 +5,7 @@ import { api } from '../api/client';
 import { Tenant } from '../types';
 import { formatCurrency, formatDate, statusColor, frequencyLabel } from '../utils/formatters';
 import { ArrowLeft, Phone, Mail, Building, CreditCard, FileText, Pencil, Trash2, Check, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function TenantDetail() {
   const { id } = useParams();
@@ -24,6 +25,10 @@ export default function TenantDetail() {
       queryClient.invalidateQueries({ queryKey: ['tenant', id] });
       queryClient.invalidateQueries({ queryKey: ['tenants'] });
       setEditing(false);
+      toast.success('Tenant updated');
+    },
+    onError: () => {
+      toast.error('Failed to update tenant');
     },
   });
 
@@ -32,6 +37,10 @@ export default function TenantDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['tenants'] });
       navigate('/tenants');
+      toast.success('Tenant deleted');
+    },
+    onError: () => {
+      toast.error('Failed to delete tenant');
     },
   });
 
@@ -68,31 +77,31 @@ export default function TenantDetail() {
             </div>
             <div className="grid md:grid-cols-2 gap-4">
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">First Name *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">First Name *</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.first_name} onChange={e => setEditForm({ ...editForm, first_name: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Last Name *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Last Name *</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.last_name} onChange={e => setEditForm({ ...editForm, last_name: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Phone *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Phone *</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.phone} onChange={e => setEditForm({ ...editForm, phone: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Email</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
                 <input type="email" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.email} onChange={e => setEditForm({ ...editForm, email: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">ID Number</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">ID Number</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.id_number} onChange={e => setEditForm({ ...editForm, id_number: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Company</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Company</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.company_name} onChange={e => setEditForm({ ...editForm, company_name: e.target.value })} />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
                 <textarea rows={2} className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.notes} onChange={e => setEditForm({ ...editForm, notes: e.target.value })} />
               </div>
             </div>
@@ -125,7 +134,12 @@ export default function TenantDetail() {
         )}
       </div>
 
-      <h3 className="text-lg font-semibold text-text-primary">Contract History ({tenant.contracts?.length || 0})</h3>
+      <div className="flex items-center justify-between">
+        <h3 className="text-lg font-semibold text-text-primary">Contract History ({tenant.contracts?.length || 0})</h3>
+        <Link to="/contracts" className="flex items-center gap-1 text-sm font-medium text-accent-600 hover:text-accent-700">
+          <FileText className="w-3.5 h-3.5" /> New Contract
+        </Link>
+      </div>
 
       {tenant.contracts && tenant.contracts.length > 0 ? (
         <div className="bg-white rounded-xl border border-surface-border overflow-hidden shadow-sm">
@@ -133,11 +147,11 @@ export default function TenantDetail() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Property / Unit</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Period</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Rent</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Frequency</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Status</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Property / Unit</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Period</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Rent</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Frequency</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Status</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">
@@ -164,6 +178,7 @@ export default function TenantDetail() {
         <div className="text-center py-8 bg-white rounded-xl border border-surface-border">
           <FileText className="w-8 h-8 text-text-muted mx-auto mb-2" />
           <p className="text-text-muted">No contracts for this tenant.</p>
+          <Link to="/contracts" className="inline-block mt-3 text-sm font-medium text-accent-600 hover:text-accent-700">Create a contract →</Link>
         </div>
       )}
     </div>

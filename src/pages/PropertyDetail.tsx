@@ -4,12 +4,13 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { Property, Unit, Mortgage, PropertyValuation, PROPERTY_TYPE_GROUPS, UAE_EMIRATES } from '../types';
 import { statusColor, formatCurrency, formatDate, formatAddress } from '../utils/formatters';
-import { Plus, ArrowLeft, X, Bed, Bath, Ruler, Landmark, TrendingUp, BarChart3, Loader2, Home, Pencil, Trash2, Check } from 'lucide-react';
+import { Plus, ArrowLeft, X, Bed, Bath, Ruler, Landmark, TrendingUp, BarChart3, Loader2, Home, Pencil, Trash2, Check, FileText } from 'lucide-react';
 import MortgageForm from '../components/mortgage/MortgageForm';
 import MortgageCard from '../components/mortgage/MortgageCard';
 import ValuationChart from '../components/charts/ValuationChart';
 import GainLossIndicator from '../components/ui/GainLossIndicator';
 import PropertyMap from '../components/maps/PropertyMap';
+import { toast } from 'sonner';
 
 export default function PropertyDetail() {
   const { id } = useParams();
@@ -47,6 +48,10 @@ export default function PropertyDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['property', id] });
       queryClient.invalidateQueries({ queryKey: ['market-estimate', id] });
+      toast.success('Market match updated');
+    },
+    onError: () => {
+      toast.error('Failed to auto-match property');
     },
   });
 
@@ -56,6 +61,10 @@ export default function PropertyDetail() {
       queryClient.invalidateQueries({ queryKey: ['property', id] });
       setShowUnitForm(false);
       setUnitForm({ unit_number: '', floor: '', bedrooms: '', bathrooms: '', area_sqm: '', notes: '' });
+      toast.success('Unit added');
+    },
+    onError: () => {
+      toast.error('Failed to add unit');
     },
   });
 
@@ -65,12 +74,22 @@ export default function PropertyDetail() {
       queryClient.invalidateQueries({ queryKey: ['property', id] });
       queryClient.invalidateQueries({ queryKey: ['properties'] });
       setEditing(false);
+      toast.success('Property updated');
+    },
+    onError: () => {
+      toast.error('Failed to update property');
     },
   });
 
   const deletePropertyMutation = useMutation({
     mutationFn: () => api.del(`/properties/${id}`),
-    onSuccess: () => { window.location.href = '/properties'; },
+    onSuccess: () => {
+      window.location.href = '/properties';
+      toast.success('Property deleted');
+    },
+    onError: () => {
+      toast.error('Failed to delete property');
+    },
   });
 
   const updateUnitMutation = useMutation({
@@ -78,12 +97,22 @@ export default function PropertyDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['property', id] });
       setEditingUnit(null);
+      toast.success('Unit updated');
+    },
+    onError: () => {
+      toast.error('Failed to update unit');
     },
   });
 
   const deleteUnitMutation = useMutation({
     mutationFn: (unitId: number) => api.del(`/properties/units/${unitId}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['property', id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['property', id] });
+      toast.success('Unit deleted');
+    },
+    onError: () => {
+      toast.error('Failed to delete unit');
+    },
   });
 
   if (isLoading) return (
@@ -125,11 +154,11 @@ export default function PropertyDetail() {
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Name *</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Name *</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.name} onChange={e => setEditForm({ ...editForm, name: e.target.value })} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Type</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Type</label>
                 <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.type} onChange={e => setEditForm({ ...editForm, type: e.target.value })}>
                   {Object.entries(PROPERTY_TYPE_GROUPS).map(([group, types]) => (
                     <optgroup key={group} label={group}>
@@ -139,29 +168,29 @@ export default function PropertyDetail() {
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Emirate</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Emirate</label>
                 <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.emirate} onChange={e => setEditForm({ ...editForm, emirate: e.target.value })}>
                   {UAE_EMIRATES.map(e => <option key={e} value={e}>{e}</option>)}
                 </select>
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">City / Area</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">City / Area</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.city} onChange={e => setEditForm({ ...editForm, city: e.target.value })} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Neighborhood</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Neighborhood</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.neighborhood} onChange={e => setEditForm({ ...editForm, neighborhood: e.target.value })} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Street</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Street</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.street} onChange={e => setEditForm({ ...editForm, street: e.target.value })} />
               </div>
               <div>
-                <label className="block text-xs font-medium text-text-muted mb-1">Villa / Building #</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Villa / Building #</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.villa_number} onChange={e => setEditForm({ ...editForm, villa_number: e.target.value })} />
               </div>
               <div className="md:col-span-2">
-                <label className="block text-xs font-medium text-text-muted mb-1">Notes</label>
+                <label className="block text-xs font-medium text-text-secondary mb-1">Notes</label>
                 <textarea className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" rows={2} value={editForm.notes} onChange={e => setEditForm({ ...editForm, notes: e.target.value })} />
               </div>
             </div>
@@ -336,23 +365,23 @@ export default function PropertyDetail() {
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-1">Unit Number *</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">Unit Number *</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={unitForm.unit_number} onChange={e => setUnitForm({ ...unitForm, unit_number: e.target.value })} placeholder="e.g., 101, A" />
             </div>
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-1">Floor</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">Floor</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={unitForm.floor} onChange={e => setUnitForm({ ...unitForm, floor: e.target.value })} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-1">Bedrooms</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">Bedrooms</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={unitForm.bedrooms} onChange={e => setUnitForm({ ...unitForm, bedrooms: e.target.value })} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-1">Bathrooms</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">Bathrooms</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={unitForm.bathrooms} onChange={e => setUnitForm({ ...unitForm, bathrooms: e.target.value })} />
             </div>
             <div>
-              <label className="block text-xs font-medium text-text-muted mb-1">Area (sqm)</label>
+              <label className="block text-xs font-medium text-text-secondary mb-1">Area (sqm)</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={unitForm.area_sqm} onChange={e => setUnitForm({ ...unitForm, area_sqm: e.target.value })} />
             </div>
           </div>
@@ -407,6 +436,11 @@ export default function PropertyDetail() {
                   {unit.bathrooms != null && <span className="flex items-center gap-1"><Bath className="w-3 h-3" />{unit.bathrooms} BA</span>}
                   {unit.area_sqm != null && <span className="flex items-center gap-1"><Ruler className="w-3 h-3" />{unit.area_sqm} sqm</span>}
                 </div>
+                {unit.status === 'vacant' && (
+                  <Link to="/contracts" className="mt-3 flex items-center gap-1 text-xs font-medium text-accent-600 hover:text-accent-700">
+                    <FileText className="w-3 h-3" /> Create Contract
+                  </Link>
+                )}
               </>
             )}
           </div>

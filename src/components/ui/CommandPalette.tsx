@@ -153,7 +153,7 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
             onChange={e => setQuery(e.target.value)}
             onKeyDown={handleKeyDown}
             placeholder="Search properties, tenants, contracts..."
-            className="flex-1 text-sm text-text-primary placeholder-text-muted outline-none bg-transparent"
+            className="flex-1 text-sm text-text-primary placeholder-text-secondary outline-none bg-transparent"
           />
           <button onClick={onClose} className="text-text-muted hover:text-text-secondary">
             <X className="w-4 h-4" />
@@ -167,7 +167,7 @@ export default function CommandPalette({ open, onClose }: CommandPaletteProps) {
           ) : (
             <>
               {!query.trim() && (
-                <p className="px-4 py-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">Quick navigation</p>
+                <p className="px-4 py-1.5 text-[11px] font-medium text-text-secondary uppercase tracking-wider">Quick navigation</p>
               )}
               {results.map((result, i) => (
                 <button

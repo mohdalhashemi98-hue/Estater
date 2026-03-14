@@ -3,7 +3,7 @@ import { cn } from '../../lib/utils';
 
 const variantStyles = {
   default: 'bg-accent-500 text-white hover:bg-accent-600 shadow-sm',
-  outline: 'border border-surface-border text-text-secondary hover:bg-white/60',
+  outline: 'border border-surface-border text-text-secondary hover:bg-white/80',
   ghost: 'text-text-secondary hover:bg-surface-overlay',
 } as const;
 

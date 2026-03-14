@@ -133,12 +133,12 @@ export default function PropertyValuation() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Date</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Value</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Source</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Confidence</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Notes</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted"></th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Date</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Value</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Source</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Confidence</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Notes</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">

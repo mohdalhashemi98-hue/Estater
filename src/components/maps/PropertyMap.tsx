@@ -53,7 +53,7 @@ export default function PropertyMap({ address, propertyName }: PropertyMapProps)
           <div className="w-10 h-10 rounded-lg bg-surface-overlay flex items-center justify-center mb-2">
             <MapPin className="w-5 h-5 text-text-muted" />
           </div>
-          <p className="text-sm font-medium text-text-muted">Map Preview</p>
+          <p className="text-sm font-medium text-text-secondary">Map Preview</p>
           <p className="text-xs text-text-muted mt-0.5">Add GOOGLE_MAPS_API_KEY to .env to enable</p>
         </div>
         <div className="px-4 py-2.5 border-t border-surface-border">

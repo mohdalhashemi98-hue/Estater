@@ -102,7 +102,7 @@ export default function AnalysisCard({ analysis }: AnalysisCardProps) {
               if (items.length === 0) return null;
               return (
                 <div key={party}>
-                  <p className="text-[11px] font-medium text-text-muted uppercase tracking-wider mb-2">{party}</p>
+                  <p className="text-[11px] font-medium text-text-secondary uppercase tracking-wider mb-2">{party}</p>
                   <ul className="space-y-1.5">
                     {items.map((o, i) => (
                       <li key={i} className="text-sm text-text-primary flex items-start gap-2">

@@ -1,5 +1,6 @@
 import { lazy, Suspense } from 'react';
 import { Routes, Route } from 'react-router-dom';
+import { Toaster } from 'sonner';
 import Layout from './components/layout/Layout';
 import ProtectedRoute from './components/auth/ProtectedRoute';
 
@@ -29,6 +30,8 @@ const AuditLog = lazy(() => import('./pages/AuditLog'));
 const Templates = lazy(() => import('./pages/Templates'));
 const ReminderSettings = lazy(() => import('./pages/ReminderSettings'));
 const Reports = lazy(() => import('./pages/Reports'));
+const Settings = lazy(() => import('./pages/Settings'));
+const Maintenance = lazy(() => import('./pages/Maintenance'));
 
 function PageLoader() {
   return (
@@ -40,6 +43,8 @@ function PageLoader() {
 
 export default function App() {
   return (
+    <>
+    <Toaster position="top-right" richColors closeButton duration={3000} />
     <Suspense fallback={<PageLoader />}>
       <Routes>
         {/* Public routes */}
@@ -169,6 +174,14 @@ export default function App() {
           }
         />
         <Route
+          path="/maintenance"
+          element={
+            <ProtectedRoute>
+              <Layout><Maintenance /></Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
           path="/reports"
           element={
             <ProtectedRoute>
@@ -208,7 +221,27 @@ export default function App() {
             </ProtectedRoute>
           }
         />
+        <Route
+          path="/settings"
+          element={
+            <ProtectedRoute>
+              <Layout><Settings /></Layout>
+            </ProtectedRoute>
+          }
+        />
+
+        {/* Catch-all 404 */}
+        <Route path="*" element={
+          <div className="min-h-screen flex items-center justify-center bg-surface">
+            <div className="text-center">
+              <h1 className="text-6xl font-bold text-text-muted mb-2">404</h1>
+              <p className="text-text-secondary mb-6">Page not found</p>
+              <a href="/dashboard" className="text-accent-600 hover:text-accent-700 font-medium text-sm">Go to Dashboard</a>
+            </div>
+          </div>
+        } />
       </Routes>
     </Suspense>
+    </>
   );
 }

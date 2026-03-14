@@ -35,7 +35,7 @@ export default function GenerateDocument({ template }: Props) {
   return (
     <div className="space-y-4">
       <div>
-        <label className="block text-xs font-medium text-text-muted mb-1">Select Contract</label>
+        <label className="block text-xs font-medium text-text-secondary mb-1">Select Contract</label>
         <select value={contractId} onChange={e => setContractId(e.target.value)}
           className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm">
           <option value="">Choose a contract...</option>

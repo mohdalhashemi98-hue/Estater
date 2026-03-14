@@ -5,6 +5,7 @@ import { api } from '../api/client';
 import { Property, PROPERTY_TYPE_GROUPS, UAE_EMIRATES } from '../types';
 import { formatAddress } from '../utils/formatters';
 import { Building2, Plus, MapPin, X } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Properties() {
   const queryClient = useQueryClient();
@@ -25,12 +26,22 @@ export default function Properties() {
       queryClient.invalidateQueries({ queryKey: ['properties'] });
       setShowForm(false);
       setForm({ name: '', type: 'villa', emirate: 'Dubai', city: '', neighborhood: '', street: '', villa_number: '', notes: '' });
+      toast.success('Property created');
+    },
+    onError: () => {
+      toast.error('Failed to create property');
     },
   });
 
   const deleteMutation = useMutation({
     mutationFn: (id: number) => api.del(`/properties/${id}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['properties'] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['properties'] });
+      toast.success('Property deleted');
+    },
+    onError: () => {
+      toast.error('Failed to delete property');
+    },
   });
 
   return (
@@ -50,15 +61,15 @@ export default function Properties() {
         <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm modal-content">
           <div className="flex justify-between items-center mb-4">
             <h3 className="font-semibold text-text-primary">New Property</h3>
-            <button onClick={() => setShowForm(false)} className="text-text-muted hover:text-text-muted"><X className="w-5 h-5" /></button>
+            <button onClick={() => setShowForm(false)} className="text-text-muted hover:text-text-secondary"><X className="w-5 h-5" /></button>
           </div>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Name *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Name *</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.name} onChange={e => setForm({ ...form, name: e.target.value })} placeholder="Property name" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Type *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Type *</label>
               <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.type} onChange={e => setForm({ ...form, type: e.target.value })}>
                 {Object.entries(PROPERTY_TYPE_GROUPS).map(([group, types]) => (
                   <optgroup key={group} label={group}>
@@ -70,7 +81,7 @@ export default function Properties() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Emirate *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Emirate *</label>
               <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.emirate} onChange={e => setForm({ ...form, emirate: e.target.value })}>
                 {UAE_EMIRATES.map(e => (
                   <option key={e} value={e}>{e}</option>
@@ -78,23 +89,23 @@ export default function Properties() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">City / Area</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">City / Area</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.city} onChange={e => setForm({ ...form, city: e.target.value })} placeholder="e.g., Jumeirah, Business Bay" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Neighborhood</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Neighborhood</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.neighborhood} onChange={e => setForm({ ...form, neighborhood: e.target.value })} placeholder="e.g., Al Wasl, Marina" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Street</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Street</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.street} onChange={e => setForm({ ...form, street: e.target.value })} placeholder="e.g., Al Wasl Road" />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Villa / Building #</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Villa / Building #</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={form.villa_number} onChange={e => setForm({ ...form, villa_number: e.target.value })} placeholder="e.g., Villa 5, Building 12" />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
               <textarea className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" rows={2} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
             </div>
           </div>

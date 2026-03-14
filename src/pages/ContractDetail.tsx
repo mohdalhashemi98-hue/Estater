@@ -1,6 +1,7 @@
 import { useState, useRef } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { toast } from 'sonner';
 import { api } from '../api/client';
 import { Contract, Payment, ContractFile } from '../types';
 import { formatCurrency, formatDate, statusColor, frequencyLabel, daysUntil, formatFileSize, fileIcon } from '../utils/formatters';
@@ -44,7 +45,9 @@ export default function ContractDetail() {
       queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
       setPayingId(null);
       setPayRef('');
+      toast.success('Payment marked as paid');
     },
+    onError: () => toast.error('Failed to mark payment'),
   });
 
   const terminateMutation = useMutation({
@@ -52,7 +55,9 @@ export default function ContractDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contract', id] });
       queryClient.invalidateQueries({ queryKey: ['contracts'] });
+      toast.success('Contract terminated');
     },
+    onError: () => toast.error('Failed to terminate contract'),
   });
 
   const renewMutation = useMutation({
@@ -61,13 +66,19 @@ export default function ContractDetail() {
       queryClient.invalidateQueries({ queryKey: ['contract', id] });
       queryClient.invalidateQueries({ queryKey: ['contracts'] });
       setShowRenew(false);
+      toast.success('Contract renewed');
     },
+    onError: () => toast.error('Failed to renew contract'),
   });
 
   const refundMutation = useMutation({
     mutationFn: (data: { depositId: number; refund_amount: number; refund_reason: string }) =>
       api.post(`/deposits/${data.depositId}/refund`, data),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['contract', id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contract', id] });
+      toast.success('Deposit refunded');
+    },
+    onError: () => toast.error('Failed to process refund'),
   });
 
   const uploadFilesMutation = useMutation({
@@ -80,13 +91,21 @@ export default function ContractDetail() {
       queryClient.invalidateQueries({ queryKey: ['contract', id] });
       setUploading(false);
       if (fileInputRef.current) fileInputRef.current.value = '';
+      toast.success('Files uploaded');
     },
-    onError: () => setUploading(false),
+    onError: () => {
+      setUploading(false);
+      toast.error('Failed to upload files');
+    },
   });
 
   const deleteFileMutation = useMutation({
     mutationFn: (fileId: number) => api.del(`/contracts/files/${fileId}`),
-    onSuccess: () => queryClient.invalidateQueries({ queryKey: ['contract', id] }),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['contract', id] });
+      toast.success('File deleted');
+    },
+    onError: () => toast.error('Failed to delete file'),
   });
 
   const updateContractMutation = useMutation({
@@ -95,7 +114,9 @@ export default function ContractDetail() {
       queryClient.invalidateQueries({ queryKey: ['contract', id] });
       queryClient.invalidateQueries({ queryKey: ['contracts'] });
       setEditingContract(false);
+      toast.success('Contract updated');
     },
+    onError: () => toast.error('Failed to update contract'),
   });
 
   const updateDepositMutation = useMutation({
@@ -103,7 +124,9 @@ export default function ContractDetail() {
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ['contract', id] });
       setEditingDeposit(false);
+      toast.success('Deposit updated');
     },
+    onError: () => toast.error('Failed to update deposit'),
   });
 
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -179,19 +202,19 @@ export default function ContractDetail() {
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Start Date</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Start Date</label>
                 <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.start_date} onChange={e => setContractForm({ ...contractForm, start_date: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">End Date</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">End Date</label>
                 <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.end_date} onChange={e => setContractForm({ ...contractForm, end_date: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Rent Amount</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Rent Amount</label>
                 <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.rent_amount} onChange={e => setContractForm({ ...contractForm, rent_amount: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Frequency</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Frequency</label>
                 <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.payment_frequency} onChange={e => setContractForm({ ...contractForm, payment_frequency: e.target.value })}>
                   <option value="monthly">Monthly</option>
                   <option value="quarterly">Quarterly</option>
@@ -200,11 +223,11 @@ export default function ContractDetail() {
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Total Payments</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Total Payments</label>
                 <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.total_payments} onChange={e => setContractForm({ ...contractForm, total_payments: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Status</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Status</label>
                 <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.status} onChange={e => setContractForm({ ...contractForm, status: e.target.value })}>
                   <option value="active">Active</option>
                   <option value="terminated">Terminated</option>
@@ -213,7 +236,7 @@ export default function ContractDetail() {
                 </select>
               </div>
               <div className="md:col-span-3">
-                <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
                 <textarea rows={2} className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={contractForm.notes} onChange={e => setContractForm({ ...contractForm, notes: e.target.value })} />
               </div>
             </div>
@@ -323,19 +346,19 @@ export default function ContractDetail() {
           <h3 className="font-semibold text-lg text-text-primary mb-4">Renew Contract</h3>
           <div className="grid md:grid-cols-3 gap-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">New Start Date *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">New Start Date *</label>
               <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.start_date} onChange={e => setRenewForm({ ...renewForm, start_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">New End Date *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">New End Date *</label>
               <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.end_date} onChange={e => setRenewForm({ ...renewForm, end_date: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Rent Amount *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Rent Amount *</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.rent_amount} onChange={e => setRenewForm({ ...renewForm, rent_amount: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Frequency</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Frequency</label>
               <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.payment_frequency} onChange={e => setRenewForm({ ...renewForm, payment_frequency: e.target.value })}>
                 <option value="monthly">Monthly</option>
                 <option value="quarterly">Quarterly</option>
@@ -344,11 +367,11 @@ export default function ContractDetail() {
               </select>
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Number of Payments *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Number of Payments *</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.total_payments} onChange={e => setRenewForm({ ...renewForm, total_payments: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">New Deposit</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">New Deposit</label>
               <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-2 focus:ring-accent-500/20 outline-none" value={renewForm.deposit_amount} onChange={e => setRenewForm({ ...renewForm, deposit_amount: e.target.value })} placeholder="Optional" />
             </div>
           </div>
@@ -404,11 +427,11 @@ export default function ContractDetail() {
               </div>
               <div className="grid md:grid-cols-2 gap-4">
                 <div>
-                  <label className="block text-sm font-medium text-text-muted mb-1">Amount</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">Amount</label>
                   <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.amount} onChange={e => setDepositForm({ ...depositForm, amount: e.target.value })} />
                 </div>
                 <div>
-                  <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                  <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
                   <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={depositForm.notes} onChange={e => setDepositForm({ ...depositForm, notes: e.target.value })} />
                 </div>
               </div>
@@ -563,14 +586,14 @@ export default function ContractDetail() {
         <table className="w-full text-sm">
           <thead className="bg-surface border-b border-surface-border">
             <tr>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">#</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Due Date</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Amount</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Status</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Paid Date</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Method</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Reference</th>
-              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Actions</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">#</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Due Date</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Amount</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Status</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Paid Date</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Method</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Reference</th>
+              <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Actions</th>
             </tr>
           </thead>
           <tbody className="divide-y divide-surface-border">
@@ -608,7 +631,7 @@ export default function ContractDetail() {
                           >
                             Confirm
                           </button>
-                          <button onClick={() => setPayingId(null)} className="text-text-muted hover:text-text-muted text-xs">Cancel</button>
+                          <button onClick={() => setPayingId(null)} className="text-text-muted hover:text-text-secondary text-xs">Cancel</button>
                         </div>
                       ) : (
                         <button

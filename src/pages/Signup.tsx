@@ -76,7 +76,7 @@ export default function Signup() {
                 value={name}
                 onChange={e => setName(e.target.value)}
                 required
-                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
+                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
                 placeholder="John Doe"
               />
             </div>
@@ -87,7 +87,7 @@ export default function Signup() {
                 value={email}
                 onChange={e => setEmail(e.target.value)}
                 required
-                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
+                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
                 placeholder="you@example.com"
               />
             </div>
@@ -99,7 +99,7 @@ export default function Signup() {
                   value={password}
                   onChange={e => setPassword(e.target.value)}
                   required
-                  className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors pr-10"
+                  className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors pr-10"
                   placeholder="At least 6 characters"
                 />
                 <button
@@ -118,7 +118,7 @@ export default function Signup() {
                 value={confirmPassword}
                 onChange={e => setConfirmPassword(e.target.value)}
                 required
-                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-muted focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
+                className="w-full px-3 py-2.5 bg-surface border border-surface-border rounded-lg text-sm text-text-primary placeholder-text-secondary focus:outline-none focus:ring-2 focus:ring-accent-200 focus:border-accent-400 transition-colors"
                 placeholder="Repeat your password"
               />
             </div>

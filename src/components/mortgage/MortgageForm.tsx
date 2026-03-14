@@ -149,31 +149,31 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
 
       <div className="grid md:grid-cols-3 gap-3">
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Lender Name *<AiBadge field="lender_name" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Lender Name *<AiBadge field="lender_name" /></label>
           <input className={inputClass} value={form.lender_name} onChange={e => setForm({ ...form, lender_name: e.target.value })} placeholder="e.g., Emirates NBD" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Loan Amount *<AiBadge field="loan_amount" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Loan Amount *<AiBadge field="loan_amount" /></label>
           <input type="number" className={inputClass} value={form.loan_amount} onChange={e => setForm({ ...form, loan_amount: e.target.value })} placeholder="300000" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Interest Rate (%) *<AiBadge field="interest_rate" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Interest Rate (%) *<AiBadge field="interest_rate" /></label>
           <input type="number" step="0.01" className={inputClass} value={form.interest_rate} onChange={e => setForm({ ...form, interest_rate: e.target.value })} placeholder="3.99" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Term (months) *<AiBadge field="term_months" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Term (months) *<AiBadge field="term_months" /></label>
           <input type="number" className={inputClass} value={form.term_months} onChange={e => setForm({ ...form, term_months: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Start Date *<AiBadge field="start_date" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Start Date *<AiBadge field="start_date" /></label>
           <input type="date" className={inputClass} value={form.start_date} onChange={e => setForm({ ...form, start_date: e.target.value })} />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Monthly Payment<AiBadge field="monthly_payment" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Monthly Payment<AiBadge field="monthly_payment" /></label>
           <input type="number" className={inputClass} value={form.monthly_payment} onChange={e => setForm({ ...form, monthly_payment: e.target.value })} placeholder="Auto-calculated" />
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Loan Type<AiBadge field="loan_type" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Loan Type<AiBadge field="loan_type" /></label>
           <select className={inputClass} value={form.loan_type} onChange={e => setForm({ ...form, loan_type: e.target.value })}>
             <option value="fixed">Fixed Rate</option>
             <option value="variable">Variable Rate</option>
@@ -181,13 +181,13 @@ export default function MortgageForm({ propertyId, onClose }: MortgageFormProps)
           </select>
         </div>
         <div>
-          <label className="block text-xs font-medium text-text-muted mb-1">Account Number<AiBadge field="account_number" /></label>
+          <label className="block text-xs font-medium text-text-secondary mb-1">Account Number<AiBadge field="account_number" /></label>
           <input className={inputClass} value={form.account_number} onChange={e => setForm({ ...form, account_number: e.target.value })} />
         </div>
       </div>
 
       <div className="mt-3">
-        <label className="block text-xs font-medium text-text-muted mb-1">Notes<AiBadge field="notes" /></label>
+        <label className="block text-xs font-medium text-text-secondary mb-1">Notes<AiBadge field="notes" /></label>
         <textarea className={inputClass} rows={2} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
       </div>
 

@@ -65,11 +65,11 @@ export default function AuditLog() {
             <thead>
               <tr className="border-b border-surface-border bg-surface">
                 <th className="w-8 px-4 py-3"></th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Timestamp</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Entity</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Action</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Entity ID</th>
-                <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">IP</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Timestamp</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Entity</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Action</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Entity ID</th>
+                <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">IP</th>
               </tr>
             </thead>
             <tbody>

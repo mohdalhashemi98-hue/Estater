@@ -4,7 +4,7 @@ import { useAuth } from '../../contexts/AuthContext';
 import {
   LayoutDashboard, Building2, Users, FileText, CreditCard, Shield,
   Menu, X, ChevronDown, TrendingUp, Wallet, Search, BarChart3,
-  Settings, Receipt, History, FileEdit, Bell, FileBarChart, LogOut
+  Settings, Receipt, History, FileEdit, Bell, FileBarChart, LogOut, Wrench
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import { Sidebar, SidebarBody, SidebarLink } from '../ui/sidebar';
@@ -13,6 +13,7 @@ import CalendarStatus from '../calendar/CalendarStatus';
 import CommandPalette from '../ui/CommandPalette';
 import NotificationDropdown from '../ui/NotificationDropdown';
 import MobileNav from './MobileNav';
+import QuickAddFab from '../ui/QuickAddFab';
 
 const mainNavItems = [
   { path: '/dashboard', label: 'Home', icon: LayoutDashboard },
@@ -22,6 +23,7 @@ const mainNavItems = [
   { path: '/payments', label: 'Payments', icon: CreditCard },
   { path: '/deposits', label: 'Deposits', icon: Shield },
   { path: '/expenses', label: 'Expenses', icon: Receipt },
+  { path: '/maintenance', label: 'Maintenance', icon: Wrench },
   { path: '/portfolio', label: 'Portfolio', icon: TrendingUp },
 ];
 
@@ -32,7 +34,7 @@ const workflowItems = [
   { path: '/cashflow', label: 'Cash Flow', icon: Wallet },
   { path: '/audit-log', label: 'Audit Log', icon: History },
   { path: '/settings/reminders', label: 'Reminders', icon: Bell },
-  { path: '/settings/calendar', label: 'Settings', icon: Settings },
+  { path: '/settings', label: 'Settings', icon: Settings },
 ];
 
 // ---- Sidebar Content (used inside the animated sidebar) ----
@@ -75,7 +77,7 @@ function SidebarContent() {
 
         {/* Workflows section */}
         <div className="mt-6">
-          <p className="px-2 mb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+          <p className="px-2 mb-1.5 text-[11px] font-medium text-text-secondary uppercase tracking-wider">
             Workflows
           </p>
           <div className="flex flex-col gap-0.5">
@@ -197,11 +199,11 @@ export default function Layout({ children }: { children: ReactNode }) {
           {/* Centered search bar — opens command palette */}
           <button
             onClick={() => setSearchOpen(true)}
-            className="hidden md:flex items-center gap-2 mx-auto px-3 py-1.5 bg-surface border border-surface-border rounded-lg text-sm text-text-muted w-[320px] cursor-pointer hover:border-accent-200 transition-colors"
+            className="hidden md:flex items-center gap-2 mx-auto px-3 py-1.5 bg-surface border border-surface-border rounded-lg text-sm text-text-secondary w-[320px] cursor-pointer hover:border-accent-200 transition-colors"
           >
             <Search className="w-3.5 h-3.5" />
             <span className="flex-1 text-left">Search for anything</span>
-            <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] text-text-muted bg-white border border-surface-border rounded px-1.5 py-0.5 font-mono">
+            <kbd className="hidden sm:inline-flex items-center gap-0.5 text-[10px] text-text-secondary bg-white border border-surface-border rounded px-1.5 py-0.5 font-mono">
               <span className="text-xs">&#8984;</span>K
             </kbd>
           </button>
@@ -252,6 +254,9 @@ export default function Layout({ children }: { children: ReactNode }) {
 
       {/* Command palette */}
       <CommandPalette open={searchOpen} onClose={() => setSearchOpen(false)} />
+
+      {/* Quick Add FAB */}
+      <QuickAddFab />
     </div>
   );
 }

@@ -67,7 +67,7 @@ export default function NotificationDropdown() {
                 {/* Overdue payments */}
                 {overdue.length > 0 && (
                   <div>
-                    <p className="px-4 pt-3 pb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+                    <p className="px-4 pt-3 pb-1.5 text-[11px] font-medium text-text-secondary uppercase tracking-wider">
                       Overdue Payments ({overdue.length})
                     </p>
                     {overdue.slice(0, 5).map(p => (
@@ -101,7 +101,7 @@ export default function NotificationDropdown() {
                 {/* Expiring contracts */}
                 {expiring.length > 0 && (
                   <div>
-                    <p className="px-4 pt-3 pb-1.5 text-[11px] font-medium text-text-muted uppercase tracking-wider">
+                    <p className="px-4 pt-3 pb-1.5 text-[11px] font-medium text-text-secondary uppercase tracking-wider">
                       Expiring Soon ({expiring.length})
                     </p>
                     {expiring.slice(0, 5).map(c => (

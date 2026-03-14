@@ -143,7 +143,7 @@ export default function CalendarSettings() {
 
       {/* ===== GOOGLE CALENDAR SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Google Calendar</h3>
+        <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3">Google Calendar</h3>
 
         <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           <div className="flex items-center justify-between">
@@ -237,7 +237,7 @@ export default function CalendarSettings() {
 
       {/* ===== DLD MARKET DATA SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Market Data</h3>
+        <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3">Market Data</h3>
 
         <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
           <div className="flex items-center gap-3 mb-5">
@@ -266,7 +266,7 @@ export default function CalendarSettings() {
           {/* Data source toggle */}
           <div className="space-y-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Data Source</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Data Source</label>
               <div className="flex gap-2">
                 <button
                   onClick={() => { setDldDataSource('sample'); saveDldMutation.mutate({ data_source: 'sample' }); }}
@@ -297,7 +297,7 @@ export default function CalendarSettings() {
 
             {/* API Key input */}
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">
+              <label className="block text-sm font-medium text-text-secondary mb-1">
                 <Key className="w-3.5 h-3.5 inline mr-1" />
                 Dubai Pulse API Key
               </label>
@@ -324,7 +324,7 @@ export default function CalendarSettings() {
 
             {/* API URL */}
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">API Endpoint</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">API Endpoint</label>
               <input
                 type="url"
                 className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
@@ -380,7 +380,7 @@ export default function CalendarSettings() {
 
       {/* ===== WEBHOOKS SECTION ===== */}
       <div>
-        <h3 className="text-sm font-semibold text-text-muted uppercase tracking-wider mb-3">Webhooks (n8n Integration)</h3>
+        <h3 className="text-sm font-semibold text-text-secondary uppercase tracking-wider mb-3">Webhooks (n8n Integration)</h3>
 
         {/* Add Webhook Form */}
         <div className="bg-white rounded-xl border border-surface-border p-6 shadow-sm">
@@ -397,7 +397,7 @@ export default function CalendarSettings() {
           <div className="space-y-4">
             <div className="grid grid-cols-2 gap-3">
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Name</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Name</label>
                 <input
                   type="text"
                   className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
@@ -407,7 +407,7 @@ export default function CalendarSettings() {
                 />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Secret (optional)</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Secret (optional)</label>
                 <input
                   type="text"
                   className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
@@ -419,7 +419,7 @@ export default function CalendarSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Webhook URL</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Webhook URL</label>
               <input
                 type="url"
                 className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none"
@@ -430,7 +430,7 @@ export default function CalendarSettings() {
             </div>
 
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-2">Events</label>
+              <label className="block text-sm font-medium text-text-secondary mb-2">Events</label>
               <label className="flex items-center gap-2 mb-2 cursor-pointer">
                 <input
                   type="checkbox"

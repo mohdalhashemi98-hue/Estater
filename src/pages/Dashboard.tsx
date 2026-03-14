@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useQuery } from '@tanstack/react-query';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { Link } from 'react-router-dom';
 import { api } from '../api/client';
 import { DashboardSummary, Contract, Payment, PortfolioSummary } from '../types';
@@ -8,12 +8,16 @@ import {
   Building2, Users, FileText, AlertTriangle, TrendingUp,
   DollarSign, BarChart3, Plus, ChevronDown
 } from 'lucide-react';
+import { toast } from 'sonner';
 import { AreaChart, Area, XAxis, YAxis, Tooltip, ResponsiveContainer } from 'recharts';
+import GettingStartedChecklist from '../components/onboarding/GettingStartedChecklist';
+import OnboardingWizard from '../components/onboarding/OnboardingWizard';
 import OccupancyTrendChart from '../components/dashboard/OccupancyTrendChart';
 import CollectionRateCard from '../components/dashboard/CollectionRateCard';
 import ExpenseBreakdownChart from '../components/dashboard/ExpenseBreakdownChart';
 import NetIncomeChart from '../components/dashboard/NetIncomeChart';
 import VacancyCostCard from '../components/dashboard/VacancyCostCard';
+import ActivityFeed from '../components/dashboard/ActivityFeed';
 
 interface AreaStat {
   area: string;
@@ -29,9 +33,16 @@ const PERIOD_OPTIONS = [
 ];
 
 export default function Dashboard() {
+  const queryClient = useQueryClient();
   const [chartView, setChartView] = useState<'chart' | 'table'>('chart');
   const [revenuePeriod, setRevenuePeriod] = useState(6);
   const [periodOpen, setPeriodOpen] = useState(false);
+  const [showOnboarding, setShowOnboarding] = useState(() => {
+    return !localStorage.getItem('estater_onboarding_complete');
+  });
+  const [payingId, setPayingId] = useState<number | null>(null);
+  const [payMethod, setPayMethod] = useState('check');
+  const [payRef, setPayRef] = useState('');
   const { data: summary } = useQuery<DashboardSummary>({
     queryKey: ['dashboard-summary'],
     queryFn: () => api.get('/dashboard/summary'),
@@ -67,6 +78,20 @@ export default function Dashboard() {
     queryFn: () => api.get('/market/areas'),
   });
 
+  const markPaidMutation = useMutation({
+    mutationFn: ({ paymentId, data }: { paymentId: number; data: any }) =>
+      api.post(`/payments/${paymentId}/mark-paid`, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['dashboard-summary'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-upcoming'] });
+      queryClient.invalidateQueries({ queryKey: ['dashboard-overdue'] });
+      setPayingId(null);
+      setPayRef('');
+      toast.success('Payment marked as paid');
+    },
+    onError: () => toast.error('Failed to mark payment'),
+  });
+
   const totalRevenue = revenue.reduce((sum, r) => sum + r.total, 0);
 
   return (
@@ -99,6 +124,9 @@ export default function Dashboard() {
         </Link>
       </div>
 
+      {/* Getting started checklist */}
+      <GettingStartedChecklist summary={summary} />
+
       {/* Overdue alert */}
       {overdue.length > 0 && (
         <div className="bg-red-50 rounded-xl border border-red-100 p-4 animate-fade-in animate-stagger-2">
@@ -112,7 +140,23 @@ export default function Dashboard() {
             {overdue.slice(0, 3).map(p => (
               <div key={p.id} className="flex items-center justify-between text-sm">
                 <span className="text-red-700">{p.tenant_name} — {p.property_name} ({p.unit_number})</span>
-                <span className="font-medium text-red-800">{formatCurrency(p.amount)}</span>
+                <div className="flex items-center gap-2">
+                  <span className="font-medium text-red-800">{formatCurrency(p.amount)}</span>
+                  {payingId === p.id ? (
+                    <div className="flex items-center gap-1.5">
+                      <select className="border border-surface-border rounded px-1.5 py-1 text-[11px] bg-white" value={payMethod} onChange={e => setPayMethod(e.target.value)}>
+                        <option value="check">Check</option>
+                        <option value="bank_transfer">Transfer</option>
+                        <option value="cash">Cash</option>
+                      </select>
+                      <input className="border border-surface-border rounded px-1.5 py-1 text-[11px] w-16 bg-white" placeholder="Ref#" value={payRef} onChange={e => setPayRef(e.target.value)} />
+                      <button onClick={() => markPaidMutation.mutate({ paymentId: p.id, data: { payment_method: payMethod, reference: payRef } })} className="bg-emerald-600 text-white px-2 py-1 rounded text-[11px] hover:bg-emerald-700">OK</button>
+                      <button onClick={() => setPayingId(null)} className="text-text-muted text-[11px]">X</button>
+                    </div>
+                  ) : (
+                    <button onClick={() => setPayingId(p.id)} className="text-[11px] font-medium text-emerald-600 hover:text-emerald-700">Pay</button>
+                  )}
+                </div>
               </div>
             ))}
             {overdue.length > 3 && (
@@ -231,8 +275,8 @@ export default function Dashboard() {
                 <table className="w-full text-sm">
                   <thead>
                     <tr className="border-b border-surface-border">
-                      <th className="text-left py-2 text-xs font-medium text-text-muted">Month</th>
-                      <th className="text-right py-2 text-xs font-medium text-text-muted">Revenue</th>
+                      <th className="text-left py-2 text-xs font-medium text-text-secondary">Month</th>
+                      <th className="text-right py-2 text-xs font-medium text-text-secondary">Revenue</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -365,9 +409,25 @@ export default function Dashboard() {
                     <p className="text-sm font-medium text-text-primary">{p.tenant_name}</p>
                     <p className="text-xs text-text-muted">{p.property_name} — {p.unit_number}</p>
                   </div>
-                  <div className="text-right">
-                    <p className="text-sm font-semibold text-text-primary tabular-nums">{formatCurrency(p.amount)}</p>
-                    <p className="text-[11px] text-text-muted">Due {formatDate(p.due_date)}</p>
+                  <div className="flex items-center gap-3">
+                    <div className="text-right">
+                      <p className="text-sm font-semibold text-text-primary tabular-nums">{formatCurrency(p.amount)}</p>
+                      <p className="text-[11px] text-text-muted">Due {formatDate(p.due_date)}</p>
+                    </div>
+                    {payingId === p.id ? (
+                      <div className="flex items-center gap-1.5">
+                        <select className="border border-surface-border rounded px-1.5 py-1 text-[11px] bg-white" value={payMethod} onChange={e => setPayMethod(e.target.value)}>
+                          <option value="check">Check</option>
+                          <option value="bank_transfer">Transfer</option>
+                          <option value="cash">Cash</option>
+                        </select>
+                        <input className="border border-surface-border rounded px-1.5 py-1 text-[11px] w-16 bg-white" placeholder="Ref#" value={payRef} onChange={e => setPayRef(e.target.value)} />
+                        <button onClick={() => markPaidMutation.mutate({ paymentId: p.id, data: { payment_method: payMethod, reference: payRef } })} className="bg-emerald-600 text-white px-2 py-1 rounded text-[11px] hover:bg-emerald-700">OK</button>
+                        <button onClick={() => setPayingId(null)} className="text-text-muted text-[11px]">X</button>
+                      </div>
+                    ) : (
+                      <button onClick={() => setPayingId(p.id)} className="text-[11px] font-medium text-emerald-600 hover:text-emerald-700 whitespace-nowrap">Mark Paid</button>
+                    )}
                   </div>
                 </div>
               ))}
@@ -412,18 +472,23 @@ export default function Dashboard() {
         <VacancyCostCard />
       </div>
 
-      {/* Full-width charts */}
+      {/* Activity feed + charts */}
       <div className="grid md:grid-cols-2 gap-5">
+        <ActivityFeed />
         <OccupancyTrendChart />
-        <NetIncomeChart />
       </div>
+
+      {/* Full-width chart */}
+      <NetIncomeChart />
 
       {/* Floating footer disclaimer */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 animate-slide-up" style={{ animationDelay: '600ms' }}>
-        <div className="bg-text-primary text-text-muted text-[10px] px-4 py-2 rounded-full shadow-lg max-w-[500px] text-center leading-relaxed">
+        <div className="bg-text-primary text-surface text-[10px] px-4 py-2 rounded-full shadow-lg max-w-[500px] text-center leading-relaxed">
           Estater is a property management platform. Market data is sourced from DLD public records.
         </div>
       </div>
+
+      <OnboardingWizard open={showOnboarding && summary?.total_properties === 0} onClose={() => setShowOnboarding(false)} />
     </div>
   );
 }

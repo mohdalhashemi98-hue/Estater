@@ -85,42 +85,42 @@ export default function MortgageDetail() {
             </div>
             <div className="grid md:grid-cols-3 gap-4">
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Lender *</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Lender *</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.lender_name} onChange={e => setEditForm({ ...editForm, lender_name: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Loan Amount</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Loan Amount</label>
                 <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.loan_amount} onChange={e => setEditForm({ ...editForm, loan_amount: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Interest Rate (%)</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Interest Rate (%)</label>
                 <input type="number" step="0.01" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.interest_rate} onChange={e => setEditForm({ ...editForm, interest_rate: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Term (months)</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Term (months)</label>
                 <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.term_months} onChange={e => setEditForm({ ...editForm, term_months: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Start Date</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Start Date</label>
                 <input type="date" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.start_date} onChange={e => setEditForm({ ...editForm, start_date: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Monthly Payment</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Monthly Payment</label>
                 <input type="number" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.monthly_payment} onChange={e => setEditForm({ ...editForm, monthly_payment: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Loan Type</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Loan Type</label>
                 <select className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.loan_type} onChange={e => setEditForm({ ...editForm, loan_type: e.target.value })}>
                   <option value="fixed">Fixed</option>
                   <option value="variable">Variable</option>
                 </select>
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Account Number</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Account Number</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.account_number} onChange={e => setEditForm({ ...editForm, account_number: e.target.value })} />
               </div>
               <div>
-                <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+                <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
                 <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-500 focus:ring-1 focus:ring-accent-500/20 outline-none" value={editForm.notes} onChange={e => setEditForm({ ...editForm, notes: e.target.value })} />
               </div>
             </div>
@@ -220,14 +220,14 @@ export default function MortgageDetail() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border sticky top-0">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">#</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Due Date</th>
-                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Principal</th>
-                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Interest</th>
-                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Total</th>
-                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Balance</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Status</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted"></th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">#</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Due Date</th>
+                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Principal</th>
+                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Interest</th>
+                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Total</th>
+                <th className="text-right px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Balance</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Status</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary"></th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">

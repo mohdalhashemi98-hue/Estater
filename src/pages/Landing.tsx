@@ -321,7 +321,7 @@ function Hero() {
           <Link to="/signup" className="bg-accent-500 text-white px-7 py-3.5 rounded-xl text-sm font-medium hover:bg-accent-600 transition-all shadow-lg shadow-accent-500/20 flex items-center gap-2 hover:shadow-xl hover:shadow-accent-500/25">
             Start Free <ArrowRight className="w-4 h-4" />
           </Link>
-          <a href="#showcase" className="text-text-secondary px-7 py-3.5 rounded-xl text-sm font-medium hover:bg-white/60 transition-all border border-surface-border/60">
+          <a href="#showcase" className="text-text-secondary px-7 py-3.5 rounded-xl text-sm font-medium hover:bg-white/80 transition-all border border-surface-border/60">
             See it in action
           </a>
         </div>
@@ -593,7 +593,7 @@ function UAESection() {
     <section className="py-24 px-6 bg-accent-500 text-white">
       <div className="max-w-6xl mx-auto">
         <div ref={headerRef} className="text-center max-w-2xl mx-auto mb-16">
-          <p className="text-sm font-medium text-accent-400 mb-3">Built for the UAE</p>
+          <p className="text-sm font-medium text-white mb-3">Built for the UAE</p>
           <h2 className="text-2xl sm:text-3xl font-bold text-white">
             Not another generic tool — built for your market
           </h2>

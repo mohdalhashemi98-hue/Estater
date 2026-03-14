@@ -102,11 +102,11 @@ export default function CashFlow() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Property</th>
-                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Month</th>
-                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Rent Income</th>
-                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Mortgage</th>
-                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Net</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Property</th>
+                <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Month</th>
+                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Rent Income</th>
+                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Mortgage</th>
+                <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Net</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface">

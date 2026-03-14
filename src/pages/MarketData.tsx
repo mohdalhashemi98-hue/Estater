@@ -204,7 +204,7 @@ export default function MarketData() {
 
       {/* Area Overview Cards */}
       <div>
-        <h3 className="text-[11px] font-medium text-text-muted uppercase tracking-wider mb-3">
+        <h3 className="text-[11px] font-medium text-text-secondary uppercase tracking-wider mb-3">
           {isDubai ? 'Dubai Areas' : 'Abu Dhabi Areas'}
         </h3>
         {areas.length === 0 ? (
@@ -284,14 +284,14 @@ export default function MarketData() {
             <table className="w-full text-sm">
               <thead className="bg-surface border-b border-surface-border">
                 <tr>
-                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Date</th>
-                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Area</th>
-                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Building</th>
-                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Type</th>
-                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Rooms</th>
-                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Price</th>
-                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">AED/sqm</th>
-                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-muted">Area (sqm)</th>
+                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Date</th>
+                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Area</th>
+                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Building</th>
+                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Type</th>
+                  <th className="text-left px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Rooms</th>
+                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Price</th>
+                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">AED/sqm</th>
+                  <th className="text-right px-4 py-2.5 text-[11px] uppercase tracking-wider font-medium text-text-secondary">Area (sqm)</th>
                 </tr>
               </thead>
               <tbody className="divide-y divide-surface">

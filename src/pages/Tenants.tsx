@@ -4,6 +4,7 @@ import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { api } from '../api/client';
 import { Tenant } from '../types';
 import { Users, Plus, X, Phone, Mail, Building } from 'lucide-react';
+import { toast } from 'sonner';
 
 export default function Tenants() {
   const queryClient = useQueryClient();
@@ -21,6 +22,10 @@ export default function Tenants() {
       queryClient.invalidateQueries({ queryKey: ['tenants'] });
       setShowForm(false);
       setForm({ first_name: '', last_name: '', email: '', phone: '', id_number: '', company_name: '', notes: '' });
+      toast.success('Tenant created');
+    },
+    onError: () => {
+      toast.error('Failed to create tenant');
     },
   });
 
@@ -41,31 +46,31 @@ export default function Tenants() {
           </div>
           <div className="grid md:grid-cols-2 gap-4">
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">First Name *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">First Name *</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.first_name} onChange={e => setForm({ ...form, first_name: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Last Name *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Last Name *</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.last_name} onChange={e => setForm({ ...form, last_name: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Phone *</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Phone *</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.phone} onChange={e => setForm({ ...form, phone: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Email</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Email</label>
               <input type="email" className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.email} onChange={e => setForm({ ...form, email: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">ID / Passport Number</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">ID / Passport Number</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.id_number} onChange={e => setForm({ ...form, id_number: e.target.value })} />
             </div>
             <div>
-              <label className="block text-sm font-medium text-text-muted mb-1">Company Name</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Company Name</label>
               <input className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" value={form.company_name} onChange={e => setForm({ ...form, company_name: e.target.value })} />
             </div>
             <div className="md:col-span-2">
-              <label className="block text-sm font-medium text-text-muted mb-1">Notes</label>
+              <label className="block text-sm font-medium text-text-secondary mb-1">Notes</label>
               <textarea className="w-full border border-surface-border rounded-lg px-3 py-2 text-sm bg-white focus:border-accent-600 focus:ring-2 focus:ring-accent-600/20 outline-none" rows={2} value={form.notes} onChange={e => setForm({ ...form, notes: e.target.value })} />
             </div>
           </div>
@@ -106,10 +111,10 @@ export default function Tenants() {
           <table className="w-full text-sm">
             <thead className="bg-surface border-b border-surface-border">
               <tr>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Name</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Contact</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Company</th>
-                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-muted">Active Contracts</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Name</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Contact</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Company</th>
+                <th className="text-left px-4 py-3 text-xs uppercase tracking-wider font-medium text-text-secondary">Active Contracts</th>
               </tr>
             </thead>
             <tbody className="divide-y divide-surface-border">

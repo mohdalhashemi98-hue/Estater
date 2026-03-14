@@ -54,11 +54,11 @@ export default function ReminderSettings() {
         <table className="w-full text-sm">
           <thead>
             <tr className="border-b border-surface-border bg-surface">
-              <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Type</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Days Before</th>
-              <th className="text-left px-4 py-3 text-xs font-medium text-text-muted">Method</th>
-              <th className="text-center px-4 py-3 text-xs font-medium text-text-muted">Enabled</th>
-              <th className="text-right px-4 py-3 text-xs font-medium text-text-muted">Actions</th>
+              <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Type</th>
+              <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Days Before</th>
+              <th className="text-left px-4 py-3 text-xs font-medium text-text-secondary">Method</th>
+              <th className="text-center px-4 py-3 text-xs font-medium text-text-secondary">Enabled</th>
+              <th className="text-right px-4 py-3 text-xs font-medium text-text-secondary">Actions</th>
             </tr>
           </thead>
           <tbody>

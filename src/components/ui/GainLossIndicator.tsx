@@ -14,7 +14,7 @@ export default function GainLossIndicator({ value, percent, showIcon = true, siz
   const isNeutral = value === 0;
 
   const color = isNeutral
-    ? (invertColors ? 'text-white/70' : 'text-text-muted')
+    ? (invertColors ? 'text-white' : 'text-text-muted')
     : isPositive
       ? (invertColors ? 'text-white' : 'text-emerald-600')
       : (invertColors ? 'text-white' : 'text-red-600');
