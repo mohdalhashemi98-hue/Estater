@@ -31,6 +31,7 @@ import templatesRouter from './routes/templates.js';
 import remindersRouter from './routes/reminders.js';
 import reportsRouter from './routes/reports.js';
 import maintenanceRouter from './routes/maintenance.js';
+import analyticsRouter from './routes/analytics.js';
 import authRouter from './routes/auth.js';
 import { authMiddleware } from './middleware/auth.js';
 import { processRetryQueue, emitWebhookEvent } from './services/webhookEmitter.js';
@@ -74,6 +75,7 @@ app.use('/api/templates', templatesRouter);
 app.use('/api/reminders', remindersRouter);
 app.use('/api/reports', reportsRouter);
 app.use('/api/maintenance', maintenanceRouter);
+app.use('/api/analytics', analyticsRouter);
 
 // Serve static files in production
 const distPath = path.join(__dirname, '..', 'dist');

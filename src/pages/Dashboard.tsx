@@ -18,6 +18,13 @@ import ExpenseBreakdownChart from '../components/dashboard/ExpenseBreakdownChart
 import NetIncomeChart from '../components/dashboard/NetIncomeChart';
 import VacancyCostCard from '../components/dashboard/VacancyCostCard';
 import ActivityFeed from '../components/dashboard/ActivityFeed';
+import PortfolioHealthScore from '../components/dashboard/PortfolioHealthScore';
+import RentBenchmark from '../components/dashboard/RentBenchmark';
+import FinancialProjections from '../components/dashboard/FinancialProjections';
+import SmartInsights from '../components/dashboard/SmartInsights';
+import RevenueCalendar from '../components/dashboard/RevenueCalendar';
+import TenantRiskScoring from '../components/dashboard/TenantRiskScoring';
+import MarketPulse from '../components/dashboard/MarketPulse';
 
 interface AreaStat {
   area: string;
@@ -465,6 +472,22 @@ export default function Dashboard() {
         </div>
       </div>
 
+      {/* Health score + Insights + Market pulse */}
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
+        <PortfolioHealthScore />
+        <SmartInsights />
+        <MarketPulse />
+      </div>
+
+      {/* Rent benchmark + Tenant risk */}
+      <div className="grid md:grid-cols-2 gap-5">
+        <RentBenchmark />
+        <TenantRiskScoring />
+      </div>
+
+      {/* Financial projections */}
+      <FinancialProjections />
+
       {/* Analytics row */}
       <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-5">
         <CollectionRateCard />
@@ -472,14 +495,17 @@ export default function Dashboard() {
         <VacancyCostCard />
       </div>
 
-      {/* Activity feed + charts */}
+      {/* Revenue calendar + Activity feed */}
       <div className="grid md:grid-cols-2 gap-5">
+        <RevenueCalendar />
         <ActivityFeed />
-        <OccupancyTrendChart />
       </div>
 
-      {/* Full-width chart */}
-      <NetIncomeChart />
+      {/* Charts */}
+      <div className="grid md:grid-cols-2 gap-5">
+        <OccupancyTrendChart />
+        <NetIncomeChart />
+      </div>
 
       {/* Floating footer disclaimer */}
       <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-20 animate-slide-up" style={{ animationDelay: '600ms' }}>

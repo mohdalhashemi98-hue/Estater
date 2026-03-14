@@ -32,6 +32,7 @@ const ReminderSettings = lazy(() => import('./pages/ReminderSettings'));
 const Reports = lazy(() => import('./pages/Reports'));
 const Settings = lazy(() => import('./pages/Settings'));
 const Maintenance = lazy(() => import('./pages/Maintenance'));
+const PropertyComparison = lazy(() => import('./pages/PropertyComparison'));
 
 function PageLoader() {
   return (
@@ -178,6 +179,14 @@ export default function App() {
           element={
             <ProtectedRoute>
               <Layout><Maintenance /></Layout>
+            </ProtectedRoute>
+          }
+        />
+        <Route
+          path="/compare"
+          element={
+            <ProtectedRoute>
+              <Layout><PropertyComparison /></Layout>
             </ProtectedRoute>
           }
         />
